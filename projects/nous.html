@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nous — 陈亦奇 Jessie Chen</title>
+<meta name="description" content="Nous：认知层 AI 建模研究原型。不模仿你怎么说话，理解你怎么想——九维认知模型、行为预测验证、矛盾检测与被动信号采集。">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">陈亦奇 <span style="color:var(--primary)">Jessie Chen</span></a>
+    <a class="nav-link" href="../index.html#projects">项目</a>
+    <a class="nav-link" href="../index.html#contact">联系</a>
+    <span class="nav-tag">CASE 05 · RESEARCH</span>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="measure">
+    <span class="kicker">AI Research Prototype · 独立开发 · MVP 验证阶段</span>
+    <h1>Nous</h1>
+    <p class="lede">不模仿你怎么说话，理解你怎么想。</p>
+    <p style="margin-top:18px">现有的 AI 分身系统都在行为层建模——表达风格、语言习惯、偏好。它们能做出一个「说话像你」的分身，但遇到没见过的场景，它没法「像你一样决策」，因为它不理解你的认知架构。Nous 在认知层工作：建模你为什么这样决策，而不只是你做了什么决策。</p>
+    <div class="facts">
+      <span><b>角色</b> — 独立开发（研究 + 全栈）</span>
+      <span><b>状态</b> — MVP 验证阶段，核心假设已确认</span>
+      <span><b>技术</b> — Python · Claude API · Next.js · ECharts</span>
+    </div>
+    <div class="metrics">
+      <div class="metric"><b>9</b><span>认知维度的结构化模型</span></div>
+      <div class="metric"><b>49→71%</b><span>行为预测准确率（一轮迭代后）</span></div>
+      <div class="metric"><b>99%</b><span>模型理解准确率（直接评判后）</span></div>
+      <div class="metric"><b>101</b><span>被动采集的认知信号</span></div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section class="section">
+  <div class="measure">
+    <div class="sec-label" data-n="01"><span>Problem</span></div>
+    <h2>说话像你 ≠ 想得像你。</h2>
+    <p>行为层系统优化的是「看起来准」（用户满意度、使用量）；认知层要优化的是「真的准」（预测命中率、矛盾检出）。当数字分身需要替你做决策时，这个区别是生死线。</p>
+    <div class="compare">
+      <div class="compare-head"><span>维度</span><span>行为层</span><span>认知层（Nous）</span></div>
+      <div class="compare-row">
+        <div class="compare-label">建模路径</div>
+        <div class="compare-cell" data-col="行为层">自下而上：行为数据 → 涌现</div>
+        <div class="compare-cell" data-col="认知层">自上而下：认知维度 → 验证</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-label">建模对象</div>
+        <div class="compare-cell" data-col="行为层">你做了什么</div>
+        <div class="compare-cell" data-col="认知层">你为什么这么做</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-label">验证标准</div>
+        <div class="compare-cell" data-col="行为层">内部指标：使用量、满意度</div>
+        <div class="compare-cell" data-col="认知层">外部指标：对新场景的预测准确率</div>
+      </div>
+    </div>
+    <p style="margin-top:22px">两者不是竞争关系而是互补的层：行为层让分身说话像你，认知层让它想得像你。</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="measure">
+    <div class="sec-label" data-n="02"><span>How It Works</span></div>
+    <h2>建模是一场对话，验证是一个闭环。</h2>
+    <p>AI 访谈者用 15–25 轮自然对话探索九个认知维度——决策架构、注意力分配、推理风格、情绪处理、社会认知、盲区、价值序列、不确定性应对、执行层弹性。没有问卷，没有人格测试。</p>
+    <div class="flow">
+      <div class="flow-step"><span class="n">01</span><strong>对话式访谈</strong><span>15–25 轮自然对话</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><span class="n">02</span><strong>双轨信号抽取</strong><span>「你说的」与「你做的」分开记</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><span class="n">03</span><strong>九维认知模型</strong><span>结构化产出，可视化呈现</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><span class="n">04</span><strong>行为预测</strong><span>对没见过的场景生成预测</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><span class="n">05</span><strong>验证与修正</strong><span>用户作答，系统打分，模型自我修正</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="measure">
+    <div class="sec-label" data-n="03"><span>Key Insight</span></div>
+    <h2>准不准不是静态属性，是演化能力。</h2>
+    <div class="quote">
+      <p>「准确的模型可能不存在，但一个知道自己错在哪的动态模型，可以持续进化。」</p>
+      <cite>— 项目的核心判断</cite>
+    </div>
+    <p>所以 Nous 的重心不在「一次建准」，而在验证闭环：预测 → 作答 → 打分 → 修正。行为预测准确率从首测 49% 迭代到 71%（确定性打分，高出随机基线 46 个百分点），其中推理预测一档达到 90%；模型理解准确率经一轮直接评判后从 85% 到 99%。</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="measure">
+    <div class="sec-label" data-n="04"><span>Contradiction Detection</span></div>
+    <h2>矛盾是最诚实的数据。</h2>
+    <p>自我报告不可靠——人对自己的描述常常是理想化的。Nous 用双轨信号分析对比「你声称的自己」与「你实际的行为」，两者的矛盾就是客观的盲区证据，替代不可靠的自评。</p>
+    <div class="proof-grid">
+      <article class="proof-card">
+        <span class="kicker">声明轨</span>
+        <h3>你说你是谁。</h3>
+        <p>访谈与对话中你对自己的描述：原则、偏好、自认为的决策方式。</p>
+      </article>
+      <article class="proof-card">
+        <span class="kicker">行为轨</span>
+        <h3>你实际怎么做。</h3>
+        <p>真实决策与行为记录。两轨冲突处，就是模型最值得追问的地方——已累计检出 20 处矛盾。</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="measure">
+    <div class="sec-label" data-n="05"><span>Passive Collection</span></div>
+    <h2>你正常工作，模型自动变准。</h2>
+    <p>后台采集器从日常 AI 会话中抽取认知信号：本地关键词预过滤先跳过低信号的纯技术会话（不花 API 调用），有信号的会话才做抽取。这形成一个飞轮——不需要专门「喂」模型，用得越多它越懂你。目前已累计 101 个信号、20 处矛盾。</p>
+    <p class="tech-line"><span class="kicker">现状</span>MVP 核心假设已确认：认知模型可以通过迭代修正闭环持续提升预测准确率。下一步是把验证样本量做大，以及把矛盾检出转化为用户可用的盲区提醒。</p>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="foot-nav measure">
+    <a href="musiclaw.html">← 上一个 — MusiClaw</a>
+    <a href="../index.html#projects">所有项目 →</a>
+  </div>
+  <div class="foot-meta"><div class="measure"><span>© 2026 陈亦奇 Jessie Chen</span><span>准确率数据出自项目验证记录</span></div></div>
+</footer>
+
+</body>
+</html>

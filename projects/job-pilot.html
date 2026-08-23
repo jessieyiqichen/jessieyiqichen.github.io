@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JobPilot — 陈亦奇 Jessie Chen</title>
+<meta name="description" content="JobPilot：一个懂你这个人的 AI 求职军师。从行为层到认知层的产品洞察、克制的功能取舍、27 个 CLI 命令与 472 个测试的工程实现。">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">陈亦奇 <span style="color:var(--primary)">Jessie Chen</span></a>
+    <a class="nav-link" href="../index.html#projects">项目</a>
+    <a class="nav-link" href="../index.html#contact">联系</a>
+    <span class="nav-tag">CASE 03 · OPEN SOURCE</span>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="measure">
+    <span class="kicker">AI Product · 独立开发 · 开源</span>
+    <h1>JobPilot</h1>
+    <p class="lede">一个懂你这个人的求职军师——知道你怎么想、怎么说、卡在哪。</p>
+    <p style="margin-top:18px">市面上的 AI 求职工具都在帮你「投得更多更快」。JobPilot 走了另一条路：接入认知模型和语言样本，做一个从找岗到拿 offer 全程陪跑的军师。开源，带 CI 和线上只读 demo。</p>
+    <div class="facts">
+      <span><b>角色</b> — 独立开发（产品 + 全栈）</span>
+      <span><b>状态</b> — 开源 · CI · <a href="https://web-ten-omega-72.vercel.app" target="_blank" rel="noopener">线上 demo</a> · <a href="https://github.com/jessieyiqichen/job-pilot" target="_blank" rel="noopener">GitHub</a></span>
+      <span><b>技术</b> — Python · Claude API · Next.js · GitHub Actions</span>
+    </div>
+    <div class="metrics">
+      <div class="metric"><b>349</b><span>多渠道采集的岗位</span></div>
+      <div class="metric"><b>37</b><span>AI 打分筛出的高分岗</span></div>
+      <div class="metric"><b>27</b><span>CLI 命令</span></div>
+      <div class="metric"><b>472</b><span>测试通过，CI 全绿</span></div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section class="section">
+  <div class="measure">
+    <div class="sec-label" data-n="01"><span>Problem</span></div>
+    <h2>求职的卡点不在信息，在人。</h2>
+    <p>我自己找实习时发现，真正卡住我的根本不是「信息不够」：</p>
+    <ul class="evidence">
+      <li>我筛出了 37 个高分岗、定制了 19 份简历，却一个都没投出去。</li>
+      <li>AI 生成的打招呼话术，我每次都要改——它不像我说话。</li>
+      <li>两个 offer 摆在面前，我不知道按什么标准选。</li>
+    </ul>
+    <p>海投工具和套模板的工具一个都解决不了这些。因为它们停在行为层（你做了什么），没碰到人（你为什么这么做）。</p>
+    <div class="quote">
+      <p>「它对我 0 投递的诊断不是『加油快投』，而是『你在乎的事用了过高标准——先允许自己投一个不完美的版本』。关键词匹配给不了这种洞察。」</p>
+      <cite>— 产品对第一个真实用户（我自己）产生的非泛泛价值</cite>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="measure">
+    <div class="sec-label" data-n="02"><span>Insight</span></div>
+    <h2>从行为层到认知层。</h2>
+    <p>这是整个产品的灵魂，也是和市面工具的根本区别：</p>
+    <div class="compare">
+      <div class="compare-head"><span>维度</span><span>行为层工具（市面主流）</span><span>JobPilot</span></div>
+      <div class="compare-row">
+        <div class="compare-label">建模什么</div>
+        <div class="compare-cell" data-col="行为层工具">你怎么做——投递、点击、偏好</div>
+        <div class="compare-cell" data-col="JobPilot">你怎么想（决策方式、盲区、价值排序）+ 你怎么说（语言风格）</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-label">给你什么</div>
+        <div class="compare-cell" data-col="行为层工具">更多岗位、通用话术</div>
+        <div class="compare-cell" data-col="JobPilot">针对你这个人的诊断、像你写的话术、扛得住追问的建议</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-label">最锋利处</div>
+        <div class="compare-cell" data-col="行为层工具">「推荐你投这 50 个岗」</div>
+        <div class="compare-cell" data-col="JobPilot">抓到「你说的」和「你做的」之间的矛盾</div>
+      </div>
+    </div>
+    <p style="margin-top:22px">「声明」与「推断」分工明确：你声明的偏好（城市、deal-breaker）是硬规则，军师必须遵守；推断出的认知是理解层，帮它调整说话方式、识别你卡在哪。两者的矛盾，恰恰是最有价值的洞察。</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="measure">
+    <div class="sec-label" data-n="03"><span>Architecture</span></div>
+    <h2>三层架构：数据是基础设施，个性是护城河。</h2>
+    <div class="status-grid">
+      <article class="status-card">
+        <span class="tag">数据层 · 人人都有</span>
+        <h3>找岗与打分</h3>
+        <p>多渠道搜索（WebSearch / 小红书 / GitHub 招聘 issue）+ 两段式 AI 打分 + 投递追踪。</p>
+      </article>
+      <article class="status-card">
+        <span class="tag shipped">个性层 · 差异化在这里</span>
+        <h3>认知与语言</h3>
+        <p>你声明的偏好（硬规则）+ 认知模型（怎么想）+ 语言样本（怎么说）。</p>
+      </article>
+      <article class="status-card">
+        <span class="tag">陪伴层 · 不只是工具</span>
+        <h3>军师</h3>
+        <p>多轮对话带长期记忆与主动跟进：诊断、周计划、答疑，被拒时给建设性复盘而非空安慰。</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="measure">
+    <div class="sec-label" data-n="04"><span>Decisions</span></div>
+    <h2>每个决策都是主动选择，不是默认。</h2>
+    <ul class="role-list">
+      <li><strong>不做自动投递、不写爬虫。</strong>投递不可逆，平台有反爬边界——定位「我们生成、你来发」，用功能克制换信任与合规。</li>
+      <li><strong>计划与跟进用确定性逻辑，不烧 LLM。</strong>「本周该投哪几个」能用规则算就不调 API：省成本，且每条建议都能指回数据、扛得住「凭什么」。</li>
+      <li><strong>两段式打分。</strong>免费启发式先粗筛全部岗位，只对 top N 调 API 精评，一次跑完成本可控。</li>
+      <li><strong>简历定制 patch 原 docx，不重新生成。</strong>用 difflib 把改动补丁回原文件，保留字体排版；技能白名单防止 AI 膨胀未声明的能力。</li>
+      <li><strong>不急着做多用户。</strong>现在最强的个性化恰恰来自深度绑定一个人，过早通用化会把它稀释成又一个普通工具。</li>
+      <li><strong>AI 可选降级。</strong>没有 API key 时走启发式或导出 prompt，基本功能不瘫。</li>
+    </ul>
+  </div>
+</section>
+
+<section class="section">
+  <div class="measure">
+    <div class="sec-label" data-n="05"><span>Results &amp; Honest Limits</span></div>
+    <h2>端到端跑通，以及一个想清楚才动的下一步。</h2>
+    <p>多渠道采集 349 个岗位 → AI 打分 → 筛出 37 个高分岗；<code style="font-family:var(--mono);font-size:14px">pipeline-all</code> 一条命令跑完搜索 → 打分 → 定制 → 话术 → 日报，每个阶段隔离，单渠道故障不中断全局。工程上：27 个 CLI 命令、472 个测试、CI 与覆盖率上报、Next.js 看板部署在 Vercel。</p>
+    <div class="proof-grid">
+      <article class="proof-card">
+        <span class="kicker">真正的难题</span>
+        <h3>不是多用户工程，是冷启动。</h3>
+        <p>数据层已按用户隔离，多用户不难。难的是：陌生用户怎么快速获得这种认知深度。</p>
+      </article>
+      <article class="proof-card highlight">
+        <span class="kicker">我的思路</span>
+        <h3>渐进式深度。</h3>
+        <p>新用户只填 5 分钟问卷加几段自己的话术，然后越用越懂你——每次对话沉淀认知信号，每次改话术系统更像你。它不一上来就完美，而是像一个跟了你三个月的人。</p>
+      </article>
+    </div>
+    <div class="quote">
+      <p>「这个项目想证明的不是『我会写多少功能』，而是『每个决策我都想清楚了为什么』。」</p>
+      <cite>— 项目 Case Study 结语</cite>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="foot-nav measure">
+    <a href="xhs-threads.html">← 上一个 — xhs-threads</a>
+    <a href="musiclaw.html">下一个 — MusiClaw →</a>
+  </div>
+  <div class="foot-meta"><div class="measure"><span>© 2026 陈亦奇 Jessie Chen</span><span>代码与数据见 GitHub 仓库</span></div></div>
+</footer>
+
+</body>
+</html>

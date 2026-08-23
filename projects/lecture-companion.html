@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lecture Companion — 陈亦奇 Jessie Chen</title>
+<meta name="description" content="实时听课 AI 助手：把课堂提问压缩成一次点击。零输入标记、多模态检索三期灰度、以复习行为定北极星、影子双跑降本。">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">陈亦奇 <span style="color:var(--primary)">Jessie Chen</span></a>
+    <a class="nav-link" href="../index.html#projects">项目</a>
+    <a class="nav-link" href="../index.html#contact">联系</a>
+    <span class="nav-tag">CASE 01 · SOLO BUILD</span>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="measure">
+    <span class="kicker">AI Product · 独立开发 · 2026.7 —</span>
+    <h1>Lecture Companion</h1>
+    <p class="lede">把课堂里没问出口的问题，压缩成一次点击。</p>
+    <p style="margin-top:18px">我独立开发了一个实时听课 AI 助手：课上点击任意转写句即返回 AI 解释，同步自动截屏交给多模态模型直读板书与公式；课后按讲义页码可溯源地复习。产品在真实课堂中生产运行，功能按灰度分期上线。</p>
+    <div class="facts">
+      <span><b>角色</b> — 独立开发（产品 + 全栈）</span>
+      <span><b>状态</b> — 生产自用中，持续迭代</span>
+      <span><b>技术</b> — Python · 火山方舟豆包 · 多模态 RAG · 流式 ASR · Next.js · SQLite</span>
+    </div>
+    <div class="metrics">
+      <div class="metric"><b>62</b><span>累计标记次数（生产库读数）</span></div>
+      <div class="metric"><b>58</b><span>其中零输入完成</span></div>
+      <div class="metric"><b>60</b><span>复习动线累计进入次数</span></div>
+      <div class="metric"><b>¼</b><span>ASR 降档后的单侧成本</span></div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section class="section">
+  <div class="measure">
+    <div class="sec-label" data-n="01"><span>Problem</span></div>
+    <h2>疑问真实存在，提问却没有发生。</h2>
+    <p>上网课时，疑问随时产生：一个没听懂的术语、一步跳过的推导、一页一闪而过的板书。但提问这个动作几乎从不发生——要暂停、要组织语言、要切换窗口，等打完字，课已经讲到下一页了。</p>
+    <ul class="evidence">
+      <li>疑问在课中高频出现，而实际发起的提问接近于零——落差不在「想不想问」，在「问一次要付出多少」。</li>
+      <li>通用聊天机器人解决不了：它要求用户先把问题描述清楚，而「描述清楚」正是课堂场景里最贵的动作。</li>
+      <li>纯文本转写丢失了课堂里最关键的信息——板书、公式和图示只存在于画面里。</li>
+    </ul>
+    <div class="quote">
+      <p>「瓶颈在输入摩擦，而非模型能力。」</p>
+      <cite>— 产品判断，决定了后续所有交互设计</cite>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="measure">
+    <div class="sec-label" data-n="02"><span>Iteration 1 · 零输入标记</span></div>
+    <h2>把提问压缩成一次点击。</h2>
+    <p>既然输入是瓶颈，就把输入干掉。课中界面实时滚动显示语音转写，对任何一句有疑问，点一下——AI 解释直接返回。点击的同时自动截取当前画面，交给多模态模型直读，补足纯文本缺失的板书与公式。</p>
+    <div class="flow">
+      <div class="flow-step"><span class="n">01</span><strong>实时转写</strong><span>流式 ASR 逐句上屏</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><span class="n">02</span><strong>一次点击</strong><span>对疑问句子点击标记</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><span class="n">03</span><strong>自动截屏</strong><span>画面交多模态模型直读</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><span class="n">04</span><strong>即时解释</strong><span>结合上下文返回讲解</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><span class="n">05</span><strong>课后复习</strong><span>标记沉淀为复习材料</span></div>
+    </div>
+    <p class="tech-line"><span class="kicker">验证</span>自用累计标记 62 次，其中 58 次零输入完成——交互假设成立：只要把成本降到一次点击，课堂提问就会真实发生。</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="measure">
+    <div class="sec-label" data-n="03"><span>Iteration 2 · 多模态检索</span></div>
+    <h2>让回答带上讲义页码，而且页码不许编。</h2>
+    <p>讲义中的公式、图示与批注只存在于页面图像里，AI 解释也无法定位到讲义原页。第二次迭代把页图与页面文字融合为单一向量入库，使回答可以附上讲义页码出处——页码由检索层结构化返回，而非模型生成，从机制上杜绝编造。</p>
+    <div class="proof-grid">
+      <article class="proof-card highlight">
+        <span class="kicker">怎么上线</span>
+        <h3>三期灰度，每期只引入一层变更。</h3>
+        <p>入库、检索、引用展示分三期灰度，出问题能立刻归因到具体一层。两日内全部合并，零回滚。</p>
+      </article>
+      <article class="proof-card">
+        <span class="kicker">为什么这样设计</span>
+        <h3>可溯源比「显得聪明」重要。</h3>
+        <p>复习场景里，一个带页码的回答用户敢信、敢点回去核对；一个编造页码的回答会摧毁整个产品的信任。</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="measure">
+    <div class="sec-label" data-n="04"><span>North Star</span></div>
+    <h2>北极星定在课后，不定在课中。</h2>
+    <p>每小时标记数只度量课中行为，而产品价值兑现在课后——所以北极星定为「被复习的标记数」，埋点由服务端直写。上线后复习动线累计进入 60 次，六成以上集中于考试与作业周：课后复习由考试驱动，与课中场景性质迥异。</p>
+    <div class="compare">
+      <div class="compare-head"><span>场景</span><span>课中</span><span>课后</span></div>
+      <div class="compare-row">
+        <div class="compare-label">用户状态</div>
+        <div class="compare-cell" data-col="课中">跟着课走，容不得等待</div>
+        <div class="compare-cell" data-col="课后">考试驱动，愿意深挖</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-label">技术选型</div>
+        <div class="compare-cell" data-col="课中">延迟可控的确定性 workflow</div>
+        <div class="compare-cell" data-col="课后">agent 式深挖，允许多步推理</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-label">度量</div>
+        <div class="compare-cell" data-col="课中">标记次数、零输入占比</div>
+        <div class="compare-cell" data-col="课后">被复习的标记数（北极星）</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="measure">
+    <div class="sec-label" data-n="05"><span>Unit Economics</span></div>
+    <h2>先记账，再降本，降本必须先证明质量不掉。</h2>
+    <p>经用量账本逐项拆分，单节两小时课约 5.5 元，ASR 占八成以上——降本因此锁定 ASR 单侧。LLM 侧按任务分档路由模型，单节实测控制在 1 元量级。</p>
+    <ul class="evidence">
+      <li><strong>影子双跑验证：</strong>新旧两档 ASR 在真实课堂同时运行，时间戳残差为零、句级相似度 0.98 以上，才执行替换。</li>
+      <li><strong>替换结果：</strong>切换到同厂商四分之一单价档，ASR 单侧成本降至四分之一，月成本从 90 元降到 25 元（8 节课 / 11.25 小时实测）。</li>
+      <li><strong>顺序不可颠倒：</strong>省钱是结果，不是目标——先有账本知道钱花在哪，再有验证证明降档不伤质量，最后才动手替换。</li>
+    </ul>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="foot-nav measure">
+    <a href="../index.html#projects">← 所有项目</a>
+    <a href="xhs-threads.html">下一个 — xhs-threads →</a>
+  </div>
+  <div class="foot-meta"><div class="measure"><span>© 2026 陈亦奇 Jessie Chen</span><span>数据为生产库真实读数</span></div></div>
+</footer>
+
+</body>
+</html>
