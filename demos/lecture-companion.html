@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lecture Companion</title>
+</head>
+<body>
+<style>
+:root{
+  --paper:#f7f8f6;--card:#ffffff;--ink:#1b2028;--ink-2:#4a5160;--ink-3:#8a90a0;
+  --line:#e3e5e0;--line-soft:#edeeea;
+  --blue:#2f5fd0;--blue-deep:#234aa5;--blue-wash:#2f5fd014;
+  --hl:#ffe164;--hl-ink:#5c4d00;--hl-wash:#ffe16438;
+  --green:#2e8b57;--green-wash:#2e8b5714;--red:#c0504d;--red-wash:#c0504d12;
+  --mono:"SF Mono","JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  --sans:-apple-system,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+  --shadow:0 1px 2px rgba(27,32,40,.05),0 4px 16px rgba(27,32,40,.06);
+}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --paper:#191c22;--card:#20242c;--ink:#e8eaee;--ink-2:#aab0bd;--ink-3:#6b7280;
+  --line:#31363f;--line-soft:#282d36;
+  --blue:#6f96e8;--blue-deep:#8fadf0;--blue-wash:#6f96e81a;
+  --hl:#c9a832;--hl-ink:#ffe58a;--hl-wash:#c9a83226;
+  --green:#5cb884;--green-wash:#5cb8841a;--red:#d98481;--red-wash:#d9848116;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 16px rgba(0,0,0,.25);
+}}
+:root[data-theme=dark]{
+  --paper:#191c22;--card:#20242c;--ink:#e8eaee;--ink-2:#aab0bd;--ink-3:#6b7280;
+  --line:#31363f;--line-soft:#282d36;
+  --blue:#6f96e8;--blue-deep:#8fadf0;--blue-wash:#6f96e81a;
+  --hl:#c9a832;--hl-ink:#ffe58a;--hl-wash:#c9a83226;
+  --green:#5cb884;--green-wash:#5cb8841a;--red:#d98481;--red-wash:#d9848116;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 16px rgba(0,0,0,.25);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+  font-size:16px;line-height:1.75;-webkit-font-smoothing:antialiased}
+h1,h2,h3,p,ul,ol{margin:0}
+.wrap{max-width:1060px;margin:0 auto;padding:0 32px}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+mark{background:linear-gradient(transparent 45%,var(--hl-wash) 45%);color:inherit;padding:0 2px}
+
+/* ---------- top nav ---------- */
+nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--paper) 88%,transparent);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;gap:22px;height:52px}
+nav .brand{font-weight:700;font-size:15px;letter-spacing:.02em}
+nav .brand em{font-style:normal;color:var(--blue)}
+nav a{color:var(--ink-2);text-decoration:none;font-size:13.5px;padding:4px 2px}
+nav a:hover{color:var(--ink)}
+nav .tag{margin-left:auto;font-family:var(--mono);font-size:11.5px;color:var(--ink-3);
+  border:1px solid var(--line);border-radius:99px;padding:2px 10px}
+@media(max-width:760px){nav a{display:none}nav .tag{margin-left:auto}}
+
+/* ---------- hero ---------- */
+.hero{padding:72px 0 40px}
+.hero .kicker{font-family:var(--mono);font-size:12.5px;letter-spacing:.14em;color:var(--blue);
+  text-transform:uppercase;margin-bottom:18px}
+.hero h1{font-size:clamp(30px,4.6vw,46px);line-height:1.25;font-weight:800;letter-spacing:-.01em;
+  text-wrap:balance;max-width:21em}
+.hero h1 .pen{background:linear-gradient(transparent 52%,var(--hl) 52%,var(--hl) 92%,transparent 92%);padding:0 3px}
+.hero .sub{margin-top:20px;font-size:17.5px;color:var(--ink-2);max-width:38em}
+.statline{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:10px;
+  padding:12px 18px;box-shadow:var(--shadow)}
+.stat b{display:block;font-family:var(--mono);font-size:21px;font-weight:600;letter-spacing:-.01em}
+.stat span{font-size:12.5px;color:var(--ink-3)}
+
+/* ---------- live demo ---------- */
+.demo{margin:48px 0 0;background:var(--card);border:1px solid var(--line);border-radius:14px;
+  box-shadow:var(--shadow);overflow:hidden}
+.demo-bar{display:flex;align-items:center;gap:10px;padding:10px 18px;border-bottom:1px solid var(--line-soft);
+  font-size:12.5px;color:var(--ink-3)}
+.demo-bar .dot{width:9px;height:9px;border-radius:50%;background:var(--red);opacity:.85;
+  animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.25}}
+.demo-bar .hint{margin-left:auto;font-family:var(--mono);font-size:11.5px}
+.demo-body{display:grid;grid-template-columns:1.15fr .85fr;min-height:340px}
+@media(max-width:860px){.demo-body{grid-template-columns:1fr}}
+.ts-pane{padding:20px 24px;border-right:1px solid var(--line-soft);display:flex;flex-direction:column;gap:2px}
+@media(max-width:860px){.ts-pane{border-right:none;border-bottom:1px solid var(--line-soft)}}
+.ts-line{display:flex;gap:12px;align-items:baseline;padding:7px 10px;border-radius:8px;
+  opacity:0;transform:translateY(6px);transition:opacity .5s,transform .5s,background .3s}
+.ts-line.show{opacity:1;transform:none}
+.ts-line .t{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);flex:none}
+.ts-line .x{font-size:14.5px;color:var(--ink-2)}
+.ts-line.key{cursor:default}
+.ts-line.key .x{color:var(--ink)}
+.ts-line.marked{background:var(--hl-wash)}
+.markbtn{flex:none;margin-left:auto;font-size:12px;font-family:inherit;color:var(--hl-ink);
+  background:var(--hl);border:none;border-radius:99px;padding:3px 13px;cursor:pointer;
+  font-weight:600;opacity:0;transition:opacity .4s;white-space:nowrap}
+.ts-line.show .markbtn{opacity:1}
+.markbtn:hover{filter:brightness(.96)}
+.markbtn:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.markbtn[disabled]{cursor:default;background:transparent;border:1px solid var(--line);color:var(--ink-3)}
+.ex-pane{padding:20px 24px;display:flex;flex-direction:column}
+.ex-title{font-size:12px;letter-spacing:.1em;color:var(--ink-3);font-family:var(--mono);margin-bottom:14px}
+.ex-empty{margin:auto;text-align:center;color:var(--ink-3);font-size:13.5px;max-width:17em}
+.ex-empty .arrow{font-size:22px;display:block;margin-bottom:8px;color:var(--hl-ink)}
+.ex-card{display:none;background:var(--blue-wash);border:1px solid color-mix(in srgb,var(--blue) 22%,transparent);
+  border-radius:10px;padding:16px 18px;font-size:14.5px;line-height:1.8}
+.ex-card.on{display:block}
+.ex-card .who{font-size:11.5px;font-family:var(--mono);color:var(--blue);margin-bottom:8px}
+.ex-card .cursor{display:inline-block;width:7px;height:15px;background:var(--blue);
+  vertical-align:-2px;animation:blink .9s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.ex-note{margin-top:auto;padding-top:14px;font-size:12px;color:var(--ink-3)}
+.replay{margin:0;border-top:1px solid var(--line-soft);padding:9px 18px;display:flex;gap:14px;align-items:center;
+  font-size:12.5px;color:var(--ink-3)}
+.replay button{font-family:inherit;font-size:12.5px;color:var(--blue);background:none;border:none;
+  cursor:pointer;padding:2px 4px;text-decoration:underline;text-underline-offset:3px}
+
+/* ---------- sections ---------- */
+section{padding:64px 0 8px}
+.sec-kicker{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--blue);
+  text-transform:uppercase}
+.sec-title{font-size:clamp(22px,3vw,30px);font-weight:800;letter-spacing:-.01em;margin-top:8px;
+  text-wrap:balance}
+.sec-lead{margin-top:14px;color:var(--ink-2);max-width:44em;font-size:16px}
+.grid{display:grid;gap:16px;margin-top:30px}
+.g2{grid-template-columns:1fr 1fr}
+.g3{grid-template-columns:1fr 1fr 1fr}
+@media(max-width:860px){.g2,.g3{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;
+  padding:22px 24px;box-shadow:var(--shadow)}
+.card h3{font-size:16.5px;font-weight:700;margin-bottom:10px}
+.card p{font-size:14.5px;color:var(--ink-2)}
+.card .n{font-family:var(--mono);font-size:12px;color:var(--ink-3);display:block;margin-bottom:10px}
+
+/* loop 三幕 */
+.acts{counter-reset:act;margin-top:30px;display:grid;gap:0}
+.act{display:grid;grid-template-columns:64px 1fr;gap:0;position:relative;padding-bottom:34px}
+.act:last-child{padding-bottom:0}
+.act::before{counter-increment:act;content:counter(act);
+  width:34px;height:34px;border-radius:50%;background:var(--card);border:1.5px solid var(--line);
+  display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:13.5px;
+  color:var(--ink-2);position:relative;z-index:2}
+.act:not(:last-child)::after{content:"";position:absolute;left:16.5px;top:36px;bottom:0;
+  width:1.5px;background:var(--line)}
+.act h3{font-size:17px;font-weight:700}
+.act h3 small{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);font-weight:400;margin-left:10px}
+.act p{margin-top:8px;font-size:14.5px;color:var(--ink-2);max-width:46em}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.chip{font-size:12.5px;border:1px solid var(--line);border-radius:99px;padding:3px 12px;color:var(--ink-2);background:var(--card)}
+.chip.y{background:var(--hl-wash);border-color:color-mix(in srgb,var(--hl-ink) 25%,transparent);color:var(--hl-ink)}
+
+/* 决策卡 */
+.dec .card{display:flex;flex-direction:column;gap:0}
+.dec h3{display:flex;align-items:baseline;gap:10px}
+.verdict{margin-top:14px;border-radius:9px;padding:10px 14px;font-size:13.5px;font-family:var(--mono)}
+.verdict.stop{background:var(--red-wash);color:var(--red)}
+.verdict.go{background:var(--green-wash);color:var(--green)}
+.dtable{width:100%;border-collapse:collapse;margin-top:14px;font-size:13.5px}
+.dtable td,.dtable th{padding:7px 10px;border-bottom:1px solid var(--line-soft);text-align:left}
+.dtable th{font-size:11.5px;font-family:var(--mono);color:var(--ink-3);font-weight:500;letter-spacing:.06em}
+.dtable td.v{font-family:var(--mono)}
+.dtable tr:last-child td{border-bottom:none}
+.foot{margin-top:auto;padding-top:14px;font-size:12.5px;color:var(--ink-3)}
+
+/* 成本条 */
+.costbar{display:flex;height:34px;border-radius:8px;overflow:hidden;margin-top:18px;border:1px solid var(--line)}
+.costbar .asr{flex:8.2;background:var(--blue);display:flex;align-items:center;padding:0 14px;
+  color:#fff;font-family:var(--mono);font-size:12.5px;white-space:nowrap}
+.costbar .llm{flex:1.8;background:var(--blue-wash);display:flex;align-items:center;justify-content:center;
+  color:var(--blue);font-family:var(--mono);font-size:12px}
+.costnotes{display:flex;flex-wrap:wrap;gap:20px;margin-top:16px}
+.costnotes div{font-size:13.5px;color:var(--ink-2)}
+.costnotes b{font-family:var(--mono);font-weight:600;color:var(--ink)}
+
+/* 开发模式 */
+.orch{display:grid;grid-template-columns:200px 1fr;gap:16px;align-items:stretch;margin-top:30px}
+@media(max-width:860px){.orch{grid-template-columns:1fr}}
+.orch .hub{background:var(--card);border:1.5px solid var(--blue);border-radius:12px;padding:18px;
+  display:flex;flex-direction:column;justify-content:center;box-shadow:var(--shadow)}
+.orch .hub b{font-size:15px}
+.orch .hub span{font-size:12.5px;color:var(--ink-3);margin-top:4px}
+.orch .agents{display:grid;gap:10px}
+.orch .agent{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 16px;
+  display:flex;align-items:baseline;gap:12px;font-size:13.5px}
+.orch .agent .id{font-family:var(--mono);color:var(--blue);flex:none;font-weight:600}
+.orch .agent span{color:var(--ink-2)}
+.rulebox{margin-top:16px;background:var(--card);border:1px dashed var(--line);border-radius:10px;
+  padding:14px 18px;font-size:13.5px;color:var(--ink-2)}
+.rulebox b{color:var(--ink)}
+
+/* 诚实边界 */
+.honest{margin:64px 0 0;border-top:1px solid var(--line);padding:36px 0 12px}
+.honest h2{font-size:15px;font-weight:700;color:var(--ink-2)}
+.honest ul{margin-top:12px;padding-left:18px}
+.honest li{font-size:13.5px;color:var(--ink-3);margin-bottom:6px;list-style:"— "}
+footer{padding:36px 0 44px;color:var(--ink-3);font-size:12.5px;font-family:var(--mono)}
+
+@media(prefers-reduced-motion:reduce){
+  .ts-line{transition:none;opacity:1;transform:none}
+  .demo-bar .dot,.ex-card .cursor{animation:none}
+}
+</style>
+
+<nav><div class="wrap">
+  <div class="brand">Lecture <em>Companion</em></div>
+  <a href="#loop">产品闭环</a><a href="#decisions">关键决策</a><a href="#econ">单位经济</a><a href="#dev">开发模式</a>
+  <div class="tag">独立项目 · 真实自用中</div>
+</div></nav>
+
+<header class="hero"><div class="wrap">
+  <div class="kicker">Real-time lecture AI · 独立产品</div>
+  <h1>听课时没懂的那一句,<span class="pen">点一下</span>,别的交给 AI</h1>
+  <p class="sub">实时转写流上零输入标记「没懂」,AI 带着前文上下文即时解释;每个标记连同屏幕快照沉淀为课后复习的种子。转写只是底座——这个产品处理的是<b>困惑</b>,不是录音。</p>
+  <div class="statline">
+    <div class="stat"><b class="mono">41</b><span>真实标记 · 92% 零输入纯点击*</span></div>
+    <div class="stat"><b class="mono">15.6<small style="font-size:12px">/h</small></b><span>首周峰值标记率</span></div>
+    <div class="stat"><b class="mono">433</b><span>自动化测试 · 全分支门禁</span></div>
+    <div class="stat"><b class="mono">3 档</b><span>模型路由 + 跨池降级链</span></div>
+  </div>
+
+  <div class="demo" id="demo">
+    <div class="demo-bar"><span class="dot"></span>正在上课 · 机器学习 · 实时转写<span class="hint">交互演示,内容为脱敏示例</span></div>
+    <div class="demo-body">
+      <div class="ts-pane" id="tsPane"></div>
+      <div class="ex-pane">
+        <div class="ex-title">AI EXPLANATION</div>
+        <div class="ex-empty" id="exEmpty"><span class="arrow">←</span>等转写滚到你没听懂的那句,点「没懂」试试——这就是产品的全部输入成本</div>
+        <div class="ex-card" id="exCard"><div class="who">deep 档 · 携带前 5 分钟上下文 + 标记瞬间屏幕快照</div><span id="exText"></span><span class="cursor" id="exCursor"></span></div>
+        <div class="ex-note">真实产品中:解释流式返回约 2 秒起答,限 200 字——学生还在听课,没时间读长文;这条约束写在系统提示词里,连同它的理由。</div>
+      </div>
+    </div>
+    <div class="replay"><span>转写为模拟播放;真实链路:麦克风/屏幕音频 → 火山流式 ASR(WebSocket 二进制协议)→ 逐句落库</span><button id="replayBtn" type="button">重播演示</button></div>
+  </div>
+</div></header>
+
+<section id="why"><div class="wrap">
+  <div class="sec-kicker">Why it exists</div>
+  <h2 class="sec-title">疑问真实存在,提问行为没有发生</h2>
+  <p class="sec-lead">头部备考机构的 AI 答疑能力已经可用,但公开信息显示近半学员仍依赖线下教师答疑——<mark>瓶颈不在模型能力,在输入成本</mark>:组织语言描述「我哪里没懂」这个动作,恰好发生在认知负荷最高的时刻。把输入成本压到一次点击,是整个产品的原点假设。</p>
+  <div class="grid g3">
+    <div class="card"><span class="n">差异化坐标</span><h3>四项同时满足者,调研范围内无</h3><p>实时(课中而非课后)× 零输入(点击而非提问)× 跨内容源(线下课/网课/B 站/录播)× 私人身份(数据归学习者,不归机构)。竞品分别占其中一到三项。</p></div>
+    <div class="card"><span class="n">形态之争</span><h3>工作台,不是悬浮字幕</h3><p>悬浮字幕赢在普适,但从「没懂」到「问出去」要四步切换。工作台把这个动作压到一次点击。赌注是主动交互率高于被动覆盖面——自用数据支持:41 次标记 92% 是纯点击*。</p></div>
+    <div class="card"><span class="n">自用验证</span><h3>唯一用户 = 设计者本人</h3><p>n=1 不做统计结论,做的是最快的假设证伪:三个核心设计被自己的真实行为推翻过(见页尾)。统计验证有明确的实验设计与终止阈值,不假装已完成。</p></div>
+  </div>
+</div></section>
+
+<section id="loop"><div class="wrap">
+  <div class="sec-kicker">Product loop</div>
+  <h2 class="sec-title">课中捕捉 → 课后沉淀 → 复习消费</h2>
+  <div class="acts">
+    <div class="act"><div></div><div style="grid-column:2;margin-left:18px;margin-top:-38px">
+      <h3>课中:零输入捕捉困惑<small>实时链路,延迟即产品</small></h3>
+      <p>转写逐句滚出;没懂点一下,系统抓当前句 + 前 5 分钟上下文 + 标记瞬间屏幕快照(老师的 PPT/板书),快模型 2 秒内给 200 字救场解释。可追问、可撤销。课程讲义上传后自动抽术语喂给 ASR 热词与解释提示词,纠正「凸/convex」类专业词误识别。</p>
+      <div class="chips"><span class="chip y">零输入标记</span><span class="chip">双向断线缓冲(5 分钟)</span><span class="chip">跨连接时间轴归一</span><span class="chip">多模态快照</span><span class="chip">ASR 热词</span></div>
+    </div></div>
+    <div class="act"><div></div><div style="grid-column:2;margin-left:18px;margin-top:-38px">
+      <h3>课后:自动沉淀资产<small>异步链路,换更强模型档</small></h3>
+      <p>下课自动触发:结构化课程总结(知识框架 + 薄弱区,带时间戳出处)、「别错过」事项提取(考试/作业/口头承诺 → 可订阅 ICS 日历)、跨课检索索引构建。课中的每个标记升级为可深挖的复习卡片。</p>
+      <div class="chips"><span class="chip">定制总结</span><span class="chip">事项提取 + 日历</span><span class="chip">跨课 RAG 索引</span><span class="chip">深挖(大白话 + 手绘示意图)</span></div>
+    </div></div>
+    <div class="act"><div></div><div style="grid-column:2;margin-left:18px;margin-top:-38px">
+      <h3>复习:五种方式 + 导引<small>北极星在这里结账</small></h3>
+      <p>复习页以「复习方式」而非「数据类别」组织:搭框架 / 整理没懂 / 梳理课件 / 过习题 / 回顾重点,各带完成态;导引卡按规则串成当日路线。多模态检索让扫描版讲义可检索、可按页引用、可图文对照讲解。</p>
+      <div class="chips"><span class="chip">五方式动线</span><span class="chip">复习导引</span><span class="chip y">北极星:被复习的标记数</span><span class="chip">服务端埋点直写</span></div>
+    </div></div>
+  </div>
+</div></section>
+
+<section id="decisions"><div class="wrap">
+  <div class="sec-kicker">Decisions, with receipts</div>
+  <h2 class="sec-title">四个关键决策,每个都有数据或代码作据</h2>
+  <div class="grid g2 dec">
+    <div class="card">
+      <h3>Agent 化:先立判据,再做实验,用数据否决</h3>
+      <p>先定判定标准防止事后挪门柱:用户等得起几十秒延迟、且步骤写不死,两条同时满足才 agent 化。唯一合格候选(课后深挖)做最小实验:仅改 2–3 轮迭代检索,其余不动。</p>
+      <table class="dtable"><tr><th>维度</th><th>结果</th><th>测量方式</th></tr>
+        <tr><td>延迟</td><td class="v">1.8×</td><td>客观计时</td></tr>
+        <tr><td>token 成本</td><td class="v">1.3×</td><td>用量账本</td></tr>
+        <tr><td>质量增量</td><td class="v">≈ 0</td><td>盲评 A/B 并排</td></tr></table>
+      <div class="verdict stop">判定:全线不上 agent · 开关永久关 · 实验代码留库作负结果样本</div>
+      <div class="foot">副产品比主结论值钱:盲评发现两版「都不好懂」——瓶颈在解释的受众校准,不在检索深度。可读性改造随即立项,优先级排到全部检索工作之前。</div>
+    </div>
+    <div class="card">
+      <h3>防幻觉:页码永远不从模型嘴里出来</h3>
+      <p>检索命中哪页,由代码结构化返回给前端渲染;模型只负责讲解,页码在它的输出通道之外。「错了会被立刻抓住的字段,不该来自概率分布。」</p>
+      <table class="dtable"><tr><th>层</th><th>做法</th></tr>
+        <tr><td>检索层</td><td>页码 / 出处结构化返回,禁模型生成</td></tr>
+        <tr><td>阈值层</td><td class="v">0.21 — 用 376 个无关对实测校准,0.20 离无关上界仅 0.004,故不取</td></tr>
+        <tr><td>质检层</td><td>二阶坑:质检员看不到图,曾把正确的页指涉误判为编造——修在给质检提示词补上图的存在</td></tr></table>
+      <div class="verdict go">沉淀惯例:代码管结构,模型管内容</div>
+    </div>
+    <div class="card">
+      <h3>多模态检索:三期分险,不一步到位</h3>
+      <p>扫描版讲义无文字层,文本检索对它失明。三期各只引入一个不可逆变量:一期页图入库 + 页码出处(检索门默认关,先跑热管道);二期按生产形态校准阈值后放量;三期命中页图送视觉模型,深挖输出图文对照。每期留止血开关,免回滚。</p>
+      <div class="verdict go">两天三期全部合并 · 零回滚 · 扫描讲义从死文件变成可检索资产</div>
+      <div class="foot">「一步到位」会让数据管道、阈值、展示三层的错搅在一起无法归因;分期不是慢,是让每层的错在它自己那期暴露。</div>
+    </div>
+    <div class="card">
+      <h3>北极星:被复习的标记数,不是标记数</h3>
+      <p>每小时标记数只度量前半段(课中输入);产品承诺的闭环是「没懂的最终懂了」,发生在课后。北极星定为被复习的标记数(标记被深挖 / 自测 / 展开计一次),同时约束输入 × 消费两半。</p>
+      <table class="dtable"><tr><th>候选指标</th><th>否决理由</th></tr>
+        <tr><td>使用时长</td><td>转写工具的指标;时长与「懂没懂」零相关</td></tr>
+        <tr><td>标记总数</td><td>只算输入,复习为零它照样涨</td></tr>
+        <tr><td>被复习的标记数</td><td class="v" style="color:var(--green)">✓ 任何一半为零,指标即为零</td></tr></table>
+      <div class="foot">定完一算,当时转化率为 0——「当前值为 0,这就是问题本身」写进复盘,复习闭环激活随即提为全队最高优先级;埋点由服务端在深挖/表态时直写,不依赖前端。</div>
+    </div>
+  </div>
+</div></section>
+
+<section id="econ"><div class="wrap">
+  <div class="sec-kicker">Unit economics</div>
+  <h2 class="sec-title">把自己产品的账算到分位</h2>
+  <p class="sec-lead">实时听觉通道既是护城河也是成本——按流过音频计费的 ASR 决定了实时形态无法免费规模化,这与「用得越多边际越低」的常规 SaaS 相反,也反向解释了为什么多数竞品选择零边际成本的课后资料侧。</p>
+  <div class="costbar"><div class="asr">ASR 转写 4.5 元/小时 · 约 85%</div><div class="llm">LLM ≈15%</div></div>
+  <div class="costnotes">
+    <div>单节 2 小时课(2 倍速实听)成本约 <b>5.5 元</b>,其中 LLM 全链路(解释+总结+检索)约 <b>1 元</b></div>
+    <div>倍速听课按流过音频计费 → 成本随倍速线性下降,重度用户自带折扣</div>
+    <div>降档杠杆已探明:低一档 ASR 单价 <b>1 元/小时</b>,质量/热词/时间戳三项验证通过即可让 C 端订阅账成立</div>
+  </div>
+</div></section>
+
+<section id="dev"><div class="wrap">
+  <div class="sec-kicker">How it was built</div>
+  <h2 class="sec-title">1 名产品决策者 + 3 个并行 AI 编程代理</h2>
+  <p class="sec-lead">代理写码;任务边界、事实源、验收标准、事故裁定是人的工作。峰值单日合并 <b class="mono">7</b> 个功能分支,全程 <b class="mono">433</b> 条自动化测试门禁 + 集成 review + 高位端口真实自验。</p>
+  <div class="orch">
+    <div class="hub"><b>集成主管(人 + 主会话)</b><span>写任务 · review 每个分支 diff · 合并部署 · 事故裁定</span></div>
+    <div class="agents">
+      <div class="agent"><span class="id">Agent A</span><span>深挖 / 总结 / RAG 检索 / agentic 实验——LLM 链路</span></div>
+      <div class="agent"><span class="id">Agent B</span><span>材料管线 / visual RAG / 限额韧性 / ICS——数据与集成</span></div>
+      <div class="agent"><span class="id">Agent C</span><span>复习页改版 / 导引 / 导航规范——体验层</span></div>
+    </div>
+  </div>
+  <div class="rulebox"><b>最贵的一课:</b>任务经直发消息与共享交接文件双源分配,一次不同步导致代理整批重复劳动。修的是协议不是代码——确立<b>交接文件为唯一事实源</b>,直发消息仅作提醒;此后零撞车。多 agent 系统的失效几乎都不在个体执行,在信息同步协议——这恰好是 AI 时代产品经理的核心工位。</div>
+</div></section>
+
+<div class="honest"><div class="wrap">
+  <h2>数据边界(主动交代)</h2>
+  <ul>
+    <li>* 零输入比例:首月样本口径 92%(11/12),截至当前累计口径 90.2%(37/41);15.6 次/小时为首周窗口峰值,随课程熟悉度回落——该指标设有预注册终止阈值,持续追踪中。</li>
+    <li>agentic 实验为单用户、个位数用例的盲评;成本与延迟两维为客观测量。实验目的是产品决策而非发表,重开验证成本约一天,实验代码带测试留存于仓库。</li>
+    <li>用户样本 n=1(本人),统计意义的多用户验证有已写就的实验设计与判定规则,尚未执行——不将自用数据外推为市场结论。</li>
+  </ul>
+  <footer>Lecture Companion · 独立产品 · 2026 · 本页为面试展示用,数据截至 2026-08,全部口径可溯源至项目仓库</footer>
+</div></div>
+
+<script>
+(function(){
+  var reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var LINES=[
+    {t:"12:04",x:"……我们继续看优化问题。上一讲说过,目标函数的形状决定了求解难度……"},
+    {t:"12:11",x:"如果一个函数是凸的,那么任意局部最优解就是全局最优——这是整个凸优化的基石。",key:true},
+    {t:"12:19",x:"所以判断凸性非常重要。常用的办法是看二阶导,也就是 Hessian 矩阵是否半正定……"},
+    {t:"12:27",x:"这个性质考试必考,大家把凸函数的定义和判定方法都记牢。"}
+  ];
+  var EX="凸函数(convex function):图像上任意两点的连线,始终位于函数曲线上方或与之重合的函数,形状像一只碗。老师这句话的意思是:对这种「碗形」函数,你在碗里任何位置往低处走,最终都会到达同一个碗底——所以「局部最低点」就是「全局最低点」,不存在小坑困住你。这就是为什么后面会强调用 Hessian 半正定来判定凸性:先确认是碗,再放心往下滚。";
+  var pane=document.getElementById("tsPane"),exEmpty=document.getElementById("exEmpty"),
+      exCard=document.getElementById("exCard"),exText=document.getElementById("exText"),
+      exCursor=document.getElementById("exCursor"),timers=[];
+  function clearTimers(){timers.forEach(clearTimeout);timers=[]}
+  function typeOut(s,done){
+    exText.textContent="";exCursor.style.display="inline-block";
+    if(reduced){exText.textContent=s;exCursor.style.display="none";if(done)done();return}
+    var i=0;(function step(){
+      if(i<=s.length){exText.textContent=s.slice(0,i);i+=2;timers.push(setTimeout(step,26))}
+      else{exCursor.style.display="none";if(done)done()}
+    })();
+  }
+  function build(){
+    clearTimers();pane.innerHTML="";
+    exCard.classList.remove("on");exEmpty.style.display="";
+    LINES.forEach(function(l,idx){
+      var row=document.createElement("div");row.className="ts-line"+(l.key?" key":"");
+      var t=document.createElement("span");t.className="t";t.textContent="["+l.t+"]";
+      var x=document.createElement("span");x.className="x";x.textContent=l.x;
+      row.appendChild(t);row.appendChild(x);
+      if(l.key){
+        var b=document.createElement("button");b.className="markbtn";b.type="button";b.textContent="✋ 没懂";
+        b.addEventListener("click",function(){
+          row.classList.add("marked");b.disabled=true;b.textContent="已标记 ✓";
+          exEmpty.style.display="none";exCard.classList.add("on");typeOut(EX);
+        });
+        row.appendChild(b);
+      }
+      pane.appendChild(row);
+      var delay=reduced?0:400+idx*1400;
+      timers.push(setTimeout(function(){row.classList.add("show")},delay));
+    });
+  }
+  document.getElementById("replayBtn").addEventListener("click",build);
+  build();
+})();
+</script>
+</body>
+</html>

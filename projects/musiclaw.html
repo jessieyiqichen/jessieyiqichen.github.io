@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MusiClaw — 陈亦奇 Jessie Chen</title>
-<meta name="description" content="MusiClaw：上海音乐剧市场数据平台。每日自动采集 86 部剧的公开售票数据，AI 宣发 agent 有明确的职责边界，数据内容供给一个真实运营中的社交媒体账号。">
+<meta name="description" content="MusiClaw：上海音乐剧市场数据平台。每天自动存 86 部剧的公开售票数据，AI 负责数据到草稿，发布键永远是人按。">
 <link rel="stylesheet" href="../assets/site.css">
 </head>
 <body>
@@ -23,17 +23,18 @@
     <span class="kicker">Data Product · 独立开发 · 每日自动运行</span>
     <h1>MusiClaw</h1>
     <p class="lede">把一个演出市场，做成每天自己更新的数据产品。</p>
-    <p style="margin-top:18px">上海音乐剧市场信息高度不透明：售票情况、卡司影响、场馆时段效应，剧迷靠感觉，行业靠经验。MusiClaw 每天自动采集 86 部剧的公开座位图快照，结合卡司排期数据分析售票率，产出周报、数据仪表盘、AI 晨报，并供给一个真实运营中的小红书数据号——从数据采集到内容发布的完整闭环。</p>
+    <p style="margin-top:18px">上海音乐剧市场信息高度不透明：售票情况、卡司影响、场馆时段效应，剧迷靠感觉，行业靠经验。MusiClaw 每天自动采集 86 部剧的公开座位图快照，结合卡司排期数据分析售票率，产出周报、数据仪表盘和 AI 晨报，支撑一个真实运营中的小红书数据号。从数据采集到内容发布，是一条完整的闭环。</p>
     <div class="facts">
       <span><b>角色</b> — 独立开发（数据 + 产品 + 内容运营）</span>
       <span><b>状态</b> — 每日自动运行中</span>
+      <span><b>网站</b> — <a href="http://47.94.34.146/" target="_blank" rel="noopener">线上数据仪表盘</a></span>
       <span><b>技术</b> — Python · Selenium · SQLite · Next.js · Claude</span>
     </div>
     <div class="metrics">
-      <div class="metric"><b>86</b><span>每日追踪的剧目</span></div>
+      <div class="metric"><b>86</b><span>每天追踪的剧目</span></div>
       <div class="metric"><b>每日</b><span>座位图快照 + 排卡同步</span></div>
       <div class="metric"><b>4</b><span>条内容产线：周报 / 帖子 / 仪表盘 / 晨报</span></div>
-      <div class="metric"><b>24h</b><span>发布后固定复盘节奏</span></div>
+      <div class="metric"><b>24h</b><span>发布后固定复盘</span></div>
     </div>
   </div>
 </header>
@@ -43,14 +44,14 @@
 <section class="section">
   <div class="measure">
     <div class="sec-label" data-n="01"><span>Problem</span></div>
-    <h2>剧迷圈不缺讨论，缺数据。</h2>
+    <h2>剧迷圈什么都聊，就是不聊数据。</h2>
     <ul class="evidence">
-      <li>音乐剧售票数据是公开的（座位图人人可见），但没有人把它沉淀成可分析的时间序列。</li>
-      <li>「哪个卡司带票」「什么场次好卖」全靠圈内口口相传，没有数据支撑。</li>
-      <li>社交媒体上的演出内容靠情绪和站队，带数据的讨论几乎是空白——这既是信息缺口，也是内容定位的机会。</li>
+      <li>售票数据其实是公开的，座位图人人都能看。但没人把它存下来，变成能分析的时间序列。</li>
+      <li>「哪个卡司带票」「什么场次好卖」全靠圈内口口相传，没有数据说话。</li>
+      <li>社交平台上的演出内容靠情绪和站队，带数据的讨论几乎是空白。这是信息缺口，也是内容定位的机会。</li>
     </ul>
     <div class="quote">
-      <p>「账号人设：带着数据的剧迷——刚入坑音乐剧、会写代码的人。」</p>
+      <p>「账号人设：带着数据的剧迷。刚入坑音乐剧、会写代码的人。」</p>
       <cite>— 内容定位，数据能力本身就是差异化</cite>
     </div>
   </div>
@@ -59,17 +60,17 @@
 <section class="section">
   <div class="measure">
     <div class="sec-label" data-n="02"><span>System</span></div>
-    <h2>从座位图到发布，一条每天自动走完的流水线。</h2>
+    <h2>从座位图到发帖，一条每天自动走完的流水线。</h2>
     <div class="flow">
-      <div class="flow-step"><span class="n">01</span><strong>每日采集</strong><span>86 部剧座位图快照 + 排卡表同步</span></div>
+      <div class="flow-step"><span class="n">01</span><strong>每日采集</strong><span>86 部剧座位图快照，排卡表同步</span></div>
       <div class="flow-arrow">→</div>
-      <div class="flow-step"><span class="n">02</span><strong>入库分析</strong><span>SQLite 时间序列，卡司 / 场馆 / 时段归因</span></div>
+      <div class="flow-step"><span class="n">02</span><strong>入库分析</strong><span>SQLite 时间序列，看卡司、场馆、时段</span></div>
       <div class="flow-arrow">→</div>
-      <div class="flow-step"><span class="n">03</span><strong>异常检测</strong><span>发现值得发帖的异常与趋势</span></div>
+      <div class="flow-step"><span class="n">03</span><strong>异常检测</strong><span>找出值得发帖的异常和趋势</span></div>
       <div class="flow-arrow">→</div>
       <div class="flow-step"><span class="n">04</span><strong>选题与内容</strong><span>AI 出选题清单，配仪表盘截图</span></div>
       <div class="flow-arrow">→</div>
-      <div class="flow-step"><span class="n">05</span><strong>发布与复盘</strong><span>人工点发布，24h 后数据归档</span></div>
+      <div class="flow-step"><span class="n">05</span><strong>发布与复盘</strong><span>人点发布，24 小时后归档数据</span></div>
     </div>
     <p class="tech-line"><span class="kicker">产出</span>每周数据周报 · 小红书数据帖 · Next.js 数据仪表盘 · 每日 AI 晨报</p>
   </div>
@@ -78,23 +79,23 @@
 <section class="section">
   <div class="measure">
     <div class="sec-label" data-n="03"><span>AI Boundaries</span></div>
-    <h2>AI 是宣发专家，但边界写得清清楚楚。</h2>
-    <p>项目里 AI 扮演宣发专家 agent，八项职责落成文档：数据洞察、选题建议、内容审核、数据验证、素材准备、发帖辅助、评论管理、复盘记录。同样落成文档的，是它不做什么：</p>
+    <h2>AI 管数据到草稿，发布键永远是人按。</h2>
+    <p>项目里 AI 当宣发专家，八项职责写成了文档：数据洞察、选题、内容审核、数据验证、素材准备、发帖辅助、评论管理、复盘。同样写成文档的，是它不做什么。</p>
     <div class="proof-grid">
       <article class="proof-card highlight">
         <span class="kicker">AI 做的</span>
-        <h3>数据到草稿的一切。</h3>
-        <p>从每日数据里发现异常、生成选题、起草内容、发布前检查限流风险词与「AI 味」、发布后 24 小时读数据做复盘。</p>
+        <h3>从数据到草稿的一切。</h3>
+        <p>从每天的数据里找异常、出选题、起草内容，发布前查限流风险词和 AI 味，发布 24 小时后读数据做复盘。</p>
       </article>
       <article class="proof-card">
         <span class="kicker">AI 不做的</span>
-        <h3>最终发布权在人。</h3>
-        <p>不自动点击「发布」按钮，不替代人工做发布决策，不主动「优化」用户的文案风格，不写它写不好的抽象梗文案。</p>
+        <h3>不碰发布，不碰风格。</h3>
+        <p>不自动点发布，不替人做发布决策，不擅自「优化」我的文案风格，也不写它写不好的梗文案。</p>
       </article>
     </div>
     <div class="quote">
-      <p>「AI 产品的边界设计和能力设计同样重要——知道让 AI 停在哪里，是把它用进真实工作流的前提。」</p>
-      <cite>— 这个项目对我最大的意义</cite>
+      <p>「这个项目教我最多的是边界设计：知道让 AI 停在哪，才能放心把它放进真实的工作流。」</p>
+      <cite>— 做完这条流水线之后的体会</cite>
     </div>
   </div>
 </section>
@@ -102,12 +103,12 @@
 <section class="section">
   <div class="measure">
     <div class="sec-label" data-n="04"><span>Content Discipline</span></div>
-    <h2>数据内容的公信力，靠纪律不靠热情。</h2>
+    <h2>数据内容的公信力，靠纪律。</h2>
     <ul class="evidence">
-      <li><strong>每张图标注采集时间与完整性</strong>——座位图是快照不是实时，不标注就是误导。</li>
-      <li><strong>发布前固定过审核</strong>：限流风险词、AI 味、营销号味，三项检查不过不发。</li>
-      <li><strong>发布后 24 小时固定复盘</strong>：读帖子数据、归档素材与表现，选题判断由复盘数据反哺。</li>
-      <li><strong>历史帖子全部归档</strong>——每篇的选题依据、数据出处、表现数据可回溯。</li>
+      <li><strong>每张图都标采集时间和完整性。</strong>座位图是快照不是实时，不标就是误导读者。</li>
+      <li><strong>发布前固定过三道检查。</strong>限流风险词、AI 味、营销号味，不过不发。</li>
+      <li><strong>发布 24 小时后固定复盘。</strong>读帖子数据、归档素材，选题判断靠复盘数据反哺。</li>
+      <li><strong>历史帖子全部归档。</strong>每篇的选题依据、数据出处、表现，都翻得回去。</li>
     </ul>
   </div>
 </section>
@@ -119,7 +120,7 @@
     <a href="job-pilot.html">← 上一个 — JobPilot</a>
     <a href="nous.html">下一个 — Nous →</a>
   </div>
-  <div class="foot-meta"><div class="measure"><span>© 2026 陈亦奇 Jessie Chen</span><span>仅采集公开数据，发布决策始终在人</span></div></div>
+  <div class="foot-meta"><div class="measure"><span>© 2026 陈亦奇 Jessie Chen</span><span>只采集公开数据，发布决策始终在人</span></div></div>
 </footer>
 
 </body>

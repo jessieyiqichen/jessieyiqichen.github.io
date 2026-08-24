@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>xhs-threads — 陈亦奇 Jessie Chen</title>
-<meta name="description" content="小红书收藏的思考轨迹还原：零标注主动归档，AI 自动归线写认知并质检。独立审核模型三审多数，92% 调用走轻量档，单条成本 ¥0.13。">
+<meta name="description" content="小红书收藏的思考轨迹还原：你只管存，AI 自动归线写笔记并质检。独立审核模型三审取多数，92% 调用走轻量档，单条成本 ¥0.13。">
 <link rel="stylesheet" href="../assets/site.css">
 </head>
 <body>
@@ -22,11 +22,13 @@
   <div class="measure">
     <span class="kicker">AI Product · 独立开发 · 2026.7 —</span>
     <h1>xhs-threads</h1>
-    <p class="lede">你只管存，AI 主动归档——把收藏还原成思考的轨迹。</p>
-    <p style="margin-top:18px">收藏是高频动作，整理几乎不发生，收藏瞬间的想法没有载体。我把整理做成零标注的主动归档：定时自动运行，AI 判断每条新收藏属于哪条想法主线、写下认知并自我质检，主线随收藏自动分叉生长。沉淀下来的不是内容摘要，而是用户自己的想法轨迹。</p>
+    <p class="lede">你只管存，整理交给 AI。</p>
+    <p style="margin-top:18px">收藏是高频动作，整理几乎不发生，收藏那一刻的想法也没有载体。我把整理做成零标注的主动归档：系统定时自动运行，AI 判断每条新收藏的归属主线、生成笔记并自动质检，主线随收藏持续分叉生长。产品沉淀的不是内容摘要，是用户自己的想法轨迹。</p>
     <div class="facts">
       <span><b>角色</b> — 独立开发（产品 + 全栈）</span>
       <span><b>状态</b> — 定时自动运行，Vercel / 阿里云双部署</span>
+      <span><b>产品入口</b> — <a href="https://capture-server-one.vercel.app" target="_blank" rel="noopener">线上捕获页</a></span>
+      <span><b>演示</b> — <a href="../demos/xhs-threads.html" target="_blank" rel="noopener">交互展示页（想法主线如何分叉生长）</a></span>
       <span><b>技术</b> — Python · 模型分档路由 · Rubric 评测 · launchd 定时</span>
     </div>
     <div class="metrics">
@@ -43,12 +45,12 @@
 <section class="section">
   <div class="measure">
     <div class="sec-label" data-n="01"><span>Problem</span></div>
-    <h2>收藏在发生，思考在流失。</h2>
-    <p>每次点收藏，都有一个当下的想法：「这个方法能用在我的项目上」「这和上周看的那篇矛盾」。但这个想法没有任何载体——收藏夹只存了内容本身，几个月后回看，只剩一堆失去上下文的链接。</p>
+    <h2>收藏在发生，想法在丢。</h2>
+    <p>每次点收藏，其实都有一个当下的念头：这个方法我的项目能用；这篇和上周看的那篇矛盾。但这个念头没地方存。收藏夹只存了内容，几个月后回头看，就是一堆想不起来为什么存的链接。</p>
     <ul class="evidence">
-      <li>收藏是秒级动作、天天发生；整理需要专门坐下来做，几乎从不发生。</li>
-      <li>指望用户「养成整理习惯」是产品的偷懒——正确的问题是：能不能让整理根本不需要用户参与？</li>
-      <li>真正值钱的不是内容归类，而是「你当时为什么存它」——想法轨迹一旦流失就无法重建。</li>
+      <li>收藏是几秒钟的事，天天做；整理要专门坐下来，所以基本不做。</li>
+      <li>指望用户养成整理习惯，等于把产品该解决的问题推回给用户。正确的问题是：整理能否完全不需要用户参与？</li>
+      <li>值钱的是「你当时为什么存它」，不是内容分类。这个东西丢了就找不回来。</li>
     </ul>
   </div>
 </section>
@@ -56,24 +58,24 @@
 <section class="section">
   <div class="measure">
     <div class="sec-label" data-n="02"><span>Differentiation</span></div>
-    <h2>竞品都在等用户发起，我让系统主动持续。</h2>
-    <p>调研四类竞品后确认：现有工具把收藏整理做成内容归类，且多需用户主动发起——社区工具导出后自理，AI 工具也要用户发起请求才做一次性归类。未见零标注、随收藏自动生长的主动归档。据此确立差异化，并写成 8 条产品判断约束后续所有功能取舍。</p>
+    <h2>竞品都在等用户发起，我让系统自己动。</h2>
+    <p>调研四类竞品后确认：现有工具都把收藏整理做成内容归类，且多数需要用户主动发起。社区工具导出后自行整理，AI 工具也要用户发起请求才归类一次，没有见到零标注、随收藏自动生长的做法。差异化据此确立，并写成 8 条产品判断，约束后续所有功能取舍。</p>
     <div class="compare">
       <div class="compare-head"><span>维度</span><span>现有工具</span><span>xhs-threads</span></div>
       <div class="compare-row">
         <div class="compare-label">触发方式</div>
-        <div class="compare-cell" data-col="现有工具">用户发起，请求式一次性整理</div>
-        <div class="compare-cell" data-col="xhs-threads">系统主动，随收藏持续生长</div>
+        <div class="compare-cell" data-col="现有工具">你发起，它才整理一次</div>
+        <div class="compare-cell" data-col="xhs-threads">系统自己持续归档</div>
       </div>
       <div class="compare-row">
         <div class="compare-label">用户付出</div>
         <div class="compare-cell" data-col="现有工具">要标注、要发起、要维护</div>
-        <div class="compare-cell" data-col="xhs-threads">零标注零发起，只管存</div>
+        <div class="compare-cell" data-col="xhs-threads">只管存，其他不用管</div>
       </div>
       <div class="compare-row">
-        <div class="compare-label">沉淀物</div>
-        <div class="compare-cell" data-col="现有工具">内容摘要与分类</div>
-        <div class="compare-cell" data-col="xhs-threads">用户自己的想法轨迹，同主题下分线</div>
+        <div class="compare-label">攒下来什么</div>
+        <div class="compare-cell" data-col="现有工具">内容摘要和分类</div>
+        <div class="compare-cell" data-col="xhs-threads">你自己的想法轨迹，同主题下还会分线</div>
       </div>
     </div>
   </div>
@@ -82,18 +84,18 @@
 <section class="section">
   <div class="measure">
     <div class="sec-label" data-n="03"><span>Evaluation</span></div>
-    <h2>AI 直接写进用户界面的内容，必须先过质检。</h2>
-    <p>AI 产出的认知文字直接呈现给用户，量大且无法逐条人工把关。为此建立自动评审：由独立于生成模型的审核模型按评分判据打分，同一条内容审三次取多数，低于底线即打回重写；重写仍不合格转人工，不静默采用。</p>
+    <h2>AI 写给用户看的东西，得先过质检。</h2>
+    <p>AI 产出的文字直接进入用户界面，量大且无法逐条人工把关。为此搭建了自动评审：由独立于生成模型的审核模型按判据打分，同一条内容审三次取多数，不及格打回重写；重写仍不合格转人工，不静默放行。</p>
     <div class="proof-grid">
       <article class="proof-card highlight">
         <span class="kicker">上线前验收</span>
-        <h3>7 个坏样本，全部拦截。</h3>
-        <p>上线前专门构造 7 个典型坏样本（编造、空话、归错线）作为验收评测集，评审体系全部拦截后才放行。</p>
+        <h3>7 个坏样本，全拦住了。</h3>
+        <p>上线前专门造了 7 个典型坏样本（编造、空话、归错线）当验收集，评审全部拦截之后才放行。</p>
       </article>
       <article class="proof-card">
         <span class="kicker">机制要点</span>
-        <h3>审核模型独立于生成模型。</h3>
-        <p>让模型自己给自己打分是失效的评测。审核走独立模型、三审取多数，评分判据落成文档而非临场发挥。</p>
+        <h3>审核模型必须独立。</h3>
+        <p>让模型给自己打分等于没打。审核走另一个模型，三审取多数，判据写成文档，不靠临场发挥。</p>
       </article>
     </div>
   </div>
@@ -102,14 +104,14 @@
 <section class="section">
   <div class="measure">
     <div class="sec-label" data-n="04"><span>Unit Economics</span></div>
-    <h2>21.5 次调用一条笔记，92% 走轻量档。</h2>
-    <p>单条笔记从判断归属到写作认知，平均经过 21.5 次模型调用（账本实测：559 次调用 / 26 条笔记）。全用旗舰档成本过高，全用轻量档质量不稳——所以按任务分档路由：分类判断走轻量档，认知写作走旗舰档。</p>
+    <h2>一条笔记 21.5 次调用，92% 走轻量档。</h2>
+    <p>一条笔记从判断归属到生成完毕，平均经过 21.5 次模型调用（账本实测：559 次调用、26 条笔记）。全用旗舰档成本过高，全用轻量档质量不稳，所以按任务分档路由：分类判断走轻量档，写作走旗舰档。</p>
     <ul class="evidence">
-      <li><strong>逐笔记账：</strong>每次调用记录用途、档位与 token 用量，成本报表一条命令复现。</li>
-      <li><strong>实测结构：</strong>92% 的调用落在轻量档；单条笔记全部模型成本约 0.13 元，较全用旗舰档省约一半。</li>
-      <li><strong>质量兜底：</strong>评审判不合格的产出自动重写，仍不合格转人工——省钱不以静默降质为代价。</li>
+      <li><strong>每次调用都记账。</strong>用途、档位、token 用量全记，成本报表一条命令能复现。</li>
+      <li><strong>实测结构。</strong>92% 的调用落在轻量档，一条笔记全部模型成本约 0.13 元，比全用旗舰档省一半左右。</li>
+      <li><strong>质量兜底。</strong>评审不合格自动重写，还不行转人工。省钱不能靠悄悄降质。</li>
     </ul>
-    <p class="tech-line"><span class="kicker">进展</span>累计归出 10 条想法主线共 39 个节点；首位外部用户已跑通全流程。</p>
+    <p class="tech-line"><span class="kicker">进展</span>目前归出 10 条想法主线、39 个节点，第一位外部用户也跑通了全流程。</p>
   </div>
 </section>
 

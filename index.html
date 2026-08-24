@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>陈亦奇 Jessie Chen — AI 产品</title>
-<meta name="description" content="陈亦奇 Jessie Chen，芝加哥大学计算社会科学硕士在读。独立开发 AI 产品，负责过从 0 到 1 上线的内容板块。写进页面的每个数字都有出处。">
+<meta name="description" content="陈亦奇 Jessie Chen，芝加哥大学计算社会科学硕士在读，2027 届，AI 产品方向。五个独立完成的 AI 产品，三个每天在生产环境运行。">
 <link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
@@ -13,20 +13,21 @@
   <div class="nav-inner">
     <a class="nav-brand" href="index.html">陈亦奇 <span style="color:var(--primary)">Jessie Chen</span></a>
     <a class="nav-link" href="#projects">项目</a>
-    <a class="nav-link" href="#about">关于</a>
+    <a class="nav-link" href="#about">方法</a>
     <a class="nav-link" href="#contact">联系</a>
-    <span class="nav-tag">AI PRODUCT · 2026</span>
+    <span class="nav-tag">AI PRODUCT · 2027 届</span>
   </div>
 </nav>
 
 <header class="hero">
   <div class="measure">
-    <span class="kicker">AI Product · Build &amp; Ship · Chicago / Shanghai</span>
-    <h1>把真实痛点做成上线的产品，<br>说有出处的数字。</h1>
-    <p class="lede">我是陈亦奇，芝加哥大学计算社会科学硕士在读（经济学方向）。过去一年里，我独立开发了五个 AI 产品，其中三个每天在生产环境自动运行。我信奉一条纪律：任何写进简历或页面的数字，必须能当场说出它来自哪个后台、哪个指标、哪天的读数。</p>
+    <span class="kicker">AI Product · Chicago / Shanghai · Open to Opportunities</span>
+    <h1>产品判断值不值钱，<br>要用上线的产品来验证。</h1>
+    <p class="lede">我是陈亦奇，芝加哥大学计算社会科学硕士在读（经济学方向），2027 届，求职方向是 AI 产品经理。过去一年，我独立完成了五个 AI 产品从需求定义、开发到上线的全过程，其中三个至今每天在生产环境自动运行。我做产品的方式偏数据和证据：北极星先定口径，成本逐笔记账，这个网站上的每个数字都能给出后台、指标和读数日期。</p>
     <div class="facts">
       <span><b>现在</b> — UChicago 计算社会科学硕士，GPA 4.0</span>
       <span><b>此前</b> — 香港中文大学经济学学士</span>
+      <span><b>能力栈</b> — 产品定义 · AI 工程 · 数据分析 · 全栈开发</span>
     </div>
   </div>
 </header>
@@ -34,83 +35,110 @@
 <section class="section" id="projects">
   <div class="measure">
     <div class="sec-label" data-n="01"><span>Selected Work</span></div>
-    <h2>五个从问题出发的完整故事</h2>
+    <h2>五个项目，覆盖 AI 产品经理的完整能力链</h2>
     <div class="project-list">
 
-      <a class="project-item" href="projects/lecture-companion.html">
-        <div class="pi-head">
+      <div class="project-item reveal">
+        <a class="pi-head" href="projects/lecture-companion.html">
           <span class="pi-n">01</span>
           <h3>Lecture Companion</h3>
           <span class="pi-arrow">→</span>
-        </div>
-        <p class="pi-role">实时听课 AI 助手 · 独立开发 · 2026.7 —</p>
-        <p class="pi-desc">网课中疑问真实存在，而提问几乎不发生——瓶颈在输入摩擦，不在模型能力。我把提问压缩成对转写句的一次点击，自动截屏交给多模态模型直读板书与公式。</p>
+        </a>
+        <p class="pi-role">实时听课 AI 助手 · 独立开发 · 证明：交互设计 + 指标体系 + 成本工程</p>
+        <a class="pi-media" href="projects/lecture-companion.html" aria-hidden="true" tabindex="-1"><img src="assets/img/lecture-companion.png" alt="Lecture Companion 产品界面" loading="lazy"></a>
+        <p class="pi-desc">课堂提问的瓶颈在输入摩擦，不在模型能力。我把提问压缩成对转写句的一次点击，用多模态补齐板书与公式；北极星定在课后复习行为，成本按用量账本逐项管理。</p>
         <div class="pi-stats">
           <span><b>62</b> 次标记，58 次零输入</span>
           <span><b>3 期</b>灰度上线，零回滚</span>
           <span>ASR 成本降至<b>四分之一</b></span>
         </div>
-      </a>
+        <div class="pi-links">
+          <a href="projects/lecture-companion.html">案例拆解</a>
+          <a href="demos/lecture-companion.html" target="_blank" rel="noopener">交互展示页</a>
+        </div>
+      </div>
 
-      <a class="project-item" href="projects/xhs-threads.html">
-        <div class="pi-head">
+      <div class="project-item reveal">
+        <a class="pi-head" href="projects/xhs-threads.html">
           <span class="pi-n">02</span>
           <h3>xhs-threads</h3>
           <span class="pi-arrow">→</span>
-        </div>
-        <p class="pi-role">小红书收藏的思考轨迹还原 · 独立开发 · 2026.7 —</p>
-        <p class="pi-desc">收藏是高频动作，整理几乎不发生。我把整理做成零标注的主动归档：你只管存，AI 自动归线、写认知并质检，随收藏分叉成线。</p>
+        </a>
+        <p class="pi-role">小红书收藏的思考轨迹还原 · 独立开发 · 证明：差异化定位 + AI 评测体系</p>
+        <a class="pi-media" href="projects/xhs-threads.html" aria-hidden="true" tabindex="-1"><img src="assets/img/xhs-threads.png" alt="xhs-threads 捕获页界面" loading="lazy"></a>
+        <p class="pi-desc">收藏是高频动作，整理几乎不发生。我把整理做成零标注的主动归档：用户只管存，AI 自动归线、写笔记并质检。差异化经四类竞品调研确立，产出质量由独立审核模型把关。</p>
         <div class="pi-stats">
           <span><b>10</b> 条想法主线，<b>39</b> 个节点</span>
           <span><b>92%</b> 调用走轻量档</span>
           <span>单条成本 <b>¥0.13</b></span>
         </div>
-      </a>
+        <div class="pi-links">
+          <a href="projects/xhs-threads.html">案例拆解</a>
+          <a href="https://capture-server-one.vercel.app" target="_blank" rel="noopener">产品入口（捕获页）</a>
+          <a href="demos/xhs-threads.html" target="_blank" rel="noopener">交互展示页</a>
+        </div>
+      </div>
 
-      <a class="project-item" href="projects/job-pilot.html">
-        <div class="pi-head">
+      <div class="project-item reveal">
+        <a class="pi-head" href="projects/job-pilot.html">
           <span class="pi-n">03</span>
           <h3>JobPilot</h3>
           <span class="pi-arrow">→</span>
-        </div>
-        <p class="pi-role">AI 求职军师 · 独立开发 · 开源</p>
-        <p class="pi-desc">求职的卡点不在信息，在人。市面工具停在行为层（你做了什么），JobPilot 接入认知模型与语言样本，做一个懂你怎么想、怎么说、卡在哪的陪跑军师。</p>
+        </a>
+        <p class="pi-role">AI 求职军师 · 独立开发 · 开源 · 证明：产品洞察 + 功能取舍 + 工程质量</p>
+        <!-- TODO: jobpilot-demo.vercel.app 部署上线后重截 assets/img/job-pilot.png 再挂回此处（旧图误截为 Nous） -->
+        <p class="pi-desc">求职的卡点不在信息，在人。市面工具停在行为层，JobPilot 接入认知模型与语言样本，给出针对个人的诊断和像本人写的话术。六条产品取舍全部想清楚了为什么。</p>
         <div class="pi-stats">
           <span><b>349</b> 岗采集，<b>37</b> 高分岗</span>
           <span><b>27</b> 个 CLI 命令，<b>472</b> 测试</span>
           <span>CI + 线上只读 demo</span>
         </div>
-      </a>
+        <div class="pi-links">
+          <a href="projects/job-pilot.html">案例拆解</a>
+          <a href="https://jobpilot-demo.vercel.app" target="_blank" rel="noopener">线上 demo</a>
+          <a href="https://github.com/jessieyiqichen/job-pilot" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
 
-      <a class="project-item" href="projects/musiclaw.html">
-        <div class="pi-head">
+      <div class="project-item reveal">
+        <a class="pi-head" href="projects/musiclaw.html">
           <span class="pi-n">04</span>
           <h3>MusiClaw</h3>
           <span class="pi-arrow">→</span>
-        </div>
-        <p class="pi-role">上海音乐剧市场数据平台 · 独立开发 · 2026 —</p>
-        <p class="pi-desc">剧迷圈不缺讨论，缺数据。每天自动采集 86 部剧的公开售票数据，结合卡司排期做归因分析，从数据采集到内容发布的完整闭环，供给一个真实运营中的数据号。</p>
+        </a>
+        <p class="pi-role">上海音乐剧市场数据平台 · 独立开发 · 证明：数据产品 + 内容运营闭环</p>
+        <a class="pi-media" href="projects/musiclaw.html" aria-hidden="true" tabindex="-1"><img src="assets/img/musiclaw.png" alt="MusiClaw 数据仪表盘界面" loading="lazy"></a>
+        <p class="pi-desc">把公开售票数据做成每天自动更新的数据产品：86 部剧的座位图快照、卡司归因分析、四条内容产线，支撑一个真实运营的数据账号。AI 的职责边界全部落成文档。</p>
         <div class="pi-stats">
           <span><b>86</b> 部剧每日快照</span>
           <span><b>4</b> 条内容产线</span>
-          <span>AI 职责边界成文</span>
+          <span>发布后 <b>24h</b> 固定复盘</span>
         </div>
-      </a>
+        <div class="pi-links">
+          <a href="projects/musiclaw.html">案例拆解</a>
+          <a href="http://47.94.34.146/" target="_blank" rel="noopener">数据仪表盘</a>
+        </div>
+      </div>
 
-      <a class="project-item" href="projects/nous.html">
-        <div class="pi-head">
+      <div class="project-item reveal">
+        <a class="pi-head" href="projects/nous.html">
           <span class="pi-n">05</span>
           <h3>Nous</h3>
           <span class="pi-arrow">→</span>
-        </div>
-        <p class="pi-role">认知层 AI 建模 · 研究原型</p>
-        <p class="pi-desc">说话像你 ≠ 想得像你。AI 访谈 15–25 轮产出九维认知模型，对没见过的场景做行为预测，用户作答验证、模型自我修正——优化「真的准」而不是「看起来准」。</p>
+        </a>
+        <p class="pi-role">认知层 AI 建模 · 研究原型 · 证明：前沿探索 + 假设验证</p>
+        <a class="pi-media" href="projects/nous.html" aria-hidden="true" tabindex="-1"><img src="assets/img/nous.png" alt="Nous 产品界面" loading="lazy"></a>
+        <p class="pi-desc">AI 分身说话像你，不代表想得像你。Nous 在认知层为人建模，用对新场景的行为预测检验模型，以预测命中率为外部标准，错了就修，一轮迭代把准确率从 49% 提到 71%。</p>
         <div class="pi-stats">
           <span>预测准确率 <b>49→71%</b></span>
           <span>模型理解 <b>99%</b></span>
           <span><b>101</b> 个被动信号</span>
         </div>
-      </a>
+        <div class="pi-links">
+          <a href="projects/nous.html">案例拆解</a>
+          <a href="https://nous-app.vercel.app/" target="_blank" rel="noopener">在线体验</a>
+        </div>
+      </div>
 
     </div>
   </div>
@@ -119,12 +147,12 @@
 <section class="section" id="about">
   <div class="measure">
     <div class="sec-label" data-n="02"><span>How I Work</span></div>
-    <h2>四条贯穿所有项目的做事方式</h2>
+    <h2>四条贯穿所有项目的工作方式</h2>
     <ul class="role-list">
-      <li><strong>痛点先于方案。</strong>先确认瓶颈在哪一层再动手——课堂提问的瓶颈在输入摩擦而非模型能力，收藏整理的瓶颈在「主动发起」这个动作本身。</li>
-      <li><strong>灰度与归因。</strong>上线拆期，每期只引入一层变更，出了问题能立刻说清是哪一层的责任。多模态检索三期灰度两日合并、零回滚。</li>
-      <li><strong>指标先定口径。</strong>北极星不选好看的选有效的：课后「被复习的标记数」而非课中标记数。日活报 UV 不报 PV，任何进报告的数字都要能说出「哪个后台、哪个指标、哪天的读数」。</li>
-      <li><strong>成本是产品参数。</strong>每次模型调用逐笔记账，按任务分档路由；用影子双跑验证 ASR 降档后才替换。省钱的前提是先证明质量不掉。</li>
+      <li><strong>痛点先于方案。</strong>动手前先确认瓶颈在哪一层：课堂提问的瓶颈在输入摩擦而非模型能力，收藏整理的瓶颈在「需要用户主动发起」这个动作本身。层判断错了，功能做得再好也不解决问题。</li>
+      <li><strong>灰度与归因。</strong>上线拆期，每期只引入一层变更，问题出现时可以立即定位责任层。多模态检索分三期灰度，两日全部合并，零回滚。</li>
+      <li><strong>指标先定口径。</strong>北极星选真正反映价值的：课后被复习的标记数，而非课中标记数。日活用 UV 不用 PV。任何进报告的数字，都要能说出哪个后台、哪个指标、哪天的读数。</li>
+      <li><strong>成本是产品参数。</strong>每次模型调用逐笔记账，按任务分档路由模型；降本之前先用影子双跑证明质量不掉。省钱是验证的结果，不是目标。</li>
     </ul>
   </div>
 </section>
@@ -132,8 +160,8 @@
 <section class="section" id="contact">
   <div class="measure">
     <div class="sec-label" data-n="03"><span>Contact</span></div>
-    <h2>找我聊聊</h2>
-    <p>对 AI 产品、评测体系或成本工程感兴趣，欢迎邮件或 GitHub 找到我。</p>
+    <h2>正在寻找 AI 产品方向的机会</h2>
+    <p>2027 届，产品经理方向，AI 产品优先。想深入了解任何一个项目的细节，或者需要完整简历，欢迎邮件联系。</p>
     <div class="facts" style="margin-top:22px">
       <span><b>Email</b> — <a href="mailto:jessiechenyiqi@outlook.com">jessiechenyiqi@outlook.com</a></span>
       <span><b>GitHub</b> — <a href="https://github.com/jessieyiqichen" target="_blank" rel="noopener">jessieyiqichen</a></span>
@@ -150,5 +178,15 @@
   </div>
 </footer>
 
+<script>
+(function () {
+  var els = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) { els.forEach(function (el) { el.classList.add('in'); }); return; }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { rootMargin: '0px 0px -8% 0px' });
+  els.forEach(function (el) { io.observe(el); });
+})();
+</script>
 </body>
 </html>

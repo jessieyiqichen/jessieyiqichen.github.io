@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>xhs-threads</title>
+</head>
+<body>
+<style>
+:root{
+  --paper:#faf7f2;--card:#ffffff;--ink:#26221c;--ink-2:#5a544a;--ink-3:#948c7e;
+  --line:#e8e2d6;--line-soft:#f0ebe1;
+  --acc:#b5433c;--acc-deep:#8f332e;--acc-wash:#b5433c12;
+  --hl:#ffe164;--hl-ink:#5c4d00;--hl-wash:#ffe16438;
+  --green:#3e7d5a;--green-wash:#3e7d5a14;--gray-wash:#948c7e14;
+  --mono:"SF Mono","JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  --sans:-apple-system,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+  --shadow:0 1px 2px rgba(38,34,28,.05),0 4px 16px rgba(38,34,28,.06);
+}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --paper:#1d1b17;--card:#26231e;--ink:#ece8e0;--ink-2:#b3ac9f;--ink-3:#7a7365;
+  --line:#38342c;--line-soft:#2e2b24;
+  --acc:#e07f78;--acc-deep:#eda49f;--acc-wash:#e07f781a;
+  --hl:#c9a832;--hl-ink:#ffe58a;--hl-wash:#c9a83226;
+  --green:#69b58c;--green-wash:#69b58c1a;--gray-wash:#7a736522;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 16px rgba(0,0,0,.25);
+}}
+:root[data-theme=dark]{
+  --paper:#1d1b17;--card:#26231e;--ink:#ece8e0;--ink-2:#b3ac9f;--ink-3:#7a7365;
+  --line:#38342c;--line-soft:#2e2b24;
+  --acc:#e07f78;--acc-deep:#eda49f;--acc-wash:#e07f781a;
+  --hl:#c9a832;--hl-ink:#ffe58a;--hl-wash:#c9a83226;
+  --green:#69b58c;--green-wash:#69b58c1a;--gray-wash:#7a736522;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 16px rgba(0,0,0,.25);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+  font-size:16px;line-height:1.75;-webkit-font-smoothing:antialiased}
+h1,h2,h3,p,ul,ol{margin:0}
+.wrap{max-width:1060px;margin:0 auto;padding:0 32px}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+mark{background:linear-gradient(transparent 45%,var(--hl-wash) 45%);color:inherit;padding:0 2px}
+
+nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--paper) 88%,transparent);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;gap:22px;height:52px}
+nav .brand{font-weight:700;font-size:15px}
+nav .brand em{font-style:normal;color:var(--acc)}
+nav a{color:var(--ink-2);text-decoration:none;font-size:13.5px;padding:4px 2px}
+nav a:hover{color:var(--ink)}
+nav .tag{margin-left:auto;font-family:var(--mono);font-size:11.5px;color:var(--ink-3);
+  border:1px solid var(--line);border-radius:99px;padding:2px 10px}
+@media(max-width:760px){nav a{display:none}nav .tag{margin-left:auto}}
+
+.hero{padding:72px 0 40px}
+.hero .kicker{font-family:var(--mono);font-size:12.5px;letter-spacing:.14em;color:var(--acc);
+  text-transform:uppercase;margin-bottom:18px}
+.hero h1{font-size:clamp(30px,4.6vw,46px);line-height:1.25;font-weight:800;letter-spacing:-.01em;
+  text-wrap:balance;max-width:21em}
+.hero h1 .pen{background:linear-gradient(transparent 52%,var(--hl) 52%,var(--hl) 92%,transparent 92%);padding:0 3px}
+.hero .sub{margin-top:20px;font-size:17.5px;color:var(--ink-2);max-width:40em}
+.statline{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:10px;
+  padding:12px 18px;box-shadow:var(--shadow)}
+.stat b{display:block;font-family:var(--mono);font-size:21px;font-weight:600}
+.stat span{font-size:12.5px;color:var(--ink-3)}
+
+section{padding:64px 0 8px}
+.sec-kicker{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--acc);text-transform:uppercase}
+.sec-title{font-size:clamp(22px,3vw,30px);font-weight:800;letter-spacing:-.01em;margin-top:8px;text-wrap:balance}
+.sec-lead{margin-top:14px;color:var(--ink-2);max-width:46em;font-size:16px}
+.grid{display:grid;gap:16px;margin-top:30px}
+.g2{grid-template-columns:1fr 1fr}
+.g3{grid-template-columns:1fr 1fr 1fr}
+@media(max-width:860px){.g2,.g3{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;
+  padding:22px 24px;box-shadow:var(--shadow)}
+.card h3{font-size:16.5px;font-weight:700;margin-bottom:10px}
+.card p{font-size:14.5px;color:var(--ink-2)}
+.card .n{font-family:var(--mono);font-size:12px;color:var(--ink-3);display:block;margin-bottom:10px}
+
+
+/* 主线样例卡 */
+.thread-mock{margin-top:28px;background:var(--card);border:1px solid var(--line);border-radius:14px;
+  box-shadow:var(--shadow);padding:20px 24px;max-width:640px}
+.tm-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.tm-head b{font-size:16.5px}
+.tm-domain{font-size:11.5px;font-family:var(--mono);color:var(--acc);border:1px solid color-mix(in srgb,var(--acc) 35%,var(--line));border-radius:99px;padding:1px 9px}
+.tm-status{margin-left:auto;font-size:11.5px;font-family:var(--mono);color:var(--ink-3)}
+.tm-node{font-size:14px;padding:8px 10px;border-top:1px solid var(--line-soft);display:block}
+.tm-node .tm-date{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);margin-right:10px}
+.tm-node.open{background:var(--hl-wash);border-radius:8px}
+.tm-cog{margin-top:8px;font-size:13px;color:var(--ink-2);background:var(--card);border:1px dashed var(--line);border-radius:8px;padding:10px 12px;line-height:1.7}
+.tm-cog-tag{display:block;font-family:var(--mono);font-size:10.5px;color:var(--acc);margin-bottom:4px}
+.tm-more{font-size:12.5px;color:var(--ink-3);padding:8px 10px;border-top:1px solid var(--line-soft)}
+
+/* 链路 */
+.flow{display:flex;flex-wrap:wrap;gap:0;margin-top:30px;align-items:stretch}
+.fstep{flex:1 1 150px;background:var(--card);border:1px solid var(--line);border-radius:12px;
+  padding:16px 16px 14px;box-shadow:var(--shadow);position:relative;margin:0 22px 18px 0}
+.fstep:after{content:"→";position:absolute;right:-19px;top:50%;transform:translateY(-50%);
+  color:var(--ink-3);font-size:15px}
+.fstep:last-child:after{content:""}
+.fstep .w{font-size:11.5px;font-family:var(--mono);color:var(--ink-3);margin-bottom:6px;display:block}
+.fstep b{font-size:14.5px;display:block;margin-bottom:4px}
+.fstep p{font-size:12.5px;color:var(--ink-2);line-height:1.6}
+.fstep.local{border-color:color-mix(in srgb,var(--green) 45%,var(--line))}
+.fstep.local .w{color:var(--green)}
+.fstep.cloud{border-color:color-mix(in srgb,var(--acc) 35%,var(--line))}
+.fstep.cloud .w{color:var(--acc)}
+.legend{display:flex;gap:18px;margin-top:4px;font-size:12.5px;color:var(--ink-3)}
+.legend i{font-style:normal;display:inline-block;width:10px;height:10px;border-radius:3px;
+  vertical-align:-1px;margin-right:6px;border:1px solid var(--line)}
+.legend .lg{background:var(--green-wash);border-color:var(--green)}
+.legend .lr{background:var(--acc-wash);border-color:var(--acc)}
+
+/* 判定链演示 */
+.demo{margin:36px 0 0;background:var(--card);border:1px solid var(--line);border-radius:14px;
+  box-shadow:var(--shadow);overflow:hidden}
+.demo-bar{display:flex;align-items:center;gap:10px;padding:10px 18px;border-bottom:1px solid var(--line-soft);
+  font-size:12.5px;color:var(--ink-3)}
+.demo-bar .dot{width:9px;height:9px;border-radius:50%;background:var(--acc);opacity:.85;animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.25}}
+.demo-bar .hint{margin-left:auto;font-family:var(--mono);font-size:11.5px}
+.demo-body{display:grid;grid-template-columns:.9fr 1.1fr;min-height:320px}
+@media(max-width:860px){.demo-body{grid-template-columns:1fr}}
+.note-pane{padding:20px 22px;border-right:1px solid var(--line-soft)}
+@media(max-width:860px){.note-pane{border-right:none;border-bottom:1px solid var(--line-soft)}}
+.note-pane .ex-title{font-size:12px;letter-spacing:.1em;color:var(--ink-3);font-family:var(--mono);margin-bottom:12px}
+.note{display:block;width:100%;text-align:left;font-family:inherit;background:var(--paper);
+  border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:10px;cursor:pointer;
+  font-size:14px;color:var(--ink);transition:border .2s,background .2s}
+.note small{display:block;color:var(--ink-3);font-size:12px;margin-top:2px}
+.note:hover{border-color:var(--acc)}
+.note.on{border-color:var(--acc);background:var(--acc-wash)}
+.chain-pane{padding:20px 24px;display:flex;flex-direction:column;gap:8px}
+.chain-pane .ex-title{font-size:12px;letter-spacing:.1em;color:var(--ink-3);font-family:var(--mono);margin-bottom:4px}
+.q{display:flex;gap:12px;align-items:baseline;padding:9px 12px;border-radius:9px;border:1px solid transparent;
+  opacity:.38;transition:opacity .4s,background .3s,border .3s}
+.q .qi{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);flex:none}
+.q .qx{font-size:14px;color:var(--ink-2)}
+.q .verdict{margin-left:auto;flex:none;font-size:12px;font-weight:600;opacity:0;transition:opacity .3s}
+.q.active{opacity:1;background:var(--gray-wash);border-color:var(--line)}
+.q.miss{opacity:.75}
+.q.miss .verdict{opacity:1;color:var(--ink-3)}
+.q.hit{opacity:1;background:var(--hl-wash);border-color:color-mix(in srgb,var(--hl-ink) 30%,var(--line))}
+.q.hit .verdict{opacity:1;color:var(--hl-ink)}
+.result{margin-top:6px;border-radius:10px;padding:13px 16px;font-size:14px;line-height:1.7;
+  background:var(--acc-wash);border:1px solid color-mix(in srgb,var(--acc) 25%,transparent);
+  opacity:0;transition:opacity .5s}
+.result.on{opacity:1}
+.result .who{font-family:var(--mono);font-size:11.5px;color:var(--acc);margin-bottom:4px}
+.chain-note{margin-top:auto;padding-top:12px;font-size:12px;color:var(--ink-3)}
+
+/* 表格 */
+table{width:100%;border-collapse:collapse;margin-top:26px;font-size:14px;background:var(--card);
+  border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)}
+th,td{text-align:left;padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+th{font-size:12.5px;color:var(--ink-3);font-weight:600;background:var(--gray-wash)}
+tr:last-child td{border-bottom:none}
+td b.no{color:var(--acc)}
+
+/* 引用/亮点 */
+.callout{margin-top:26px;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--hl);
+  border-radius:12px;padding:20px 24px;box-shadow:var(--shadow)}
+.callout h3{font-size:15.5px;margin-bottom:8px}
+.callout p{font-size:14.5px;color:var(--ink-2)}
+.q-and-a{margin-top:8px}
+.q-and-a b{color:var(--ink)}
+
+/* 边界 */
+.boundary{margin:64px 0 0;border-top:1px solid var(--line);padding:36px 0 8px}
+.boundary h2{font-size:17px;font-weight:700;margin-bottom:14px}
+.boundary ul{padding-left:20px;color:var(--ink-2);font-size:14px}
+.boundary li{margin-bottom:6px}
+footer{padding:40px 0 56px;color:var(--ink-3);font-size:12.5px;font-family:var(--mono)}
+</style>
+
+<nav>
+  <div class="wrap">
+    <span class="brand">xhs-<em>threads</em></span>
+    <a href="#problem">01 为什么做</a>
+    <a href="#product">02 产品</a>
+    <a href="#routing">03 核心判断</a>
+    <a href="#quality">04 质检</a>
+    <a href="#biz">05 架构与商业</a>
+    <a href="#status">06 现状</a>
+    <span class="tag">独立开发 · 0→1 · 运行中</span>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker">AI Product · Side Project</div>
+    <h1>把随手收藏,串成<span class="pen">你的思考轨迹</span></h1>
+    <p class="sub">市面上的工具按主题把收藏摆整齐。这个产品也归档,但存了就自动长——同一个主题下,收藏跟着内容流自然分叉成线。归好之后,每一步还能顺带记下想法怎么变的。存入链接即可,全程无人值守。</p>
+    <div class="statline">
+      <div class="stat"><b>10 / 39</b><span>思考主线 / 节点(真实收藏)</span></div>
+      <div class="stat"><b>23 / 28</b><span>归线盲判重放,一次过质检</span></div>
+      <div class="stat"><b>0 / 7</b><span>编造样本漏放(内容质检)</span></div>
+      <div class="stat"><b>15 min</b><span>无人值守巡查周期</span></div>
+      <div class="stat"><b>5–9 次</b><span>单条笔记模型调用,逐条埋点</span></div>
+    </div>
+  </div>
+</header>
+
+<section id="problem">
+  <div class="wrap">
+    <div class="sec-kicker">01 · 为什么做</div>
+    <h2 class="sec-title">收藏完就沉底,归档只到主题那一层</h2>
+    <p class="sec-lead">调研做下来,大家都在做归档,也都按<b>内容主题</b>分。本产品也归档,但组织单位更细:不只是"这篇讲面试",而是<b>"这篇在你哪条思考线上推了一步"</b>。同一个面试主题下,你可能同时在想三件不同的事,三件事各有各的线。难点在于要替用户下笔:写的是用户自己的判断,写错了他一眼就能看出来。真正的门槛不在功能,在质检。</p>
+
+    <table>
+      <tr><th>玩家</th><th>它在做什么</th><th>组织单位</th><th>为什么不构成正面竞争</th></tr>
+      <tr><td><b>点点 AI</b>(小红书官方)</td><td>AI 搜索助手,支持收藏导入与 AI 整理</td><td>内容类目</td><td>官方入场说明整理收藏是真需求。但它的整理是请求式的——用户问一次、AI 归一次,结果不会随着后续收藏持续生长</td></tr>
+      <tr><td><b>社区导出工具</b>(油猴脚本等)</td><td>收藏夹导出、建自有知识库</td><td>文件 / 条目</td><td>它解决的是"把数据拿出来",不解决"把思考串起来"。这条热帖的 2716 赞同时说明"资产要归自己"的诉求很强,本产品的导出功能对齐的正是这一点</td></tr>
+      <tr><td><b>通用知识库</b>(Obsidian / Notion)</td><td>内容沉淀、双链、检索</td><td>笔记 / 标签</td><td>用户想要知识库时它们更好,不碰。本产品做的是主动归档——存了就自动长,同一主题下收藏跟着内容流分叉成线,按域 → 主线 → 节点的层级铺开</td></tr>
+      <tr><td><b>DIY 组合</b>(插件+Obsidian+快捷指令)</td><td>builder 自搭全流程</td><td>—</td><td>本人亲手搭过一遍:六步以上的配置、五个卡点,正常用户在第一个卡点就会流失。所以捕获必须做到零配置,这是前提,不是加分项</td></tr>
+      <tr><td><b>xhs-threads</b></td><td>零标注、随收藏自动生长分叉的主动归档</td><td><b>同主题下分叉的线索</b></td><td>—</td></tr>
+    </table>
+    <p style="margin-top:10px;font-size:12.5px;color:var(--ink-3)">评论层的用户声音挖掘尝试过一次,数据抓取失败,按约定停手,报告如实记录"无数据、不编造"。因此"用户对官方工具的不满集中在哪"目前是已知的未知,列在下一阶段的验证问题清单里。</p>
+  </div>
+</section>
+
+<section id="product">
+  <div class="wrap">
+    <div class="sec-kicker">02 · 产品是什么</div>
+    <h2 class="sec-title">一条"思考主线",长这个样子</h2>
+    <p class="sec-lead">用户要做的只有存入:在小红书点分享,或者把链接粘到网页里。系统把每一篇挂到对应的思考线上,一条线就是一个你持续在琢磨的问题。展开一条线,能看到每一篇收藏带来了什么变化。</p>
+
+    <div class="thread-mock">
+      <div class="tm-head"><span class="tm-domain">职业发展</span><b>AI 产品经理的求职通关</b><span class="tm-status">活跃 · 9 篇</span></div>
+      <div class="tm-node"><span class="tm-date">07-13</span>如何判断一家 Startup 能不能去?</div>
+      <div class="tm-node"><span class="tm-date">07-23</span>DeepSeek AgentHarness 产品经理面试题</div>
+      <div class="tm-node open"><span class="tm-date">08-15</span>产品经理面试:项目没数据怎么讲价值
+        <div class="tm-cog"><span class="tm-cog-tag">想法变化(默认折叠,点开可见)</span>你此前一直把"项目没数据"当成简历硬伤,这篇之后你意识到面试官要听的是"你怎么定义价值、怎么在没有数据时逼近它"——短板被重构成了展示判断力的机会。</div>
+      </div>
+      <div class="tm-more">… 另外 6 篇折叠中</div>
+    </div>
+    <p style="margin-top:10px;font-size:12.5px;color:var(--ink-3)">示意图,结构与线上一致;节点标题为真实数据,展开的想法变化文案为演示样张。</p>
+
+    <div class="grid g2">
+      <div class="card"><span class="n">核心价值</span><h3>存了就自动长,零标注</h3><p>存进来的帖子自动挂到对应的思考线上,用户从头到尾不需要选分类、打标签。归好线之后,系统顺带写一段"想法变化"——你原来以为 X,看完这篇变成了 Y,主语是"你"。这段是<b>衍生产物</b>,默认折叠;组织结构本身才是核心。</p></div>
+      <div class="card"><span class="n">被用户推翻的一课</span><h3>读起来累是体验问题,不写了才是资产问题</h3><p>上线一天后收到真实反馈:"那段太长,我没有动机看""上面全是提炼后的文字,找原帖有困难。"于是改了两处显示:第一行让给帖子标题,因为用户找东西靠的是对帖子的记忆,不是系统写的分析;那段想法变化改成默认折叠。<b>数据层和生成端没有动</b>:这个字段是给三个月后回来复盘的自己看的,不是给刷页面那一眼看的。</p></div>
+    </div>
+  </div>
+</section>
+
+
+<section id="routing">
+  <div class="wrap">
+    <div class="sec-kicker">03 · 核心判断</div>
+    <h2 class="sec-title">没有标准答案的判断,改写成固定顺序的判定链</h2>
+    <p class="sec-lead">看完产品,下一个问题自然是:每篇帖子挂到哪条线,系统怎么定?这个判断没有客观答案,归到哪取决于用户当时在想什么。做法是把它改写成<b>一条固定顺序的判定链</b>:四步,按顺序问,命中即止。链条里有两个取舍。一,挂错线会污染整条轨迹,进杂项只是晚一点被处理,所以拿不准就进杂项。二,一篇帖子如果要把某条线的意图句改一改才装得下,不算挂入,按这条线要分裂来处理,不硬塞。</p>
+
+    <div class="demo">
+      <div class="demo-bar"><span class="dot"></span>判定链演示——点左侧任一真实案例<span class="hint">数据来自生产日志</span></div>
+      <div class="demo-body">
+        <div class="note-pane">
+          <div class="ex-title">新存入的帖子</div>
+          <button class="note" data-case="0">💡 产品经理面试:项目没数据怎么讲价值<small>用户备注:面试要用</small></button>
+          <button class="note" data-case="1">StepFun Builder Program 开放招募<small>无备注</small></button>
+          <button class="note" data-case="2">阿里 8 年策略 PM:搜索该不该千人千面?<small>无备注</small></button>
+        </div>
+        <div class="chain-pane">
+          <div class="ex-title">判定链(按序问,命中即止)</div>
+          <div class="q" data-q="0"><span class="qi">Q1</span><span class="qx">直接回答了某条线正在追问的事吗?</span><span class="verdict"></span></div>
+          <div class="q" data-q="1"><span class="qi">Q2</span><span class="qx">变化能被某条线的「意图」一句话装下吗?(不改那句话)</span><span class="verdict"></span></div>
+          <div class="q" data-q="2"><span class="qi">Q3</span><span class="qx">能预先写出"这条新线以后会收到什么"吗?</span><span class="verdict"></span></div>
+          <div class="q" data-q="3"><span class="qi">Q4</span><span class="qx">都不能 → 进杂项暂存池,攒两篇同类再提线</span><span class="verdict"></span></div>
+          <div class="result" id="result"><div class="who" id="result-who"></div><span id="result-text"></span></div>
+          <div class="chain-note">评测方式:拿 28 篇已经人工归好的笔记让系统从零盲判,23 篇一次通过质检,单篇约 60 秒。没通过的 5 篇会带着原因转人工复核,不会被静默丢弃。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="quality">
+  <div class="wrap">
+    <div class="sec-kicker">04 · 质量怎么保</div>
+    <h2 class="sec-title">先怀疑尺子,再怀疑模型</h2>
+    <p class="sec-lead">归完线还要写那段想法变化,这一步有单独的质检。建质检的起因是测试里出过一次事:某旗舰模型给用户<b>编造了一段他从未有过的项目经历</b>,写得很通顺,不细看就会信。这种错比写得差严重得多,因为它进的是用户自己的档案。</p>
+    <div class="grid g3">
+      <div class="card"><span class="n">做法</span><h3>标准翻译成机器可执行</h3><p>"写得好"这种标准没法检查,但"每个论断必须在原帖或用户备注中找到出处"可以。检查由独立于作者的裁判模型执行,三票取多数,防止模型自己给自己放水。</p></div>
+      <div class="card"><span class="n">结果</span><h3>编造样本 7/7 拦截,零漏放</h3><p>代价是误杀 8/28,这个比例是有意接受的:错拦的内容带着原因转人工复核,编造混进去才不可逆。负样本只有 7 条,漏放归零之后就停止调参了,继续调就是对 7 条样本过拟合,等真实使用攒出新的坏案例再迭代。</p></div>
+      <div class="card"><span class="n">方法论</span><h3>4 轮迭代,3 轮问题在判据</h3><p>好几次得出"这条模型判不了"的结论,追查下去发现是判据本身写错了,比如把"恰当""自然"这类给人看的词直接搬给了模型。后来定了个规矩:评测不及格,先查判据写没写对,再说模型行不行。</p></div>
+    </div>
+    <div class="callout">
+      <h3>一次"指标全绿,结论是错的"</h3>
+      <p>验证轻量版(不抓正文,只凭标题写想法变化)的时候,实验数字非常完美:6 条全部产出,质检全部通过。但逐条读原文之后发现不对——模型只是把"你收藏了这篇"换个说法复述回去,没有任何新判断。而质检查的恰好是"有无行为支撑",复述行为的支撑度天然满分,于是必然放行。<b>尺子在量另一个东西,读数却很好看。</b>当场停掉了全量实验,省下五倍的模型额度,然后加了一条判据:把行为描述删掉,看还剩不剩内容。这件事之后多了一条习惯:数字好得反常,先读原文。</p>
+    </div>
+  </div>
+</section>
+
+<section id="biz">
+  <div class="wrap">
+    <div class="sec-kicker">05 · 约束怎么变成架构和生意</div>
+    <h2 class="sec-title">架构和定价,都是从约束推出来的</h2>
+    <p class="sec-lead">这个产品的几个大决定,推导方式是一样的:先认下改不了的约束,再看约束之下还能怎么搭。最硬的约束是平台风控:<b>不做批量自动化,抓取不用机房 IP</b>,触发风控封的是用户自己的账号。架构因此分成两半:取内容留在用户本地设备,AI 判断放云端,中间用任务队列衔接,凭证切成四份、各管一段。这个结构反过来也是门槛:竞品要做托管服务,就得用机房抓取,替用户冒我不用冒的险。</p>
+<div class="flow">
+      <div class="fstep"><span class="w">① 手机 / 网页</span><b>一键存入</b><p>分享或粘贴链接,几百毫秒入队</p></div>
+      <div class="fstep cloud"><span class="w">② 云端</span><b>捕获队列</b><p>凭证校验、去重、多用户隔离</p></div>
+      <div class="fstep local"><span class="w">③ 用户本地</span><b>取正文</b><p>住宅网络、单条、模拟本人浏览</p></div>
+      <div class="fstep cloud"><span class="w">④ 云端</span><b>AI 判断</b><p>归线 + 写想法变化,分档路由模型</p></div>
+      <div class="fstep cloud"><span class="w">⑤ 云端</span><b>自动质检</b><p>不合格重写/降级/转人工</p></div>
+      <div class="fstep local"><span class="w">⑥ 本地→呈现</span><b>落盘上线</b><p>写入用户资产,页面即刻可见</p></div>
+    </div>
+    <div class="legend"><span><i class="lg"></i>用户本地(合规红线内)</span><span><i class="lr"></i>云端(可规模化)</span></div>
+    <h3 style="margin-top:40px;font-size:18px;font-weight:700">定价用的是同一个推法</h3>
+    <p class="sec-lead" style="margin-top:8px">不从"收多少钱"开始想,先摆三条已经量出来的事实,看它们各自堵死了哪条路。</p>
+    <table>
+      <tr><th>量出来的事实</th><th>毙掉的模式</th><th>为什么</th></tr>
+      <tr><td>抓取必须在用户本地跑(风控红线)</td><td><b class="no">✕ 纯托管 SaaS</b></td><td>托管意味着机房抓取,等于拿用户的账号去冒险</td></tr>
+      <tr><td>3 周、4 篇同主题收藏,才第一次看到价值</td><td><b class="no">✕ 订阅优先</b></td><td>没有人愿意为三周之后才出现的价值先付月费</td></tr>
+      <tr><td>每条笔记 5–9 次模型调用(逐条埋点实测)</td><td><b class="no">✕ 无限量免费增值</b></td><td>边际成本不趋近于零,免费就意味着持续失血</td></tr>
+      <tr><td colspan="3"><b>剩下能走的:按次卡收费。</b>价值按"批"产生,就按批计价;底价等于埋点实测的单条成本乘以处理量。</td></tr>
+    </table>
+    <div class="grid g2">
+      <div class="card"><span class="n">成本工程</span><h3>按任务难度分档路由</h3><p>分类判断交给轻量档模型,写想法变化交给旗舰档,每次调用都逐条埋点记录真实 token 成本。质检不合格的输出会自动重写,再不行就降级或转人工,绝不静默采用。省钱,但不以质量为代价。</p></div>
+      <div class="card"><span class="n">冷启动</span><h3>已知未解,如实交代</h3><p>新用户从开始使用到第一次看到价值,大约需要 3 周——这由数据结构决定,不是 UI 能优化掉的。缓解路径是回填历史收藏。它是当前最大的产品风险之一,被如实列入验证问题清单,而不是假装不存在。</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="status">
+  <div class="wrap">
+    <div class="sec-kicker">06 · 现在到哪了</div>
+    <h2 class="sec-title">系统在自动运行,下一步是验证它对别人也成立</h2>
+    <p class="sec-lead">链路已经无人值守跑起来了,多用户隔离上线,第一个外部测试者走通了全程。开发方式是一个人带四个并行的 AI 编程代理,按目录分工:服务端、流水线、前端、文档巡检各归一个,两两之间用接口契约衔接——契约一方起草、另一方实现并测试,两侧测试互相咬合。两天里靠这个互相抓出了十几个真实缺陷,不少是单侧测不出来的。决定和踩过的坑,都记在三份数据契约和一册故障档案里。</p>
+    <div class="grid g3">
+      <div class="card"><span class="n">质量</span><h3>103 + 78 项自动化测试</h3><p>服务端与本地流水线两套测试全绿才允许发版。健康探针会真实读取一次存储,而不是只回一个 200,因为进程活着不等于服务正常。</p></div>
+      <div class="card"><span class="n">多用户</span><h3>隔离是隐私边界,不是功能</h3><p>一人一份数据,三级凭证分权,任何一把钥匙都可以单独作废。首个外部测试者已经完整走通了从捕获、判断、归线到隔离呈现的全链路。</p></div>
+      <div class="card"><span class="n">验证设计</span><h3>行为信号,不是满意度评分</h3><p>正在拉 3 到 5 个真实用户,人工代运营,先验证假设再决定建多少系统。验证成不成看行为,不看打分:用户能不能指出 AI 写错的地方,会不会主动要求"再跑一次"。要验证的假设就一条:替用户写"想法变化"这件事,对第二个人也成立。</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap boundary">
+  <h2>数据边界(主动交代)</h2>
+  <ul>
+    <li>当前没有外部用户。所有数据来自开发者本人的真实收藏,"这套东西对第二个人也成立吗"正是下一阶段要验证的核心假设。</li>
+    <li>编造样本只有 7 条。漏放归零之后主动停止了调参,以防对小样本过拟合。误杀率 29% 是"宁可错拦、转人工复核"的方向性选择,不代表精度极限。</li>
+    <li>归线重放的基准答案是本人的人工归线,存在单人偏好。多用户验证阶段会同时校准判定链本身。</li>
+    <li>单条 5 到 9 次调用的成本数字来自逐条埋点实测,但只覆盖当前的模型组合与提示词版本,更换后需要重测。</li>
+  </ul>
+</div>
+
+<footer><div class="wrap">xhs-threads · 独立开发 · 2026 · 本页数字均可溯源至项目内验证报告与埋点记录</div></footer>
+
+<script>
+(function(){
+  var CASES=[
+    {hit:0,miss:[],who:"Q1 命中 → 挂入《AI 产品经理的求职通关》",
+     text:"这条线正在追问一件事:项目经历单薄时,怎么在面试中讲出价值。这篇帖子正面回答了它,归属没有悬念,判定到此为止。"},
+    {hit:1,miss:[0],who:"Q2 命中 → 挂入《AI 岗位机会池》",
+     text:"它没有回答任何一条线正在追问的事,所以第一问没有命中。但《AI 岗位机会池》这条线的意图是「收集值得投的 AI 岗位与项目机会」,这篇招募帖不用改一个字就能被这句话装下,于是在第二问挂入。"},
+    {hit:3,miss:[0,1,2],who:"Q4 兜底 → 进杂项暂存池",
+     text:"它没有回答任何一条线正在追问的事,一篇行业观点也装不进现有任何一条线的意图句,而且预写不出「这条新线以后会收到什么」。四问全空,进杂项暂存——宁可晚一点处理,也不开一条错线。"}
+  ];
+  var qs=[].slice.call(document.querySelectorAll(".q"));
+  var notes=[].slice.call(document.querySelectorAll(".note"));
+  var result=document.getElementById("result");
+  var rwho=document.getElementById("result-who");
+  var rtext=document.getElementById("result-text");
+  var timers=[];
+  function clearAll(){
+    timers.forEach(clearTimeout);timers=[];
+    qs.forEach(function(q){q.className="q";q.querySelector(".verdict").textContent=""});
+    result.className="result";
+  }
+  function play(i){
+    clearAll();
+    notes.forEach(function(n,j){n.className="note"+(i===j?" on":"")});
+    var c=CASES[i],step=0,seq=c.miss.concat([c.hit]);
+    seq.forEach(function(qi,idx){
+      timers.push(setTimeout(function(){
+        var q=qs[qi];q.classList.add("active");
+        timers.push(setTimeout(function(){
+          var isHit=(qi===c.hit);
+          q.classList.remove("active");
+          q.classList.add(isHit?"hit":"miss");
+          q.querySelector(".verdict").textContent=isHit?"✓ 命中,到此为止":"✕ 未中";
+          if(isHit){
+            rwho.textContent=c.who;rtext.textContent=c.text;
+            timers.push(setTimeout(function(){result.classList.add("on")},250));
+          }
+        },560));
+      },idx*820));
+    });
+  }
+  notes.forEach(function(n,i){n.addEventListener("click",function(){play(i)})});
+})();
+</script>
+</body>
+</html>
