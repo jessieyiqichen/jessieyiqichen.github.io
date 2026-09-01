@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Nous — 陈亦奇 Jessie Chen</title>
-<meta name="description" content="Nous：认知层 AI 建模研究原型。不学你怎么说话，学你怎么想。九维认知模型、行为预测验证、矛盾检测、被动信号采集。">
+<meta name="description" content="Nous：认知分身消息代理。别人的 bot 学你怎么说话，它学你怎么做决定。九维认知模型驱动的消息 triage、代回草稿与执行质检，三端真实在线。">
 <link rel="stylesheet" href="../assets/site.css">
 </head>
 <body>
@@ -14,26 +14,26 @@
     <a class="nav-brand" href="../index.html">陈亦奇 <span style="color:var(--primary)">Jessie Chen</span></a>
     <a class="nav-link" href="../index.html#projects">项目</a>
     <a class="nav-link" href="../index.html#contact">联系</a>
-    <span class="nav-tag">CASE 05 · RESEARCH</span>
+    <span class="nav-tag">CASE 05 · SOLO BUILD</span>
   </div>
 </nav>
 
 <header class="hero">
   <div class="measure">
-    <span class="kicker">AI Research Prototype · 独立开发 · MVP 验证阶段</span>
+    <span class="kicker">AI Product · 独立开发 · 2026.3 —</span>
     <h1>Nous</h1>
-    <p class="lede">不学你怎么说话，学你怎么想。</p>
-    <p style="margin-top:18px">现在的 AI 分身都在行为层建模：表达风格、语言习惯、偏好。这样能做出一个说话像你的分身，但它遇到没见过的事，不会像你一样做决定，因为它不理解你是怎么想问题的。Nous 建的是认知层的模型：你为什么这样决策，而不只是你做过什么决策。</p>
+    <p class="lede">别人的 bot 学你怎么说话，它学你怎么做决定。</p>
+    <p style="margin-top:18px">从认知建模研究走到真实产品：Nous 先用对话式访谈建出九维认知模型，再让这个模型化身消息代理——消息进来，它按你的方式判断回不回、替你起草、并在你「嘴上要答应但实际做不到」时发出质检警告。飞书 bot、Mac 悬浮助手、Web 三端同一个大脑，生产自用中。</p>
     <div class="facts">
-      <span><b>角色</b> — 独立开发（研究 + 全栈）</span>
-      <span><b>状态</b> — MVP 验证阶段，核心假设已确认 · <a href="https://nous-app.vercel.app/" target="_blank" rel="noopener">在线体验</a></span>
-      <span><b>技术</b> — Python · Claude API · Next.js · ECharts</span>
+      <span><b>角色</b> — 独立开发（研究 + 产品 + 全栈）</span>
+      <span><b>状态</b> — 三端生产自用中 · <a href="https://web-ten-omega-72.vercel.app/agent" target="_blank" rel="noopener">在线 demo</a></span>
+      <span><b>技术</b> — Python · DeepSeek · Next.js · Swift（macOS）· 飞书开放平台 · Supabase</span>
     </div>
     <div class="metrics">
-      <div class="metric"><b>9</b><span>个认知维度的结构化模型</span></div>
-      <div class="metric"><b>49→71%</b><span>行为预测准确率（一轮迭代后）</span></div>
-      <div class="metric"><b>99%</b><span>模型理解准确率（直接评判后）</span></div>
-      <div class="metric"><b>101</b><span>被动采集的认知信号</span></div>
+      <div class="metric"><b>71%</b><span>行为预测准确率（随机基线 25%）</span></div>
+      <div class="metric"><b>99%</b><span>模型理解准确率（直接评判）</span></div>
+      <div class="metric"><b>3</b><span>端真实在线：飞书 / macOS / Web<small>（截至 2026-09）</small></span></div>
+      <div class="metric"><b>9</b><span>维认知模型，驱动全部判断</span></div>
     </div>
   </div>
 </header>
@@ -42,77 +42,72 @@
 
 <section class="section">
   <div class="measure">
-    <div class="sec-label" data-n="01"><span>Problem</span></div>
-    <h2>说话像你，不等于想得像你。</h2>
-    <p>行为层系统优化的是「看起来准」：用户满意度、使用量。认知层要优化的是「真的准」：预测命中率。等分身要替你做决定的时候，这个区别就是全部。</p>
-    <div class="compare">
-      <div class="compare-head"><span>维度</span><span>行为层</span><span>认知层（Nous）</span></div>
-      <div class="compare-row">
-        <div class="compare-label">建模路径</div>
-        <div class="compare-cell" data-col="行为层">自下而上：行为数据，等它涌现</div>
-        <div class="compare-cell" data-col="认知层">自上而下：先建认知维度，再验证</div>
-      </div>
-      <div class="compare-row">
-        <div class="compare-label">建模对象</div>
-        <div class="compare-cell" data-col="行为层">你做了什么</div>
-        <div class="compare-cell" data-col="认知层">你为什么这么做</div>
-      </div>
-      <div class="compare-row">
-        <div class="compare-label">验证标准</div>
-        <div class="compare-cell" data-col="行为层">内部指标：使用量、满意度</div>
-        <div class="compare-cell" data-col="认知层">外部指标：对新场景的预测准确率</div>
-      </div>
+    <div class="sec-label" data-n="01"><span>Start Here</span></div>
+    <h2>三条路看这个项目，按你有多少时间。</h2>
+    <div class="status-grid">
+      <article class="status-card">
+        <span class="tag shipped">两分钟 · 直接上手</span>
+        <h3><a href="https://web-ten-omega-72.vercel.app/agent" target="_blank" rel="noopener">线上 demo →</a></h3>
+        <p>一部手机的通知中心：微信、钉钉、飞书的消息涌进来。点开「组长」那条——分身先给判断和草稿，再用质检警告戳穿「你会答应但做不到」。也可以丢一条你自己收到的真实消息进去。</p>
+      </article>
+      <article class="status-card">
+        <span class="tag">五分钟 · 看产品判断</span>
+        <h3><a href="#insight">往下读 ↓</a></h3>
+        <p>一个判断（回消息的本质是决策，不是文本生成）、一个平台做不了的功能（执行质检）、一个学习闭环（改一次草稿，下一次就更像你）。</p>
+      </article>
+      <article class="status-card">
+        <span class="tag">想深挖 · 看研究地基</span>
+        <h3><a href="#research">认知层建模 ↓</a></h3>
+        <p>产品之下是研究：九维认知模型怎么建、行为预测怎么验证（49→71%）、「说的 vs 做的」矛盾怎么变成客观的盲区证据。</p>
+      </article>
     </div>
-    <p style="margin-top:22px">两层不冲突，是互补的：行为层让分身说话像你，认知层让它想得像你。</p>
+    <a class="pi-media" href="https://web-ten-omega-72.vercel.app/agent" target="_blank" rel="noopener" style="margin-top:26px;display:block"><img src="../assets/img/nous.png" alt="Nous 分身通知中心界面" loading="lazy"></a>
   </div>
 </section>
 
-<section class="section">
+<section class="section" id="insight">
   <div class="measure">
-    <div class="sec-label" data-n="02"><span>How It Works</span></div>
-    <h2>建模是一场对话，验证是一个闭环。</h2>
-    <p>AI 访谈者用 15 到 25 轮自然对话，摸清九个认知维度：决策架构、注意力分配、推理风格、情绪处理、社会认知、盲区、价值序列、不确定性应对、执行层弹性。没有问卷，也没有人格测试，就是聊天。</p>
-    <div class="flow">
-      <div class="flow-step"><span class="n">01</span><strong>对话式访谈</strong><span>15–25 轮自然对话</span></div>
-      <div class="flow-arrow">→</div>
-      <div class="flow-step"><span class="n">02</span><strong>双轨信号抽取</strong><span>「你说的」和「你做的」分开记</span></div>
-      <div class="flow-arrow">→</div>
-      <div class="flow-step"><span class="n">03</span><strong>九维认知模型</strong><span>结构化产出，可视化呈现</span></div>
-      <div class="flow-arrow">→</div>
-      <div class="flow-step"><span class="n">04</span><strong>行为预测</strong><span>对没见过的场景生成预测</span></div>
-      <div class="flow-arrow">→</div>
-      <div class="flow-step"><span class="n">05</span><strong>验证与修正</strong><span>你作答，系统打分，模型自己改</span></div>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="measure">
-    <div class="sec-label" data-n="03"><span>Key Insight</span></div>
-    <h2>准不准，是能不能进化的问题。</h2>
+    <div class="sec-label" data-n="02"><span>Problem</span></div>
+    <h2>回消息的本质是决策，不是文本生成。</h2>
+    <p>每条消息背后都是一串微决策：这条回不回、现在回还是拖着、答不答应、拒绝到什么程度。写出得体回复已经是平台标配——飞书自带 AI 助手，输入法都能润色。但「得体」是所有人通用的，「像你一样决定」只属于你：</p>
+    <ul class="evidence">
+      <li>平台助手不知道这条消息在你的世界里值不值得回——它没有你的注意力模型。</li>
+      <li>它更不知道你答应的事会不会真做——它没有你的执行记录。</li>
+      <li>它被锁在单平台里，而你的社交决策横跨微信、钉钉、飞书——「今晚的精力给谁」需要看到全部。</li>
+    </ul>
     <div class="quote">
-      <p>「准确的模型可能不存在，但一个知道自己错在哪的动态模型，可以一直进化。」</p>
-      <cite>— 这个项目的核心判断</cite>
+      <p>「语气可以模仿，认知结构不能。」</p>
+      <cite>— 平台助手回答“怎么回得体”，Nous 回答“你会怎么回”</cite>
     </div>
-    <p>所以重心不放在一次建准，放在验证闭环上：预测、作答、打分、修正。行为预测准确率从首测 49% 迭代到 71%（确定性打分，比随机基线高 46 个百分点），其中推理预测一档到了 90%。模型理解准确率经过一轮直接评判，从 85% 到 99%。</p>
   </div>
 </section>
 
 <section class="section">
   <div class="measure">
-    <div class="sec-label" data-n="04"><span>Contradiction Detection</span></div>
-    <h2>矛盾是最诚实的数据。</h2>
-    <p>自我报告靠不住，人对自己的描述常常是理想化的。Nous 把「你说你是谁」和「你实际怎么做」分成两轨记录，两边冲突的地方就是客观的盲区证据，不用再依赖自评。</p>
+    <div class="sec-label" data-n="03"><span>Product</span></div>
+    <h2>一个大脑，三个入口，住进你已有的聊天软件。</h2>
+    <p>分身不是一个新 App。它通过飞书 bot 接住手机上的消息，通过 Mac 菜单栏助手浮在微信、钉钉桌面版之上，Web 端承载演示和沙盒。三端调用同一套认知模型服务。</p>
+    <div class="flow">
+      <div class="flow-step"><span class="n">01</span><strong>消息进来</strong><span>横幅自动感知 / 双击⌘C / 转发给 bot</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><span class="n">02</span><strong>triage</strong><span>代回 / 缓回 / 不回 / 你亲自回</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><span class="n">03</span><strong>草稿 + 质检</strong><span>按你的方式起草，戳穿空头承诺</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><span class="n">04</span><strong>一键填入</strong><span>草稿直接进聊天输入框，你按发送</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><span class="n">05</span><strong>修正落库</strong><span>你的每次改写都让它更像你</span></div>
+    </div>
     <div class="proof-grid">
-      <article class="proof-card">
-        <span class="kicker">声明轨</span>
-        <h3>你说你是谁。</h3>
-        <p>访谈和对话里你对自己的描述：原则、偏好、自认为的决策方式。</p>
+      <article class="proof-card highlight">
+        <span class="kicker">macOS 悬浮助手 · Swift 原生</span>
+        <h3>建议浮在微信之上，焦点不离开对话。</h3>
+        <p>通知横幅自动感知新消息（辅助功能读屏），或对一段消息连按两次 ⌘C 手动召唤；非激活面板弹出草稿，点「填入输入框」模拟粘贴直达聊天框。单次复制零打扰——工具什么时候不出现，和什么时候出现一样重要。</p>
       </article>
       <article class="proof-card">
-        <span class="kicker">行为轨</span>
-        <h3>你实际怎么做。</h3>
-        <p>真实决策和行为的记录。两轨冲突的地方，就是模型最该追问的地方。目前已经检出 20 处矛盾。</p>
+        <span class="kicker">飞书 bot · 官方接口</span>
+        <h3>手机上的入口，绕开了 3 秒超时。</h3>
+        <p>webhook 验证在跨境链路上撞 3 秒超时墙，改用长连接模式由客户端主动连飞书，无需公网 URL。消息转发给 bot，几秒后拿到判断、草稿和质检——全程官方 API，零封号风险。</p>
       </article>
     </div>
   </div>
@@ -120,10 +115,55 @@
 
 <section class="section">
   <div class="measure">
-    <div class="sec-label" data-n="05"><span>Passive Collection</span></div>
-    <h2>你正常工作，模型自动变准。</h2>
-    <p>后台采集器从日常 AI 会话中抽取认知信号。本地关键词先做预过滤，纯技术会话直接跳过，不消耗 API 调用；有信号的会话才做抽取。用户不需要专门「喂」模型，用得越多它越准。目前累计 101 个信号、20 处矛盾。</p>
-    <p class="tech-line"><span class="kicker">现状</span>MVP 的核心假设验证过了：认知模型可以靠迭代修正闭环持续提升预测准确率。下一步是把验证样本做大，再把矛盾检出变成用户能用的盲区提醒。</p>
+    <div class="sec-label" data-n="04"><span>Signature Feature</span></div>
+    <h2>「你会答应，但你做不到。」</h2>
+    <p>这是研究地基长出的产品功能：认知模型记录着「你说你是谁」和「你实际怎么做」的 20 处矛盾。当分身预测到你的口头承诺会和实际执行脱节，它不替你圆谎，它把话挑明——然后把草稿里的承诺压缩到你真会做的量。</p>
+    <div class="quote">
+      <p>「你多半会应下来，但按你的习惯，这事不上心，八成拖到周日晚上才动手——草稿把期限放宽到周一，给自己留了缓冲。」</p>
+      <cite>— 真实输出：上级周末派活场景的执行质检</cite>
+    </div>
+    <p>平台助手在结构上做不了这件事：它需要长期的个人行为建模，而且「戳穿用户」与讨好用户的产品逻辑相反。这是认知层建模独有的护城河。</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="measure">
+    <div class="sec-label" data-n="05"><span>Learning Loop</span></div>
+    <h2>教它一条，它就会一条。</h2>
+    <p>「像你」不是一次建成的，是两层数据持续喂出来的。风格卡从真实文字样本提炼你怎么打字（句式、标点、口头禅），一次冷启动；修正飞轮记录你每次对草稿的改写——「分身写的 vs 你实际发的」直接作为例子注入下一次生成。实测：教它一条「拒绝要直接、给替代方案」，同场景重问，草稿立刻用上修正后的表达。</p>
+    <div class="compare">
+      <div class="compare-head"><span>维度</span><span>平台 AI 助手</span><span>Nous 分身</span></div>
+      <div class="compare-row">
+        <div class="compare-label">优化目标</div>
+        <div class="compare-cell" data-col="平台 AI 助手">回复得体、通用礼貌</div>
+        <div class="compare-cell" data-col="Nous 分身">和你实际会做的决定一致</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-label">学习数据</div>
+        <div class="compare-cell" data-col="平台 AI 助手">所有用户的平均反馈</div>
+        <div class="compare-cell" data-col="Nous 分身">你的认知模型 + 你的改写记录</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-label">覆盖范围</div>
+        <div class="compare-cell" data-col="平台 AI 助手">锁死在单平台</div>
+        <div class="compare-cell" data-col="Nous 分身">横跨微信 / 钉钉 / 飞书</div>
+      </div>
+    </div>
+    <p class="tech-line"><span class="kicker">成本</span>全栈从 Claude 迁到 DeepSeek：11 个 API 路由统一封装切换，单位调用成本降一个数量级以上，国内直连不再依赖跨境链路。</p>
+  </div>
+</section>
+
+<section class="section" id="research">
+  <div class="measure">
+    <div class="sec-label" data-n="06"><span>Research Foundation</span></div>
+    <h2>产品之下：先建模，再验证，错了就修。</h2>
+    <p>分身的判断力来自认知层建模：AI 访谈者用 15–25 轮自然对话摸清九个维度（决策架构、注意力分配、推理风格、情绪处理、社会认知、盲区、价值序列、不确定性应对、执行层弹性），再用对新场景的行为预测检验模型——预测命中率是外部标准，不靠自我感觉。</p>
+    <ul class="evidence">
+      <li><strong>验证闭环。</strong>预测、作答、打分、修正：行为预测准确率从首测 49% 迭代到 71%（确定性打分，随机基线 25%），模型理解准确率经直接评判达 99%。</li>
+      <li><strong>矛盾是最诚实的数据。</strong>「你说的」和「你做的」分轨记录，冲突处即客观盲区证据，累计检出 20 处——质检警告的弹药库。</li>
+      <li><strong>被动采集。</strong>后台从日常 AI 会话抽取认知信号，本地预过滤省 API 调用，累计 101 个信号。你正常工作，模型自动变准。</li>
+    </ul>
+    <p class="tech-line"><span class="kicker">方法对陌生人成立</span>首个陌生被试单场 23 轮访谈产出九维画像、8 处矛盾、52 个信号——建模流程不依赖对被试的先验了解。</p>
   </div>
 </section>
 
@@ -134,7 +174,7 @@
     <a href="musiclaw.html">← 上一个 — MusiClaw</a>
     <a href="../index.html#projects">所有项目 →</a>
   </div>
-  <div class="foot-meta"><div class="measure"><span>© 2026 陈亦奇 Jessie Chen</span><span>准确率数据出自项目验证记录</span></div></div>
+  <div class="foot-meta"><div class="measure"><span>© 2026 陈亦奇 Jessie Chen</span><span>准确率与质检文案均为项目真实记录</span></div></div>
 </footer>
 
 </body>
