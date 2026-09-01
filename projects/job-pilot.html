@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>JobPilot — 陈亦奇 Jessie Chen</title>
-<meta name="description" content="JobPilot：一个懂你这个人的 AI 求职军师。从行为层到认知层的产品思路、克制的功能取舍、31 个 CLI 命令和 544 个测试。">
+<meta name="description" content="JobPilot：一个懂你这个人的 AI 求职军师。从行为层到认知层的产品判断、四个想清楚的取舍、开源可查的工程质量。">
 <link rel="stylesheet" href="../assets/site.css">
 </head>
 <body>
@@ -22,18 +22,18 @@
   <div class="measure">
     <span class="kicker">AI Product · 独立开发 · 开源</span>
     <h1>JobPilot</h1>
-    <p class="lede">一个懂你这个人的求职军师：知道你怎么想、怎么说、卡在哪。</p>
-    <p style="margin-top:18px">市面上的 AI 求职工具都在帮你投得更多更快。JobPilot 反过来：接入认知模型和语言样本，做一个从找岗陪到拿 offer 的军师。开源，带 CI，有线上只读 demo。</p>
+    <p class="lede">市面工具帮你投得更多更快，它想先懂你这个人。</p>
+    <p style="margin-top:18px">一个从找岗陪到拿 offer 的求职军师：知道你怎么想、怎么说、卡在哪。差异化不在功能数量，在建模的层次——别人停在行为层，它接入认知模型和语言样本。开源，带 CI，线上有只读 demo。</p>
     <div class="facts">
       <span><b>角色</b> — 独立开发（产品 + 全栈）</span>
-      <span><b>状态</b> — 开源 · CI · <a href="https://jobpilot-demo-delta.vercel.app" target="_blank" rel="noopener">线上 demo</a> · <a href="https://github.com/jessieyiqichen/job-pilot" target="_blank" rel="noopener">GitHub</a></span>
+      <span><b>状态</b> — 开源 · CI · 线上只读 demo</span>
       <span><b>技术</b> — Python · Claude API · Next.js · GitHub Actions</span>
     </div>
     <div class="metrics">
       <div class="metric"><b>349</b><span>多渠道采集的岗位</span></div>
       <div class="metric"><b>37</b><span>AI 打分筛出的高分岗</span></div>
-      <div class="metric"><b>31</b><span>CLI 命令<small>（截至 2026-09）</small></span></div>
-      <div class="metric"><b>544</b><span>测试通过，CI 全绿</span></div>
+      <div class="metric"><b>4</b><span>想清楚为什么的产品取舍</span></div>
+      <div class="metric"><b>544</b><span>测试通过，CI 全绿<small>（截至 2026-09）</small></span></div>
     </div>
   </div>
 </header>
@@ -42,7 +42,32 @@
 
 <section class="section">
   <div class="measure">
-    <div class="sec-label" data-n="01"><span>Problem</span></div>
+    <div class="sec-label" data-n="01"><span>Start Here</span></div>
+    <h2>三条路看这个项目，按你有多少时间。</h2>
+    <div class="status-grid">
+      <article class="status-card">
+        <span class="tag shipped">两分钟 · 直接上手</span>
+        <h3><a href="https://jobpilot-demo-delta.vercel.app" target="_blank" rel="noopener">线上 demo →</a></h3>
+        <p>打开就是 349 个真实采集岗位的看板。点任意一个高分岗，能看到 AI 定制简历和面试准备的实际输出；导航里的「求职军师」是这个产品最不一样的部分。</p>
+      </article>
+      <article class="status-card">
+        <span class="tag">五分钟 · 看产品判断</span>
+        <h3><a href="#insight">往下读 ↓</a></h3>
+        <p>一个判断（求职的卡点不在信息，在人）、一张对比表（行为层 vs 认知层）、四个想清楚为什么的取舍。这一页的重点在这里。</p>
+      </article>
+      <article class="status-card">
+        <span class="tag">想深挖 · 看代码</span>
+        <h3><a href="https://github.com/jessieyiqichen/job-pilot" target="_blank" rel="noopener">GitHub →</a></h3>
+        <p>31 个 CLI 命令、544 个测试、CI 和覆盖率上报。README 里有完整的架构说明和产品文档。</p>
+      </article>
+    </div>
+    <a class="pi-media" href="https://jobpilot-demo-delta.vercel.app" target="_blank" rel="noopener" style="margin-top:26px;display:block"><img src="../assets/img/job-pilot.png" alt="JobPilot 求职军师页界面" loading="lazy"></a>
+  </div>
+</section>
+
+<section class="section">
+  <div class="measure">
+    <div class="sec-label" data-n="02"><span>Problem</span></div>
     <h2>求职的卡点不在信息，在人。</h2>
     <p>我自己求职时发现，真正卡住我的不是岗位信息不够：</p>
     <ul class="evidence">
@@ -58,11 +83,11 @@
   </div>
 </section>
 
-<section class="section">
+<section class="section" id="insight">
   <div class="measure">
-    <div class="sec-label" data-n="02"><span>Insight</span></div>
+    <div class="sec-label" data-n="03"><span>Insight</span></div>
     <h2>从行为层挪到认知层。</h2>
-    <p>这是它和市面工具的根本区别：</p>
+    <p>这是它和市面工具的根本区别，也是整个项目唯一想证明的事：</p>
     <div class="compare">
       <div class="compare-head"><span>维度</span><span>行为层工具（市面主流）</span><span>JobPilot</span></div>
       <div class="compare-row">
@@ -81,54 +106,21 @@
         <div class="compare-cell" data-col="JobPilot">抓到「你说的」和「你做的」之间的矛盾</div>
       </div>
     </div>
-    <p style="margin-top:22px">声明和推断分得很清楚。你声明的偏好（城市、deal-breaker）是硬规则，军师必须守；推断出来的认知是理解层，帮它调整说话方式、看出你卡在哪。两边打架的地方，往往就是最值钱的洞察。</p>
-  </div>
-</section>
-
-<section class="section">
-  <div class="measure">
-    <div class="sec-label" data-n="03"><span>Architecture</span></div>
-    <h2>三层架构：数据是基础设施，个性是护城河。</h2>
-    <div class="status-grid">
-      <article class="status-card">
-        <span class="tag">数据层 · 人人都有</span>
-        <h3>找岗与打分</h3>
-        <p>多渠道搜索（WebSearch / 小红书 / GitHub 招聘 issue / LinkedIn），两段式 AI 打分，投递追踪。</p>
-      </article>
-      <article class="status-card">
-        <span class="tag shipped">个性层 · 差异化在这里</span>
-        <h3>认知与语言</h3>
-        <p>你声明的偏好是硬规则，认知模型管怎么想，语言样本管怎么说。</p>
-      </article>
-      <article class="status-card">
-        <span class="tag">陪伴层 · 不只是工具</span>
-        <h3>军师</h3>
-        <p>多轮对话，带长期记忆和主动跟进：诊断、周计划、答疑。被拒了给建设性复盘，不灌鸡汤。</p>
-      </article>
-    </div>
+    <p style="margin-top:22px">声明和推断分得很清楚：你声明的偏好（城市、deal-breaker）是硬规则，军师必须守；推断出来的认知是理解层，帮它调整说话方式、看出你卡在哪。两边打架的地方，往往就是最值钱的洞察。</p>
   </div>
 </section>
 
 <section class="section">
   <div class="measure">
     <div class="sec-label" data-n="04"><span>Decisions</span></div>
-    <h2>每个决策都是选出来的，不是默认的。</h2>
+    <h2>四个取舍，每个都想清楚了为什么。</h2>
     <ul class="role-list">
       <li><strong>不做自动投递，不写爬虫。</strong>投递不可逆，平台也有反爬边界。定位是「我们生成、你来发」，用克制换信任。</li>
       <li><strong>计划和跟进用规则算，不烧 LLM。</strong>「本周该投哪几个」能算就不调 API。省钱，而且每条建议都指得回数据，扛得住「凭什么」。</li>
       <li><strong>两段式打分。</strong>免费的启发式先把全部岗位粗筛一遍，只对 top N 调 API 精评，一次跑完成本可控。</li>
       <li><strong>简历定制是往原 docx 打补丁，不重新生成。</strong>用 difflib 把改动补回原文件，保留字体与排版；技能白名单防止 AI 写入我并不具备的能力。</li>
-      <li><strong>不急着做多用户。</strong>现在最强的个性化恰恰来自只深度绑定我一个人，过早通用化就稀释成普通工具了。</li>
-      <li><strong>AI 可以降级。</strong>没有 API key 就走启发式或导出 prompt，基本功能不瘫。</li>
     </ul>
-  </div>
-</section>
-
-<section class="section">
-  <div class="measure">
-    <div class="sec-label" data-n="05"><span>Results &amp; Honest Limits</span></div>
-    <h2>跑通了，也想清楚了下一步难在哪。</h2>
-    <p>多渠道采集 349 个岗位，AI 打分筛出 37 个高分岗；<code style="font-family:var(--mono);font-size:14px">pipeline-all</code> 一条命令跑完搜索、打分、定制、话术、日报，每个阶段互相隔离，一个渠道挂了不影响其他。工程上有 31 个 CLI 命令、544 个测试（截至 2026-09）、CI 和覆盖率上报，看板部署在 Vercel。</p>
+    <p class="tech-line"><span class="kicker">工程底线</span>流水线各阶段互相隔离，一个渠道挂了不影响其他；没有 API key 时降级到启发式，基本功能不瘫。<code style="font-family:var(--mono);font-size:14px">pipeline-all</code> 一条命令跑完全流程。</p>
     <div class="flow">
       <div class="flow-step"><span class="n">01</span><strong>搜索</strong><span>四渠道并行采集</span></div>
       <div class="flow-arrow">→</div>
@@ -140,11 +132,18 @@
       <div class="flow-arrow">→</div>
       <div class="flow-step"><span class="n">05</span><strong>日报</strong><span>当天该做什么，规则算</span></div>
     </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="measure">
+    <div class="sec-label" data-n="05"><span>Honest Limits</span></div>
+    <h2>跑通了，也想清楚了下一步难在哪。</h2>
     <div class="proof-grid">
       <article class="proof-card">
         <span class="kicker">真正的难题</span>
         <h3>不是多用户，是冷启动。</h3>
-        <p>数据层早就按用户隔离了，多用户在工程上不难。难的是：一个陌生用户怎么快速获得这种深度的理解。</p>
+        <p>数据层早就按用户隔离了，多用户在工程上不难。难的是：一个陌生用户怎么快速获得这种深度的理解。现在最强的个性化恰恰来自只深度绑定我一个人，过早通用化就稀释成普通工具了。</p>
       </article>
       <article class="proof-card highlight">
         <span class="kicker">我的打算</span>
