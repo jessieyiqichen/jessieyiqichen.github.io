@@ -26,14 +26,14 @@
     <p style="margin-top:18px">收藏是高频动作，整理几乎不发生，收藏那一刻的想法也没有载体。我把整理做成零标注的主动归档：系统定时自动运行，AI 判断每条新收藏的归属主线、生成笔记并自动质检，主线随收藏持续分叉生长。产品沉淀的不是内容摘要，是用户自己的想法轨迹。</p>
     <div class="facts">
       <span><b>角色</b> — 独立开发（产品 + 全栈）</span>
-      <span><b>状态</b> — 定时自动运行，Vercel / 阿里云双部署</span>
-      <span><b>产品入口</b> — <a href="https://capture-server-one.vercel.app" target="_blank" rel="noopener">线上捕获页</a></span>
-      <span><b>演示</b> — <a href="../demos/xhs-threads.html" target="_blank" rel="noopener">交互展示页（想法主线如何分叉生长）</a></span>
-      <span><b>技术</b> — Python · 模型分档路由 · Rubric 评测 · launchd 定时</span>
+      <span><b>状态</b> — 服务器 7×24 自动归线 · 邀请码注册内测中</span>
+      <span><b>演示</b> — <a href="https://47.94.34.146:8443/demo" target="_blank" rel="noopener">引导式演示（内嵌可点的真产品）</a> · <a href="https://47.94.34.146:8443/try" target="_blank" rel="noopener">试玩实例</a></span>
+      <span><b>补充</b> — <a href="../demos/xhs-threads.html" target="_blank" rel="noopener">分叉生长模拟页</a></span>
+      <span><b>技术</b> — Python · Node · 多租户 · 模型分档路由 · Rubric 评测 · 服务器定时归线</span>
     </div>
     <div class="metrics">
-      <div class="metric"><b>10</b><span>归出的想法主线</span></div>
-      <div class="metric"><b>39</b><span>主线上的节点</span></div>
+      <div class="metric"><b>11</b><span>思考轨迹主线（截至 2026-09）</span></div>
+      <div class="metric"><b>57</b><span>主线上的节点</span></div>
       <div class="metric"><b>92%</b><span>调用落在轻量档</span></div>
       <div class="metric"><b>¥0.13</b><span>单条笔记全部模型成本</span></div>
     </div>
@@ -97,6 +97,11 @@
         <h3>审核模型必须独立。</h3>
         <p>让模型给自己打分等于没打。审核走另一个模型，三审取多数，判据写成文档，不靠临场发挥。</p>
       </article>
+      <article class="proof-card">
+        <span class="kicker">评测素养</span>
+        <h3>连尺子本身的误差也量了。</h3>
+        <p>归线准确率单次测量 30/36（83%），对照最强平凡基线只有 31%。同一份判据重跑四次为 30/28/28/31——噪声地板 ±3，凡小于噪声的“提升”一律不认，不对着噪声讲故事。</p>
+      </article>
     </div>
   </div>
 </section>
@@ -111,7 +116,7 @@
       <li><strong>实测结构。</strong>92% 的调用落在轻量档，一条笔记全部模型成本约 0.13 元，比全用旗舰档省一半左右。</li>
       <li><strong>质量兜底。</strong>评审不合格自动重写，还不行转人工。省钱不能靠悄悄降质。</li>
     </ul>
-    <p class="tech-line"><span class="kicker">进展</span>目前归出 10 条想法主线、39 个节点，第一位外部用户也跑通了全流程。</p>
+    <p class="tech-line"><span class="kicker">进展</span>截至 2026-09-01：11 条思考轨迹、57 个节点（数据来自我本人的真实日常使用）。系统已迁移至服务器 7×24 无人值守运行，邀请码自助注册已上线，正在邀请首批外部试用者。</p>
   </div>
 </section>
 
