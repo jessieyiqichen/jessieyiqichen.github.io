@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nous · 引导式演示</title>
+</head>
+<body>
+<style>
+:root{
+  --paper:#f7f6f2;--card:#ffffff;--ink:#1f1c17;--ink-2:#57514a;--ink-3:#948d83;
+  --line:#e6e2da;--line-soft:#eeebe4;
+  --acc:#8c5936;--acc-deep:#6f4527;--acc-wash:#8c593614;
+  --green:#2e8b57;--green-wash:#2e8b5714;--warn:#b07d2a;--warn-wash:#b07d2a14;
+  --wx-bg:#f0f0f0;--wx-bar:#f7f7f7;--wx-me:#95ec69;
+  --mono:"SF Mono","JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  --sans:-apple-system,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+  --shadow:0 1px 2px rgba(31,28,23,.05),0 4px 16px rgba(31,28,23,.07);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.75;-webkit-font-smoothing:antialiased}
+h1,h2,h3,p,ul{margin:0}
+.wrap{max-width:1060px;margin:0 auto;padding:0 32px}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;gap:22px;height:52px}
+nav .brand{font-weight:700;font-size:15px}
+nav .brand em{font-style:normal;color:var(--acc)}
+nav a{color:var(--ink-2);text-decoration:none;font-size:13.5px}
+nav a:hover{color:var(--ink)}
+nav .tag{margin-left:auto;font-family:var(--mono);font-size:11.5px;color:var(--ink-3);border:1px solid var(--line);border-radius:99px;padding:2px 10px}
+
+.hero{padding:64px 0 34px}
+.hero .kicker{font-family:var(--mono);font-size:12.5px;letter-spacing:.14em;color:var(--acc);text-transform:uppercase;margin-bottom:16px}
+.hero h1{font-size:clamp(28px,4.4vw,42px);line-height:1.28;font-weight:800;letter-spacing:-.01em;text-wrap:balance}
+.hero .sub{margin-top:18px;font-size:17px;color:var(--ink-2);max-width:40em}
+
+.demo{margin:44px 0 0;background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
+.demo-bar{display:flex;align-items:center;gap:10px;padding:10px 18px;border-bottom:1px solid var(--line-soft);font-size:12.5px;color:var(--ink-3)}
+.demo-bar .dot{width:9px;height:9px;border-radius:50%;background:#c0504d;animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.25}}
+.demo-bar .hint{margin-left:auto;font-family:var(--mono);font-size:11.5px}
+.demo-body{display:grid;grid-template-columns:1.1fr .9fr;min-height:400px}
+@media(max-width:860px){.demo-body{grid-template-columns:1fr}}
+
+/* 微信桌面版复刻 */
+.wx{display:flex;flex-direction:column;border-right:1px solid var(--line-soft);background:var(--wx-bg)}
+@media(max-width:860px){.wx{border-right:none;border-bottom:1px solid var(--line-soft)}}
+.wx-bar{background:var(--wx-bar);border-bottom:1px solid #e5e5e5;padding:10px 18px;font-size:14px;font-weight:600;color:#111}
+.wx-bar small{font-weight:400;color:#999;margin-left:8px;font-size:11.5px}
+.wx-chat{flex:1;padding:18px 16px;display:flex;flex-direction:column;gap:10px;overflow:hidden}
+.wx-msg{display:flex;opacity:0;transform:translateY(8px);transition:opacity .5s,transform .5s}
+.wx-msg.show{opacity:1;transform:none}
+.wx-msg .bubble{max-width:78%;padding:8px 12px;border-radius:6px;font-size:13.5px;line-height:1.6;color:#111;background:#fff;box-shadow:0 1px 1px rgba(0,0,0,.04)}
+.wx-msg.me{justify-content:flex-end}
+.wx-msg.me .bubble{background:var(--wx-me)}
+.wx-input{border-top:1px solid #e5e5e5;background:#fafafa;padding:10px 14px;min-height:56px;font-size:13.5px;color:#111;line-height:1.6}
+.wx-input .ph{color:#bbb}
+.wx-input .caret{display:inline-block;width:1px;height:14px;background:#333;margin-left:1px;vertical-align:-2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+
+/* Nous 悬浮卡（真实产品等比复刻） */
+.desk{padding:22px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:14px;background:linear-gradient(180deg,#efece6,#e9e5dd)}
+.desk-label{font-family:var(--mono);font-size:11px;color:var(--ink-3);letter-spacing:.08em}
+.ncard{width:270px;background:#f6f1e7;border-radius:12px;border-top:2px solid var(--acc);box-shadow:0 10px 34px rgba(31,28,23,.22);padding:10px 12px;display:none;flex-direction:column;gap:8px}
+.ncard.show{display:flex;animation:rise .45s ease}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.ncard .head{display:flex;align-items:center;gap:7px}
+.ncard .logo{width:16px;height:16px;border-radius:5px;background:var(--acc);color:#fff;font-size:10px;font-weight:700;display:inline-flex;align-items:center;justify-content:center}
+.ncard .name{font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:var(--ink-3)}
+.ncard .badge{margin-left:auto;font-family:var(--mono);font-size:9.5px;color:var(--acc);border:1px solid var(--acc);border-radius:3px;padding:1px 7px}
+.ncard .loading{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink-3);padding:8px 0}
+.ncard .spin{width:12px;height:12px;border:1.5px solid var(--acc);border-top-color:transparent;border-radius:50%;animation:sp 1s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.ncard .draft{border:1px dashed #d8d0c2;background:#fbf8f2;border-radius:8px;padding:8px 10px;font-size:12.5px;line-height:1.6;color:var(--ink)}
+.ncard .gap{display:flex;gap:6px;font-size:11px;line-height:1.55;color:var(--ink-2)}
+.ncard .gap b{color:var(--warn);font-weight:700;flex:none}
+.ncard .acts{display:flex;gap:7px;align-items:center}
+.ncard .btn{font-family:inherit;font-size:11.5px;border-radius:6px;padding:5px 12px;cursor:pointer;border:1px solid var(--acc)}
+.ncard .btn.primary{background:var(--acc);color:#fff}
+.ncard .btn.primary.nudge{animation:nudge 1.4s ease-in-out infinite}
+@keyframes nudge{50%{box-shadow:0 0 0 5px var(--acc-wash)}}
+.ncard .btn.ghost{background:transparent;color:var(--ink-2);border-color:#d8d0c2}
+.ncard .det{margin-left:auto;font-size:10px;color:var(--ink-3);background:none;border:none;cursor:default}
+.ncard .done{font-size:11px;color:var(--green);padding:2px 0}
+.replay{display:flex;align-items:center;gap:14px;border-top:1px solid var(--line-soft);padding:10px 18px;font-size:12px;color:var(--ink-3)}
+.replay button{margin-left:auto;font-family:inherit;font-size:12.5px;border:1px solid var(--line);background:var(--card);border-radius:8px;padding:5px 14px;cursor:pointer;color:var(--ink-2)}
+.replay button:hover{color:var(--ink)}
+
+/* 飞书重放 */
+.fs{padding:22px 24px;display:flex;flex-direction:column;gap:10px;background:#f5f6f7;border-right:none}
+.fs-msg{display:flex;opacity:0;transform:translateY(8px);transition:opacity .5s,transform .5s}
+.fs-msg.show{opacity:1;transform:none}
+.fs-msg .bubble{max-width:86%;padding:9px 13px;border-radius:10px;font-size:13.5px;line-height:1.65;background:#fff;color:#1f2329;box-shadow:0 1px 1px rgba(0,0,0,.04);white-space:pre-line}
+.fs-msg.me{justify-content:flex-end}
+.fs-msg.me .bubble{background:#3370ff;color:#fff}
+.fs-side{padding:22px 24px;font-size:13.5px;color:var(--ink-2);display:flex;flex-direction:column;gap:14px;justify-content:center}
+.fs-side b{color:var(--ink)}
+
+.section{padding:56px 0 8px}
+.sec-title{font-size:22px;font-weight:800;margin-bottom:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
+@media(max-width:860px){.grid3{grid-template-columns:1fr}}
+.pcard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;box-shadow:var(--shadow)}
+.pcard .k{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--acc);text-transform:uppercase}
+.pcard h3{font-size:15.5px;margin:8px 0 6px}
+.pcard p{font-size:13.5px;color:var(--ink-2)}
+.bounds{margin:56px 0 72px;background:var(--acc-wash);border:1px solid var(--line);border-radius:12px;padding:22px 26px}
+.bounds h2{font-size:16px;margin-bottom:10px}
+.bounds li{font-size:13.5px;color:var(--ink-2);margin:6px 0}
+footer{border-top:1px solid var(--line);padding:26px 0 40px;font-size:13px;color:var(--ink-3)}
+footer .wrap{display:flex;gap:20px}
+footer a{color:var(--ink-2)}
+</style>
+
+<nav>
+  <div class="wrap">
+    <span class="brand">Nous <em>· 认知分身</em></span>
+    <a href="../projects/nous.html">案例拆解</a>
+    <a href="https://web-ten-omega-72.vercel.app/agent" target="_blank" rel="noopener">愿景沙盒（可试玩）</a>
+    <span class="tag">引导式演示 · 真实交互重放</span>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker">Guided Demo · 复刻真实产品交互</div>
+    <h1>一条消息进来，分身怎么接。</h1>
+    <p class="sub">下面两段演示等比复刻 Nous 的两个真实入口：Mac 悬浮助手（浮在微信桌面版之上）和飞书 bot。所有判断、草稿、质检文案均为认知模型的真实输出记录，交互为模拟重放。</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- ── 演示 1：Mac 悬浮助手 ── -->
+  <div class="demo" id="demo1">
+    <div class="demo-bar"><span class="dot"></span>场景一 · 微信桌面版收到消息，Nous 悬浮卡接住<span class="hint">交互演示 · 界面等比复刻</span></div>
+    <div class="demo-body">
+      <div class="wx">
+        <div class="wx-bar">组长<small>微信 · 桌面版</small></div>
+        <div class="wx-chat" id="wxChat">
+          <div class="wx-msg" id="m1"><div class="bubble">这周末有空吗？帮忙把部门季度汇报的数据整理一下，下周一要用</div></div>
+          <div class="wx-msg me" id="m2"><div class="bubble" id="m2b"></div></div>
+          <div class="wx-msg" id="m3"><div class="bubble">行，那就这样，辛苦。</div></div>
+        </div>
+        <div class="wx-input" id="wxInput"><span class="ph">按 Enter 发送</span></div>
+      </div>
+      <div class="desk">
+        <span class="desk-label">你的屏幕右上角 ↓</span>
+        <div class="ncard" id="ncard">
+          <div class="head"><span class="logo">N</span><span class="name">NOUS 分身</span><span class="badge" id="nbadge" style="display:none">缓回 · 草稿已备好</span></div>
+          <div class="loading" id="nload"><span class="spin"></span>分身正在按你的方式判断...</div>
+          <div class="draft" id="ndraft" style="display:none">这周有点忙，不过数据整理我周末抽空弄吧，周一给你可以吗？</div>
+          <div class="gap" id="ngap" style="display:none"><b>⚠︎</b><span>你多半会应下来，但按你的习惯，这事不上心，八成拖到周日晚上才动手——草稿把期限放宽到周一，给自己留了缓冲。</span></div>
+          <div class="acts" id="nacts" style="display:none">
+            <button class="btn primary nudge" id="fillBtn" type="button">填入输入框</button>
+            <button class="btn ghost" type="button" disabled>仅复制</button>
+            <button class="det" type="button">详情 ▾</button>
+          </div>
+          <div class="done" id="ndone" style="display:none">✓ 已填入 · 你的采纳被记录为修正信号</div>
+        </div>
+      </div>
+    </div>
+    <div class="replay"><span>真实链路：通知横幅感知（辅助功能读屏）或双击 ⌘C → 本机分身服务（九维认知模型 + 风格卡 + 修正 few-shot，DeepSeek）→「填入」经辅助功能模拟 ⌘V 直达输入框。演示中的质检默认收在「详情」里，这里为展示而展开。</span><button id="replay1" type="button">重播演示</button></div>
+  </div>
+
+  <!-- ── 演示 2：飞书 bot ── -->
+  <div class="demo" id="demo2" style="margin-top:34px">
+    <div class="demo-bar"><span class="dot"></span>场景二 · 手机上把消息转发给飞书 bot<span class="hint">对话重放 · 文案为 2026-09-01 真实输出</span></div>
+    <div class="demo-body">
+      <div class="fs" id="fsChat">
+        <div class="fs-msg me" id="f1"><div class="bubble">老板：你明天能加个班吗</div></div>
+        <div class="fs-msg" id="f2"><div class="bubble">不用急着回，晚点顺手回就行。压过来的活不紧急，别秒答应。
+
+⚠️ 你嘴上说今晚多干会儿，按你毛病多半是拖到半夜赶一点就睡——草稿把承诺压到今晚，别真拖。
+
+可以这么回：
+
+明天不行，我约了人。急的话我今晚多干会儿</div></div>
+      </div>
+      <div class="fs-side">
+        <p><b>用法就一步：</b>把收到的消息转发（或粘贴）给 bot，可加「老板：」「同事：」这类关系前缀。</p>
+        <p>几秒后拿到三样东西：<b>回不回的判断</b>、<b>可直接复制的草稿</b>、<b>质检警告</b>——第三样是平台自带 AI 助手结构上给不了的。</p>
+        <p style="font-size:12.5px;color:var(--ink-3)">真实链路：飞书长连接（官方 WSClient，无需公网 URL）→ 分身服务 → 飞书消息 API 回复。</p>
+      </div>
+    </div>
+    <div class="replay"><span>bot 回复为生产日志原文，未润色。</span><button id="replay2" type="button">重播演示</button></div>
+  </div>
+
+  <!-- ── 三个入口 ── -->
+  <section class="section">
+    <h2 class="sec-title">同一个大脑，三个真实入口。</h2>
+    <div class="grid3">
+      <article class="pcard">
+        <span class="k">macOS · Swift 原生</span>
+        <h3>悬浮助手（上面的场景一）</h3>
+        <p>通知横幅自动感知或双击 ⌘C 召唤；非激活面板不抢焦点，「填入输入框」直达微信/钉钉聊天框。生产自用中。</p>
+      </article>
+      <article class="pcard">
+        <span class="k">飞书 · 官方开放平台</span>
+        <h3>bot（上面的场景二）</h3>
+        <p>手机上的入口。长连接模式绕开跨境 webhook 的 3 秒超时，全程官方 API。生产自用中。</p>
+      </article>
+      <article class="pcard">
+        <span class="k">Web · 愿景沙盒</span>
+        <h3><a href="https://web-ten-omega-72.vercel.app/agent" target="_blank" rel="noopener" style="color:var(--acc)">通知中心（可试玩）→</a></h3>
+        <p>产品终态的概念演示：跨平台消息聚合成一个通知中心。六条预设会话含多轮脚本，也可丢真实消息在线分析。</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ── 数据边界 ── -->
+  <div class="bounds">
+    <h2>数据边界（主动交代）</h2>
+    <ul>
+      <li>两段演示里的判断、草稿、质检文案均为认知模型 2026-09-01 的真实输出记录（场景二为生产日志原文），不是为页面编写的文案。</li>
+      <li>界面为等比复刻的模拟重放：真实产品运行在本机（Mac 助手）与飞书客户端内，无法直接嵌入网页。</li>
+      <li>准确率数据（行为预测 71%、模型理解 99%）出自项目验证记录，打分方式为确定性评分，非模型自评。</li>
+      <li>Web 沙盒是产品愿景的概念演示，与当前真实形态（悬浮助手 + bot）的关系在<a href="../projects/nous.html">案例拆解</a>中说明。</li>
+    </ul>
+  </div>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <a href="../projects/nous.html">← 案例拆解</a>
+    <a href="../index.html">陈亦奇 Jessie Chen</a>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var timers=[];
+  function later(fn,ms){timers.push(setTimeout(fn,ms))}
+  function clearAll(){timers.forEach(clearTimeout);timers=[]}
+
+  // ── 场景一 ──
+  var m1=document.getElementById("m1"),m2=document.getElementById("m2"),m2b=document.getElementById("m2b"),
+      m3=document.getElementById("m3"),wxInput=document.getElementById("wxInput"),
+      ncard=document.getElementById("ncard"),nload=document.getElementById("nload"),
+      nbadge=document.getElementById("nbadge"),ndraft=document.getElementById("ndraft"),
+      ngap=document.getElementById("ngap"),nacts=document.getElementById("nacts"),
+      ndone=document.getElementById("ndone"),fillBtn=document.getElementById("fillBtn");
+  var DRAFT="这周有点忙，不过数据整理我周末抽空弄吧，周一给你可以吗？";
+
+  function resetOne(){
+    [m1,m2,m3].forEach(function(m){m.classList.remove("show")});
+    m2b.textContent="";
+    wxInput.innerHTML='<span class="ph">按 Enter 发送</span>';
+    ncard.classList.remove("show");
+    nload.style.display="flex";
+    [nbadge,ndraft,ngap,nacts,ndone].forEach(function(e){e.style.display="none"});
+    fillBtn.disabled=false;fillBtn.classList.add("nudge");
+  }
+  function playOne(){
+    resetOne();
+    later(function(){m1.classList.add("show")},500);
+    later(function(){ncard.classList.add("show")},1400);
+    later(function(){
+      nload.style.display="none";
+      nbadge.style.display="inline-block";
+      ndraft.style.display="block";
+      ngap.style.display="flex";
+      nacts.style.display="flex";
+    },3000);
+  }
+  fillBtn.addEventListener("click",function(){
+    fillBtn.disabled=true;fillBtn.classList.remove("nudge");
+    var i=0;wxInput.innerHTML="";
+    var caret=document.createElement("span");caret.className="caret";
+    var textNode=document.createTextNode("");
+    wxInput.appendChild(textNode);wxInput.appendChild(caret);
+    (function type(){
+      if(i<DRAFT.length){textNode.textContent=DRAFT.slice(0,++i);timers.push(setTimeout(type,22))}
+      else{
+        later(function(){
+          wxInput.innerHTML='<span class="ph">按 Enter 发送</span>';
+          m2b.textContent=DRAFT;m2.classList.add("show");
+        },600);
+        later(function(){m3.classList.add("show")},1600);
+        later(function(){nacts.style.display="none";ndone.style.display="block"},1700);
+      }
+    })();
+  });
+  document.getElementById("replay1").addEventListener("click",function(){clearAll();playOne()});
+
+  // ── 场景二 ──
+  var f1=document.getElementById("f1"),f2=document.getElementById("f2");
+  function playTwo(){
+    f1.classList.remove("show");f2.classList.remove("show");
+    later(function(){f1.classList.add("show")},600);
+    later(function(){f2.classList.add("show")},2000);
+  }
+  document.getElementById("replay2").addEventListener("click",function(){playTwo()});
+
+  playOne();playTwo();
+})();
+</script>
+
+</body>
+</html>
