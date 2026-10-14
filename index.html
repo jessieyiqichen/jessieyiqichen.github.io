@@ -11,7 +11,7 @@
   @font-face{font-family:"Young Serif";src:url("assets/fonts/YoungSerif-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
   @font-face{font-family:Franklin;src:url("assets/fonts/LibreFranklin.woff2") format("woff2");font-weight:100 900;font-display:swap}
   @font-face{font-family:Franklin;src:url("assets/fonts/LibreFranklin-Italic.woff2") format("woff2");font-weight:100 900;font-style:italic;font-display:swap}
-  :root{--paper:#f5f2ea;--ink:#1b1a17;--body:#3d3b36;--muted:#8a867c;--line:#dcd7cb;--mustard:#d4a72c;--cream:#f6f3ea;--pm:#ffe27a;--eng:#a9c4ff;--data:#a8e6c1;--acc:var(--pm);
+  :root{--paper:#f5f2ea;--ink:#1b1a17;--body:#3d3b36;--muted:#6b675e;--line:#dcd7cb;--mustard:#d4a72c;--cream:#f6f3ea;--pm:#ffe27a;--eng:#a9c4ff;--data:#a8e6c1;--acc:var(--pm);
     --serif:"Young Serif",Georgia,serif;--sans:Franklin,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;--ease:cubic-bezier(.3,.7,.2,1)}
   body[data-lens="eng"]{--acc:var(--eng)}body[data-lens="data"]{--acc:var(--data)}
   *{box-sizing:border-box}
@@ -58,7 +58,7 @@
   .ncard .nc-nm{margin-top:4px;font:400 clamp(28px,2.6vw,36px)/1.05 var(--serif);color:var(--ink)}
   .nc-nm span{display:inline-block;white-space:nowrap;font-family:"Songti SC","Noto Serif CJK SC",serif;font-size:16px;letter-spacing:.12em;color:var(--muted);margin-left:6px}
   .ncard .nc-l{margin-top:10px;font-size:15px;color:var(--ink)}
-  .ncard .nc-s{margin-top:3px;font-size:13.5px;color:#6f6b62}
+  .ncard .nc-s{margin-top:3px;font-size:13.5px;color:#5c5952}
   .ncard .nc-m{margin-top:14px;font-size:16px}.nc-m a{text-decoration-thickness:2px}
   .ncard .nc-b{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.nc-b .btn{padding:8px 15px;font-size:13.5px}
   .view{position:relative}
@@ -94,13 +94,13 @@
   .gm.touring .gm-img{width:150px;height:150px}
   .gm.walking .gm-b{opacity:0}
   .gm-t{margin:0;font-size:15px;line-height:1.5;color:var(--ink)}.gm-t b{font:400 21px/1.1 var(--serif);margin-right:4px}
-  .gm-n{display:flex;align-items:center;gap:6px;margin-top:10px;font-size:12.5px;color:#6f6b62}.gm-c{margin-right:auto}
+  .gm-n{display:flex;align-items:center;gap:6px;margin-top:10px;font-size:12.5px;color:#5c5952}.gm-c{margin-right:auto}
   .gm-n button,.gm-start{all:unset;cursor:pointer;padding:5px 11px;border-radius:999px;border:1px solid rgba(0,0,0,.25);color:var(--ink);font-size:12.5px}
   .gm-n button.pri,.gm-start{background:var(--ink);border-color:var(--ink);color:var(--paper)}
   .gm-n button:disabled{opacity:.35;cursor:default}
   .gm-n button:focus-visible,.gm-start:focus-visible,.gm-img:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
   .gm-hi{display:flex;align-items:center;gap:10px}.gm-hi p{margin:0;font-size:14px;color:var(--ink)}
-  .gm-x{all:unset;cursor:pointer;margin-left:2px;color:#8a867c;font-size:16px;line-height:1}
+  .gm-x{all:unset;cursor:pointer;margin-left:2px;color:#6b675e;font-size:16px;line-height:1}
   /* the greeting: on arrival my memoji asks, in the middle of the page, whether to take the tour */
   .hello{border:0;padding:84px 28px 24px;width:min(420px,calc(100vw - 40px));box-sizing:border-box;overflow:visible;background:#fffdf7;border-radius:18px;text-align:center;color:var(--ink);box-shadow:0 2px 4px rgba(0,0,0,.12),0 24px 50px rgba(0,0,0,.3)}
   .hello::backdrop{background:rgba(24,21,16,.5)}
@@ -112,7 +112,7 @@
   .hello-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:20px}
   .hello-row button{all:unset;cursor:pointer;padding:10px 20px;border-radius:999px;border:1px solid rgba(0,0,0,.28);font-size:14.5px}
   .hello-row .pri{background:var(--ink);border-color:var(--ink);color:var(--paper)}
-  .hello-x{all:unset;cursor:pointer;position:absolute;right:14px;top:10px;padding:4px;font-size:20px;line-height:1;color:#6f6b62}
+  .hello-x{all:unset;cursor:pointer;position:absolute;right:14px;top:10px;padding:4px;font-size:20px;line-height:1;color:#5c5952}
   .hello-row button:focus-visible,.hello-x:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
   body:has(.hello[open]) .gm{opacity:0}
   .hello-thumb .hello{position:fixed;inset:0;margin:auto;height:fit-content;z-index:95;animation:none}
@@ -144,7 +144,7 @@
   .head{all:unset;box-sizing:border-box;cursor:pointer;display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;gap:2px 18px;width:100%;padding:22px 28px 52px}
   .head:focus-visible{outline:2px solid var(--ink);outline-offset:-4px;border-radius:14px}
   .nm{grid-row:1/3;font:400 clamp(30px,4vw,48px)/1.05 var(--serif);color:var(--ink);letter-spacing:-.01em}
-  .role{align-self:end;justify-self:end;font-size:13px;color:#6f6b62;text-align:right}
+  .role{align-self:end;justify-self:end;font-size:13px;color:#5c5952;text-align:right}
   .peek{grid-column:2;justify-self:end;text-align:right;font-size:13.5px;color:var(--ink);max-width:36ch;opacity:0;transform:translateY(4px);transition:opacity .25s,transform .25s}
   .peek .pk{display:none}.peek em{display:block;font-style:normal;margin-bottom:2px}.peek b{font:400 18px var(--serif)}
   body[data-lens="pm"] .peek .l-pm,body[data-lens="eng"] .peek .l-eng,body[data-lens="data"] .peek .l-data{display:block}
@@ -158,14 +158,14 @@
   .card.open .head{padding-bottom:18px}
   .more figure{margin:0}
   .more img{display:block;width:100%;border-radius:6px;box-shadow:0 1px 2px rgba(0,0,0,.15)}
-  .more figcaption{margin-top:6px;font-size:12px;color:#6f6b62}
+  .more figcaption{margin-top:6px;font-size:12px;color:#5c5952}
   .sw>div{display:none}
   body[data-lens="pm"] .sw .l-pm,body[data-lens="eng"] .sw .l-eng,body[data-lens="data"] .sw .l-data{display:block}
   .tx h3{margin:0 0 6px;font:400 22px/1.25 var(--serif);color:var(--ink)}
   .tx p{margin:0 0 14px;font-size:15px}
   .nums{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:10px 0;border-top:1px solid rgba(0,0,0,.12);border-bottom:1px solid rgba(0,0,0,.12);margin:0 0 12px}
   .nums b{display:block;font:400 22px/1.1 var(--serif);color:var(--ink)}
-  .nums span{display:block;font-size:12px;line-height:1.3;color:#6f6b62}
+  .nums span{display:block;font-size:12px;line-height:1.3;color:#5c5952}
   .lk a{margin-right:12px;font-size:14px}
   .close{all:unset;cursor:pointer;margin-top:8px;font-size:13px;color:var(--ink);border-bottom:1px solid var(--ink)}
 
