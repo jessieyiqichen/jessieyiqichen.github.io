@@ -6,7 +6,7 @@
 <title>JobPilot — 陈亦奇 Jessie Chen</title>
 <link rel="alternate" hreflang="zh-CN" href="https://jessieyiqichen.github.io/projects/job-pilot.html">
 <link rel="alternate" hreflang="en" href="https://jessieyiqichen.github.io/projects/en/job-pilot.html">
-<meta name="description" content="JobPilot：一个懂你这个人的 AI 求职军师。从行为层到认知层的产品判断、四个想清楚的取舍、开源可查的工程质量。">
+<meta name="description" content="JobPilot：一个懂你这个人的 AI 求职军师。从行为层到认知层的产品判断、六个想清楚的取舍、开源可查的工程质量。">
 <link rel="stylesheet" href="../assets/site.css">
 </head>
 <body>
@@ -35,7 +35,7 @@
     <div class="metrics">
       <div class="metric"><b>349</b><span>多渠道采集的岗位</span></div>
       <div class="metric"><b>37</b><span>AI 打分筛出的高分岗</span></div>
-      <div class="metric"><b>4</b><span>想清楚为什么的产品取舍</span></div>
+      <div class="metric"><b>6</b><span>想清楚为什么的产品取舍</span></div>
       <div class="metric"><b>544</b><span>测试通过，CI 全绿<small>（截至 2026-09）</small></span></div>
     </div>
   </div>
@@ -56,7 +56,7 @@
       <article class="status-card">
         <span class="tag">五分钟 · 看产品判断</span>
         <h3><a href="#insight">往下读 ↓</a></h3>
-        <p>一个判断（求职的卡点不在信息，在人）、一张对比表（行为层 vs 认知层）、四个想清楚为什么的取舍。这一页的重点在这里。</p>
+        <p>一个判断（求职的卡点不在信息，在人）、一张对比表（行为层 vs 认知层）、六个想清楚为什么的取舍。这一页的重点在这里。</p>
       </article>
       <article class="status-card">
         <span class="tag">想深挖 · 看代码</span>
@@ -116,12 +116,14 @@
 <section class="section">
   <div class="measure">
     <div class="sec-label" data-n="04"><span>Decisions</span></div>
-    <h2>四个取舍，每个都想清楚了为什么。</h2>
+    <h2>六个取舍，每个都想清楚了为什么。</h2>
     <ul class="role-list">
       <li><strong>不做自动投递，不写爬虫。</strong>投递不可逆，平台也有反爬边界。定位是「我们生成、你来发」，用克制换信任。</li>
+      <li><strong>从行为层走到认知层。</strong>接入认知模型（怎么想）和语言样本（怎么说），这是差异化的护城河；代价是深度绑定一个用户。</li>
       <li><strong>计划和跟进用规则算，不烧 LLM。</strong>「本周该投哪几个」能算就不调 API。省钱，而且每条建议都指得回数据，扛得住「凭什么」。</li>
       <li><strong>两段式打分。</strong>免费的启发式先把全部岗位粗筛一遍，只对 top N 调 API 精评，一次跑完成本可控。</li>
       <li><strong>简历定制是往原 docx 打补丁，不重新生成。</strong>用 difflib 把改动补回原文件，保留字体与排版；技能白名单防止 AI 写入我并不具备的能力。</li>
+      <li><strong>不急着做多用户。</strong>现在最强的个性化恰恰来自深度绑定一个人；过早通用化，会把它稀释成市面上又一个普通工具。先验证对一个人有用。</li>
     </ul>
     <p class="tech-line"><span class="kicker">工程底线</span>流水线各阶段互相隔离，一个渠道挂了不影响其他；没有 API key 时降级到启发式，基本功能不瘫。<code style="font-family:var(--mono);font-size:14px">pipeline-all</code> 一条命令跑完全流程。</p>
     <div class="flow">

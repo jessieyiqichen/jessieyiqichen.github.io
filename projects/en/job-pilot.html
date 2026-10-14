@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>JobPilot — Jessie Chen 陈亦奇</title>
-<meta name="description" content="JobPilot: an AI job-search strategist that understands you as a person. Product judgment that moves from the behavior layer to the cognitive layer, four trade-offs thought through, and engineering quality that is open source for anyone to check.">
+<meta name="description" content="JobPilot: an AI job-search strategist that understands you as a person. Product judgment that moves from the behavior layer to the cognitive layer, six trade-offs thought through, and engineering quality that is open source for anyone to check.">
 <link rel="alternate" hreflang="zh-CN" href="https://jessieyiqichen.github.io/projects/job-pilot.html">
 <link rel="alternate" hreflang="en" href="https://jessieyiqichen.github.io/projects/en/job-pilot.html">
 <link rel="stylesheet" href="../../assets/site.css">
@@ -35,7 +35,7 @@
     <div class="metrics">
       <div class="metric"><b>349</b><span>jobs collected across multiple channels</span></div>
       <div class="metric"><b>37</b><span>high-score jobs picked out by AI scoring</span></div>
-      <div class="metric"><b>4</b><span>product trade-offs, each with the why thought through</span></div>
+      <div class="metric"><b>6</b><span>product trade-offs, each with the why thought through</span></div>
       <div class="metric"><b>544</b><span>tests passing, CI all green<small> (as of 2026-09)</small></span></div>
     </div>
   </div>
@@ -56,7 +56,7 @@
       <article class="status-card">
         <span class="tag">Five minutes · The product judgment</span>
         <h3><a href="#insight">Read on ↓</a></h3>
-        <p>One judgment (the job search is blocked by people, not information), one comparison table (behavior layer vs. cognitive layer), and four trade-offs, each with the why thought through. This is where the weight of this page lies.</p>
+        <p>One judgment (the job search is blocked by people, not information), one comparison table (behavior layer vs. cognitive layer), and six trade-offs, each with the why thought through. This is where the weight of this page lies.</p>
       </article>
       <article class="status-card">
         <span class="tag">Dig deeper · The code</span>
@@ -116,12 +116,14 @@
 <section class="section">
   <div class="measure">
     <div class="sec-label" data-n="04"><span>Decisions</span></div>
-    <h2>Four trade-offs, each with the why thought through.</h2>
+    <h2>Six trade-offs, each with the why thought through.</h2>
     <ul class="role-list">
       <li><strong>No auto-apply, no scrapers.</strong> Applying is irreversible, and platforms have anti-scraping boundaries. The positioning is “we generate, you send”: restraint in exchange for trust.</li>
+      <li><strong>From the behavior layer to the cognitive layer.</strong> It plugs in a cognitive model (how you think) and language samples (how you talk); that is the moat. The cost is being bound deeply to one user.</li>
       <li><strong>Plans and follow-ups are computed by rules, without burning LLM calls.</strong> If “which ones to apply to this week” can be computed, it does not call the API. That saves money, and every suggestion points back to data, so it holds up to “based on what?”</li>
       <li><strong>Two-stage scoring.</strong> A free heuristic first does a rough pass over all jobs, and only the top N get a precise evaluation through the API, so the cost of a full run stays under control.</li>
       <li><strong>Résumé tailoring patches the original docx instead of regenerating it.</strong> difflib patches the changes back into the original file, keeping fonts and layout; a skills whitelist stops the AI from writing in abilities I do not have.</li>
+      <li><strong>No rush to go multi-user.</strong> The strongest personalization comes precisely from being bound deeply to one person; generalizing too early would dilute it into one more ordinary tool. First prove it is useful to one person.</li>
     </ul>
     <p class="tech-line"><span class="kicker">Engineering baseline</span>Pipeline stages are isolated from one another, so one failing channel does not affect the others; without an API key it falls back to heuristics, and the basic functions keep working. <code style="font-family:var(--mono);font-size:14px">pipeline-all</code> runs the whole flow in one command.</p>
     <div class="flow">
