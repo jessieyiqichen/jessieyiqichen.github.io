@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MusiClaw — Jessie Chen 陈亦奇</title>
+<meta name="description" content="MusiClaw: a Shanghai musical-theatre market data platform. It saves public ticketing data for 86 shows automatically every day; the AI handles everything from data to draft, and the publish button is always pressed by a person.">
+<link rel="alternate" hreflang="zh-CN" href="https://jessieyiqichen.github.io/projects/musiclaw.html">
+<link rel="alternate" hreflang="en" href="https://jessieyiqichen.github.io/projects/en/musiclaw.html">
+<link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../../index.html">Jessie Chen <span style="color:var(--primary)" lang="zh-CN">陈亦奇</span></a>
+    <a class="nav-link" href="../../index.html#five">Projects</a>
+    <a class="nav-link" href="../../index.html#contact">Contact</a>
+    <a class="nav-link lang-link" href="../musiclaw.html" hreflang="zh-CN" lang="zh-CN">中文</a>
+    <span class="nav-tag">CASE 05 · DATA PRODUCT</span>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="measure">
+    <span class="kicker">Data Product · Solo build · Runs automatically every day</span>
+    <h1>MusiClaw</h1>
+    <p class="lede">A performance market, turned into a data product that updates itself every day.</p>
+    <p style="margin-top:18px">Information in Shanghai's musical-theatre market is highly opaque: ticket sales, the effect of the cast, venue and time-slot effects. Fans go by feel; the industry goes by experience. Every day MusiClaw automatically collects public seat-map snapshots for 86 shows, combines them with cast schedule data to analyze sell-through rates, and produces weekly reports, a data dashboard and an AI morning brief, supporting a Xiaohongshu data account in real operation. From data collection to content publishing, it is one complete closed loop.</p>
+    <div class="facts">
+      <span><b>Role</b> — Solo build (data + product + content operations)</span>
+      <span><b>Status</b> — Running automatically every day</span>
+      <span><b>Website</b> — <a href="https://jessieyiqichen.github.io/musiclaw-demo/" target="_blank" rel="noopener">Live data dashboard</a></span>
+      <span><b>Tech</b> — Python · Selenium · SQLite · Next.js · Claude</span>
+    </div>
+    <div class="metrics">
+      <div class="metric"><b>86</b><span>shows tracked every day</span></div>
+      <div class="metric"><b>Daily</b><span>seat-map snapshots + cast schedule sync</span></div>
+      <div class="metric"><b>4</b><span>content pipelines: weekly report / posts / dashboard / morning brief</span></div>
+      <div class="metric"><b>24h</b><span>fixed review after publishing</span></div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section class="section">
+  <div class="measure">
+    <div class="sec-label" data-n="01"><span>Problem</span></div>
+    <h2>Theatre fans talk about everything except data.</h2>
+    <ul class="evidence">
+      <li>Ticketing data is actually public; anyone can look at a seat map. But no one saves it and turns it into a time series that can be analyzed.</li>
+      <li>"Which cast sells tickets" and "which performances sell well" rest entirely on word of mouth inside the fan community, with no data to speak for them.</li>
+      <li>Performance content on social platforms runs on emotion and taking sides; data-backed discussion is almost nonexistent. That is an information gap, and also an opening for content positioning.</li>
+    </ul>
+    <div class="quote">
+      <p>"Account persona: a theatre fan who brings data. Someone new to musicals who can write code."</p>
+      <cite>— Content positioning: the data skill itself is the differentiation</cite>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="measure">
+    <div class="sec-label" data-n="02"><span>System</span></div>
+    <h2>From seat map to post, a pipeline that runs end to end on its own every day.</h2>
+    <div class="flow">
+      <div class="flow-step"><span class="n">01</span><strong>Daily collection</strong><span>Seat-map snapshots for 86 shows, cast schedule sync</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><span class="n">02</span><strong>Store and analyze</strong><span>SQLite time series, read by cast, venue and time slot</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><span class="n">03</span><strong>Anomaly detection</strong><span>Finds the anomalies and trends worth posting about</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><span class="n">04</span><strong>Topics and content</strong><span>AI drafts a topic list, paired with dashboard screenshots</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><span class="n">05</span><strong>Publish and review</strong><span>A person clicks publish; data archived after 24 hours</span></div>
+    </div>
+    <p class="tech-line"><span class="kicker">Output</span>Weekly data report · Xiaohongshu data posts · Next.js data dashboard · Daily AI morning brief</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="measure">
+    <div class="sec-label" data-n="03"><span>AI Boundaries</span></div>
+    <h2>The AI handles data to draft; the publish button is always pressed by a person.</h2>
+    <p>In this project the AI acts as a publicity specialist, and its eight responsibilities are written into a document: data insight, topic selection, content review, data verification, asset preparation, posting assistance, comment management and post-publish review. Also written into the document: what it does not do.</p>
+    <div class="proof-grid">
+      <article class="proof-card highlight">
+        <span class="kicker">What the AI does</span>
+        <h3>Everything from data to draft.</h3>
+        <p>It finds anomalies in each day's data, proposes topics and drafts content; before publishing it checks for throttling-risk words and AI tone; 24 hours after publishing it reads the data for a review.</p>
+      </article>
+      <article class="proof-card">
+        <span class="kicker">What the AI doesn't do</span>
+        <h3>It doesn't touch publishing or style.</h3>
+        <p>It doesn't click publish automatically, doesn't make publishing decisions for a person, doesn't "optimize" my writing style on its own, and doesn't write the meme-style copy it can't write well.</p>
+      </article>
+    </div>
+    <div class="quote">
+      <p>"What this project taught me most is boundary design: only when you know where to make the AI stop can you safely put it into a real workflow."</p>
+      <cite>— A takeaway after building this pipeline</cite>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="measure">
+    <div class="sec-label" data-n="04"><span>Content Discipline</span></div>
+    <h2>The credibility of data content comes from discipline.</h2>
+    <ul class="evidence">
+      <li><strong>Every chart is labeled with its collection time and completeness.</strong> A seat map is a snapshot, not real time; leaving that unlabeled misleads readers.</li>
+      <li><strong>Three fixed checks before publishing.</strong> Throttling-risk words, AI tone, marketing-account tone. If a post doesn't pass, it doesn't go out.</li>
+      <li><strong>A fixed review 24 hours after publishing.</strong> Read the post's data and archive the assets; review data feeds back into topic judgment.</li>
+      <li><strong>Every past post is archived.</strong> For each one, the reason for the topic, the data source and the performance can all be looked up again.</li>
+    </ul>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="foot-nav measure">
+    <a href="job-pilot.html">← Previous — JobPilot</a>
+    <a href="../../index.html#five">All projects →</a>
+  </div>
+  <div class="foot-meta"><div class="measure"><span>© 2026 Jessie Chen 陈亦奇</span><span>Public data only; publishing decisions always stay with a person</span></div></div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,597 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>陈亦奇 Jessie Chen — AI 产品</title>
+<meta name="description" content="五个 AI 产品，我独立把它们从一张白纸做到上线。其中三个至今每天在生产环境运行。">
+<link rel="alternate" hreflang="en" href="https://jessieyiqichen.github.io/">
+<link rel="alternate" hreflang="zh-CN" href="https://jessieyiqichen.github.io/zh/">
+<style>
+  @font-face{font-family:"Young Serif";src:url("../assets/fonts/YoungSerif-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
+  @font-face{font-family:Franklin;src:url("../assets/fonts/LibreFranklin.woff2") format("woff2");font-weight:100 900;font-display:swap}
+  @font-face{font-family:Franklin;src:url("../assets/fonts/LibreFranklin-Italic.woff2") format("woff2");font-weight:100 900;font-style:italic;font-display:swap}
+  :root{--paper:#f5f2ea;--ink:#1b1a17;--body:#3d3b36;--muted:#8a867c;--line:#dcd7cb;--mustard:#d4a72c;--cream:#f6f3ea;--pm:#ffe27a;--eng:#a9c4ff;--data:#a8e6c1;--acc:var(--pm);
+    --serif:"Young Serif",Georgia,"Songti SC","Noto Serif SC","Noto Serif CJK SC",serif;--sans:Franklin,-apple-system,"Segoe UI",Helvetica,Arial,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;--ease:cubic-bezier(.3,.7,.2,1)}
+  body[data-lens="eng"]{--acc:var(--eng)}body[data-lens="data"]{--acc:var(--data)}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--body);font:16px/1.6 var(--sans)}
+  a{color:var(--ink);text-underline-offset:3px;text-decoration-color:var(--mustard)}
+  .back{position:fixed;top:12px;left:16px;z-index:40;font-size:12px;color:var(--muted);text-decoration:none;background:rgba(245,242,234,.9);padding:2px 6px;border-radius:4px}
+  .doodle{display:block;color:var(--ink);pointer-events:none}
+
+  nav.bar{display:grid;grid-template-columns:auto 1fr;align-items:baseline;padding:40px 4vw 14px;font-size:14px}
+  nav.bar .l{font-size:13px;color:var(--muted)}
+  nav.bar .l a{margin-right:18px;text-decoration:none;color:var(--body)}nav.bar .r{text-align:right}nav.bar .r a{margin-left:18px;text-decoration:none;color:var(--body)}
+  nav.bar a:hover{color:var(--ink);text-decoration:underline}
+  nav.bar .nm{font:400 22px/1 var(--serif);color:var(--ink)}nav.bar .nm span{font-family:"Songti SC","Noto Serif CJK SC",serif;font-size:14px;letter-spacing:.12em;color:var(--muted);margin-left:8px}
+
+  .hero{display:grid;grid-template-columns:1fr 1fr;min-height:min(86vh,760px);margin:0 4vw;border-top:1px solid var(--line)}
+  .hero .tx{position:relative;display:flex;flex-direction:column;justify-content:center;padding:4vh 4vw 4vh 0}
+  .hero .date{margin:0 0 16px;font-size:13px;color:var(--muted)}
+  .hero .sal{margin:0 0 12px;font:400 20px var(--sans);color:var(--body)}
+  .hero h1{margin:0;font:400 clamp(36px,4vw,58px)/1.08 var(--serif);letter-spacing:-.015em;color:var(--ink)}
+  .hero h1 em{font-style:normal;background:linear-gradient(transparent 70%,rgba(212,167,44,.55) 70%)}
+  .hero .sub{margin:18px 0 20px;font-size:16.5px;max-width:44ch;transition:opacity .2s}
+  .hero h1.al-b button{all:unset;cursor:pointer;padding:0 .08em;background:linear-gradient(transparent 58%,var(--c) 58%);border-bottom:2px dashed rgba(27,26,23,.35);transition:background .25s,opacity .25s,border-color .25s}
+  .hero h1.al-b button:hover,.hero h1.al-b button:focus-visible{background:linear-gradient(transparent 8%,var(--c) 8%);border-bottom-color:transparent}
+  .hero h1.al-b button:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+  .hero h1.al-b.chosen button{opacity:.4}
+  .hero h1.al-b.chosen button[aria-pressed="true"]{opacity:1;background:linear-gradient(transparent 8%,var(--c) 8%);border-bottom-color:transparent}
+  .hero .sub{margin:14px 0 8px}
+  .nw{white-space:nowrap}
+  .lensline{margin:0 0 6px;font:15px var(--sans);color:var(--muted);max-width:44ch}
+  .al-skip{display:inline-block;margin-top:10px;font-size:13.5px;color:var(--body)}
+
+  .btn{all:unset;cursor:pointer;display:inline-block;font-size:14px;color:var(--ink);border:1px solid var(--ink);border-radius:6px;padding:10px 18px;transition:background .15s,color .15s}
+  .btn:hover,.btn:focus-visible{background:var(--ink);color:var(--paper)}
+  .hero figure{margin:0;position:relative;overflow:hidden}
+  .hero figure img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 40%}
+  .hero figcaption{position:absolute;left:16px;bottom:14px;font:14px var(--sans);color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.5)}
+
+  .d-sky{width:min(300px,80%);height:auto;aspect-ratio:240/96;margin:40px auto 0}
+  .lead-wrap{display:grid;place-items:center;padding:3vh 0 3vh 3vw}
+  .hero{grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);min-height:min(48vh,470px)!important}
+  .ncard{display:grid;grid-template-columns:200px minmax(0,1fr);column-gap:18px;align-items:start;width:min(100%,580px);background:#fffdf7;border-radius:14px;padding:14px 16px 16px 14px;box-shadow:0 1px 2px rgba(0,0,0,.12),0 18px 40px rgba(60,40,10,.12)}
+  .nc-ph{grid-row:1/span 6;display:block;width:100%;height:100%;max-height:260px;aspect-ratio:3/4;object-fit:cover;object-position:50% 40%;border-radius:9px}
+  .ncard p{margin:0;padding:0}
+  .ncard .nc-nm{margin-top:4px;font:400 clamp(28px,2.6vw,36px)/1.05 var(--serif);color:var(--ink)}
+  .nc-nm span{display:inline-block;white-space:nowrap;font-family:var(--sans);font-size:16px;letter-spacing:.02em;color:var(--muted);margin-left:6px}
+  .ncard .nc-l{margin-top:10px;font-size:15px;color:var(--ink)}
+  .ncard .nc-s{margin-top:3px;font-size:13.5px;color:#6f6b62}
+  .ncard .nc-m{margin-top:14px;font-size:16px}.nc-m a{text-decoration-thickness:2px}
+  .ncard .nc-b{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.nc-b .btn{padding:8px 15px;font-size:13.5px}
+  .view{position:relative}
+  .marks{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+  .mk{fill:none;stroke:#2344b8;stroke-width:2.2;vector-effect:non-scaling-stroke;opacity:.7;filter:url(#hand);transition:stroke-width .2s,opacity .2s}
+  .mk.on{stroke-width:4;opacity:1}
+  .bd{position:absolute;width:20px;height:20px;border-radius:50%;background:#2344b8;color:#fff;font:600 11px/20px var(--sans);text-align:center;pointer-events:none}
+  .calls{list-style:none;margin:10px 0 0;padding:0}
+  .calls li{display:grid;grid-template-columns:20px 1fr;gap:10px;padding:6px 8px;margin:0 -8px;font-size:13.5px;line-height:1.45;border-radius:6px;transition:background .2s}
+  .calls li.on{background:rgba(35,68,184,.08)}
+  .view{overflow:hidden;border-radius:6px}
+  .walk{all:unset;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:8px;margin:12px 0 2px;padding:5px 14px 5px 5px;border-radius:999px;background:var(--ink);color:var(--paper);font-size:13px;transition:transform .2s}
+  .more .walk img{flex:none;width:26px;height:26px;box-shadow:none;border-radius:50%;background:#fff;object-fit:cover}
+  .walk:hover{transform:translateY(-1px)}.walk:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+  .tshade{position:fixed;z-index:60;left:50%;top:50%;width:0;height:0;border-radius:14px;box-shadow:0 0 0 200vmax rgba(16,16,26,.62);pointer-events:none;transition:left .55s var(--ease),top .55s var(--ease),width .55s var(--ease),height .55s var(--ease),opacity .3s}
+  .tshade[hidden]{display:block!important;opacity:0}
+  .tshade.snap{transition:opacity .3s}
+  .gm{position:fixed;z-index:70;left:auto;top:auto;right:22px;bottom:18px;display:flex;align-items:flex-end;gap:6px;transition:left .9s var(--ease),top .9s var(--ease)}
+  .gm.touring{right:auto;bottom:auto}
+  .gm.snap{transition:none}
+  .gm-img{all:unset;cursor:pointer;display:block;width:104px;height:104px;flex:none;filter:drop-shadow(0 6px 10px rgba(0,0,0,.25));transform-origin:50% 90%}
+  .gm-img img{display:block;width:100%;height:100%;object-fit:contain}
+  .gm.rest .gm-img{transform:translateY(22%)}
+  .gm.rest .gm-img:hover{transform:translateY(8%)}
+  .gm.walking .gm-img{animation:stroll .32s ease-in-out infinite alternate}
+  .gm.talk .gm-img{animation:nod .5s var(--ease)}
+  @keyframes stroll{from{transform:translateY(0) rotate(-6deg)}to{transform:translateY(-10px) rotate(6deg)}}
+  @keyframes nod{0%{transform:scale(1)}40%{transform:scale(1.08) translateY(-4px)}100%{transform:scale(1)}}
+  .gm-b{order:-1;position:relative;width:300px;background:#fffdf7;border-radius:14px;padding:13px 15px 11px;box-shadow:0 2px 4px rgba(0,0,0,.12),0 14px 30px rgba(0,0,0,.2);margin-bottom:40px;transition:opacity .25s}
+  .gm-b::after{content:"";position:absolute;right:-7px;bottom:22px;width:14px;height:14px;background:#fffdf7;transform:rotate(45deg)}
+  .gm.flip{flex-direction:row-reverse}.gm.flip .gm-b::after{right:auto;left:-7px}
+  .gm-b[hidden],.gm-hi[hidden],#gm-step[hidden]{display:none}
+  .gm.touring .gm-img{width:150px;height:150px}
+  .gm.walking .gm-b{opacity:0}
+  .gm-t{margin:0;font-size:15px;line-height:1.5;color:var(--ink)}.gm-t b{font:400 21px/1.1 var(--serif);margin-right:4px}
+  .gm-n{display:flex;align-items:center;gap:6px;margin-top:10px;font-size:12.5px;color:#6f6b62}.gm-c{margin-right:auto}
+  .gm-n button,.gm-start{all:unset;cursor:pointer;padding:5px 11px;border-radius:999px;border:1px solid rgba(0,0,0,.25);color:var(--ink);font-size:12.5px}
+  .gm-n button.pri,.gm-start{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+  .gm-n button:disabled{opacity:.35;cursor:default}
+  .gm-n button:focus-visible,.gm-start:focus-visible,.gm-img:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+  .gm-hi{display:flex;align-items:center;gap:10px}.gm-hi p{margin:0;font-size:14px;color:var(--ink)}
+  .gm-x{all:unset;cursor:pointer;margin-left:2px;color:#8a867c;font-size:16px;line-height:1}
+  /* the greeting: on arrival my memoji asks, in the middle of the page, whether to take the tour */
+  .hello{border:0;padding:84px 28px 24px;width:min(420px,calc(100vw - 40px));box-sizing:border-box;overflow:visible;background:#fffdf7;border-radius:18px;text-align:center;color:var(--ink);box-shadow:0 2px 4px rgba(0,0,0,.12),0 24px 50px rgba(0,0,0,.3)}
+  .hello::backdrop{background:rgba(24,21,16,.5)}
+  .hello[open]{animation:hello-in .45s var(--ease)}
+  @keyframes hello-in{from{opacity:0;transform:translateY(14px) scale(.97)}}
+  .hello img{position:absolute;left:50%;top:-86px;width:160px;height:160px;transform:translateX(-50%);filter:drop-shadow(0 8px 12px rgba(0,0,0,.25))}
+  .hello h2{margin:0;font:400 30px/1.1 var(--serif)}
+  .hello p{margin:10px auto 0;max-width:30ch;font-size:15.5px;line-height:1.5;text-wrap:balance}
+  .hello-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:20px}
+  .hello-row button{all:unset;cursor:pointer;padding:10px 20px;border-radius:999px;border:1px solid rgba(0,0,0,.28);font-size:14.5px}
+  .hello-row .pri{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+  .hello-x{all:unset;cursor:pointer;position:absolute;right:14px;top:10px;padding:4px;font-size:20px;line-height:1;color:#6f6b62}
+  .hello-row button:focus-visible,.hello-x:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+  body:has(.hello[open]) .gm{opacity:0}
+  .hello-thumb .hello{position:fixed;inset:0;margin:auto;height:fit-content;z-index:95;animation:none}
+  .hello-thumb::after{content:"";position:fixed;inset:0;z-index:94;background:rgba(24,21,16,.5)}
+  @media (prefers-reduced-motion:reduce){.hello[open]{animation:none}}
+  .calls .k{width:20px;height:20px;box-sizing:border-box;border-radius:50%;border:1.5px solid #2344b8;color:#2344b8;font:600 11px/17px var(--sans);text-align:center}
+  .hiw{margin:0 0 12px;font-size:15px}
+  .strip{max-width:1180px;margin:0 auto;padding:0 4vw 50px;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+  .strip figure{margin:0}.strip img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:8px}
+  .strip figcaption{margin-top:5px;font:12.5px/1.3 var(--sans);color:var(--muted)}
+
+
+  .drawer{position:relative;padding-top:52px}
+  .tabs{position:absolute;top:0;left:18px;display:flex;gap:6px}
+  .tabs button{all:unset;cursor:pointer;position:relative;padding:10px 20px 18px;border-radius:12px 12px 0 0;background:var(--c);font:500 14px var(--sans);color:var(--ink);transform:translateY(10px);transition:transform .25s var(--ease);box-shadow:0 -1px 0 rgba(0,0,0,.06) inset}
+  .tabs button[aria-pressed="true"]{transform:none}
+  .tabs button:hover{transform:translateY(4px)}.tabs button[aria-pressed="true"]:hover{transform:none}
+  .tabs button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+  .divider{position:relative;z-index:2;background:var(--acc);border-radius:10px;padding:14px 22px;font-size:14.5px;color:var(--ink);box-shadow:0 2px 6px rgba(0,0,0,.08);transition:background .35s}
+  .divider span{display:none}
+  body[data-lens="pm"] .divider .l-pm,body[data-lens="eng"] .divider .l-eng,body[data-lens="data"] .divider .l-data{display:inline}
+
+  .stack{list-style:none;margin:0;padding:0}
+  .card{position:relative;margin-top:-34px;background:var(--bg);border-radius:14px;box-shadow:0 1px 2px rgba(0,0,0,.14),0 10px 26px rgba(0,0,0,.1);transform:rotate(var(--r));transition:transform .3s var(--ease),box-shadow .3s}
+  .card:first-child{margin-top:10px}
+  .card:not(.open):hover{transform:translateY(-14px) rotate(0);box-shadow:0 2px 4px rgba(0,0,0,.14),0 22px 40px rgba(0,0,0,.16);z-index:5}
+  .card.open{transform:none;z-index:6;margin-top:14px;margin-bottom:22px}
+  .card.open+.card{margin-top:0}
+  .head{all:unset;box-sizing:border-box;cursor:pointer;display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;gap:2px 18px;width:100%;padding:22px 28px 52px}
+  .head:focus-visible{outline:2px solid var(--ink);outline-offset:-4px;border-radius:14px}
+  .nm{grid-row:1/3;font:400 clamp(30px,4vw,48px)/1.05 var(--serif);color:var(--ink);letter-spacing:-.01em}
+  .role{align-self:end;justify-self:end;font-size:13px;color:#6f6b62;text-align:right}
+  .peek{grid-column:2;justify-self:end;text-align:right;font-size:13.5px;color:var(--ink);max-width:36ch;opacity:0;transform:translateY(4px);transition:opacity .25s,transform .25s}
+  .peek .pk{display:none}.peek em{display:block;font-style:normal;margin-bottom:2px}.peek b{font:400 18px var(--serif)}
+  body[data-lens="pm"] .peek .l-pm,body[data-lens="eng"] .peek .l-eng,body[data-lens="data"] .peek .l-data{display:block}
+  .card:hover .peek,.head:focus-visible .peek{opacity:1;transform:none}
+  .card.open .peek{display:none}
+  .more{display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s var(--ease)}
+  .preload .more,.preload .card{transition:none!important}
+  .more>.in{overflow:hidden;min-height:0;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:26px;padding:0 28px}
+  .card.open .more{grid-template-rows:1fr}
+  .card.open .more>.in{padding-bottom:28px}
+  .card.open .head{padding-bottom:18px}
+  .more figure{margin:0}
+  .more img{display:block;width:100%;border-radius:6px;box-shadow:0 1px 2px rgba(0,0,0,.15)}
+  .more figcaption{margin-top:6px;font-size:12px;color:#6f6b62}
+  .sw>div{display:none}
+  body[data-lens="pm"] .sw .l-pm,body[data-lens="eng"] .sw .l-eng,body[data-lens="data"] .sw .l-data{display:block}
+  .tx h3{margin:0 0 6px;font:400 22px/1.25 var(--serif);color:var(--ink)}
+  .tx p{margin:0 0 14px;font-size:15px}
+  .nums{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:10px 0;border-top:1px solid rgba(0,0,0,.12);border-bottom:1px solid rgba(0,0,0,.12);margin:0 0 12px}
+  .nums b{display:block;font:400 22px/1.1 var(--serif);color:var(--ink)}
+  .nums span{display:block;font-size:12px;line-height:1.3;color:#6f6b62}
+  .lk a{margin-right:12px;font-size:14px}
+  .close{all:unset;cursor:pointer;margin-top:8px;font-size:13px;color:var(--ink);border-bottom:1px solid var(--ink)}
+
+  .five{max-width:980px;margin:0 auto;padding:0 24px 20px}
+  .fh{display:flex;align-items:flex-end;gap:18px;margin:0 0 10px}
+  .fh h2{margin:0 0 6px;font:400 clamp(24px,2.3vw,32px)/1.1 var(--serif);color:var(--ink)}
+  .fh p{margin:0;max-width:60ch;font-size:15px}
+  .d-note{width:110px;height:82px;flex:none}
+  .head{grid-template-columns:auto 1fr auto!important}
+  .head .cd{grid-row:1/3;grid-column:3;width:64px;height:54px;align-self:start;margin-left:6px}
+  .role{grid-column:2}.peek{grid-column:2!important}
+  .rest{max-width:1180px;margin:0 auto;padding:90px 4vw 40px;display:grid;grid-template-columns:1fr 1fr;gap:56px}
+  .rest h2{margin:0 0 14px;font:400 30px/1.1 var(--serif);color:var(--ink)}
+  .rules{margin:0;padding:0;list-style:none}
+  .rules li{padding:12px 10px;border-top:1px solid var(--line);font-size:15px;border-radius:6px;transition:background .35s}.rules b{color:var(--ink)}
+  body[data-lens="pm"] .rules .r-pm,body[data-lens="eng"] .rules .r-eng,body[data-lens="data"] .rules .r-data{background:var(--acc)}
+  .pets{display:flex;align-items:flex-end;margin:-10px 0 6px -6px}.d-cat{width:118px;height:110px}.d-dog{width:108px;height:108px}
+  .ask{position:relative;max-width:1180px;margin:0 auto;padding:50px 4vw 60px;border-top:1px solid var(--line);display:grid;grid-template-columns:auto 1fr auto;gap:30px;align-items:center}
+  .ask img{width:110px}
+  .ask h2{margin:0 0 6px;font:400 34px/1.1 var(--serif);color:var(--ink)}
+  .ask p{margin:0 0 16px}
+  .ask .row{display:flex;gap:10px;flex-wrap:wrap}
+  .signoff{padding-top:64px;padding-bottom:70px}
+  .signoff p{margin:0}
+  .signoff .yours{font:400 20px var(--sans);color:var(--body)}
+  .signoff .sig{margin-top:4px;font:400 clamp(38px,4vw,54px)/1.05 var(--serif);color:var(--ink)}
+  .signoff .sig span{display:inline-block;white-space:nowrap;font-family:var(--sans);font-size:17px;letter-spacing:.02em;color:var(--muted);margin-left:8px}
+  .signoff .sig-l{margin-top:14px;max-width:52ch}
+  .signoff .sig-m{margin:12px 0 16px;font:400 clamp(20px,2vw,26px)/1.2 var(--serif)}.signoff .sig-m a{text-decoration-thickness:2px;text-underline-offset:5px}
+  .signoff .ps{margin-top:22px;font-size:14px;color:var(--body)}.signoff .ps b{color:var(--ink)}
+  .d-coffee{width:96px;height:96px}
+  footer{max-width:1180px;margin:0 auto;padding:18px 4vw 40px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+
+  dialog{border:0;padding:0;width:min(1120px,94vw);max-height:92vh;background:var(--cream);color:var(--body);border-radius:6px;box-shadow:0 40px 100px rgba(0,0,0,.45)}
+  dialog::backdrop{background:rgba(14,14,14,.55)}
+  .case{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:32px;padding:30px;max-height:92vh;overflow:auto}
+  .case img{display:block;width:100%;border:1px solid var(--line);border-radius:4px}
+  .case .cap{margin:8px 0 0;font-size:12.5px;color:var(--muted)}
+  .case h3{margin:0;font:400 38px/1.05 var(--serif);color:var(--ink)}
+  .case .role{margin:6px 0 18px;font-size:14px;color:var(--muted)}
+  .case h4{margin:0 0 4px;font-size:13px;font-weight:700;color:var(--ink)}
+  .case p{margin:0 0 14px;font-size:15.5px}
+  .case .nums{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:12px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:4px 0 12px}
+  .case .nums b{display:block;font:400 26px/1.1 var(--serif);color:var(--ink)}
+  .case .nums span{display:block;font-size:12.5px;line-height:1.3;color:var(--muted)}
+  .case .pv{font-style:normal;color:var(--muted);font-size:14.5px}
+  .case .lk a{margin-right:14px;font-size:15px}
+  .case .nav{grid-column:1/-1;display:flex;justify-content:space-between;border-top:1px solid var(--line);padding-top:14px;font-size:14px}
+  .case .nav button{all:unset;cursor:pointer;color:var(--ink)}.case .nav button:disabled{opacity:.3;cursor:default}
+
+  @media (prefers-reduced-motion:reduce){.al-b button,.walk,.tshade,.gm,.gm-img,.mk,.calls li,.bg,.info,.ul path,.name,.work .bgs::after,.btn{transition:none}}
+  @media (max-width:860px){
+    /* the hover preview never shows without a pointer; it only left an empty block in each closed card */
+    .peek{display:none!important}
+    .ncard{display:block;width:min(100%,470px);padding:16px 16px 22px}.nc-ph{height:auto;max-height:none;aspect-ratio:4/3}.ncard p{padding:0 6px}.ncard .nc-nm{margin-top:18px}
+    nav.bar{grid-template-columns:1fr;gap:6px;padding-top:44px}nav.bar .r{text-align:left}nav.bar .r a{margin:0 14px 0 0}
+    .more>.in{grid-template-columns:1fr;gap:18px;padding:0 16px}.head{padding:18px 18px 46px}.nm{font-size:30px}.role{font-size:12px}.head .cd{width:48px;height:40px}
+    .walk{max-width:100%}
+    .gm-img{width:76px;height:76px}.gm-b{width:min(250px,calc(100vw - 110px));margin-bottom:28px}.gm-t{font-size:14px}
+    .tabs{left:8px}.tabs button{padding:9px 12px 16px;font-size:13px}.divider{padding:12px 14px}
+    .hero{grid-template-columns:1fr}.hero .tx{padding:40px 0}.lead-wrap{padding:0 0 30px}.strip{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .work .head{flex-direction:column;align-items:flex-start}.it{grid-template-columns:1fr;gap:6px;margin-bottom:22px}
+    .info{opacity:1;transform:none;pointer-events:auto}.name .t{white-space:normal}.work.lit .name{opacity:1}.bg.on{opacity:0}.work.lit .bgs::after{opacity:0}
+    .rest,.ask{grid-template-columns:1fr}.case{grid-template-columns:1fr;padding:18px}
+  }
+</style>
+</head>
+<body data-lens="pm" class="preload">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <filter id="hand" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="3"/><feDisplacementMap in="SourceGraphic" scale="2.6"/></filter>
+    <pattern id="dots" width="4" height="4" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r=".9" fill="#d4a72c"/></pattern>
+  </defs>
+  <symbol id="d-cat" viewBox="0 0 130 120">
+    <g filter="url(#hand)" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M44 72 Q34 88 37 104 Q39 112 50 112 L70 112 Q81 112 82 102 Q84 87 74 72" fill="var(--mustard)" fill-opacity=".9"/>
+      <path d="M46 84 Q52 96 47 108" stroke-width="1.4"/><path d="M76 86 Q70 96 74 107" stroke-width="1.4"/>
+      <path d="M41 51 L44 31 L55 44 Q60 42 66 44 L77 31 L80 51 Q85 66 72 72 Q60 77 48 72 Q35 66 41 51 Z" fill="var(--paper)"/>
+      <path d="M45 37 L47 46" stroke-width="1.3"/><path d="M75 37 L73 46" stroke-width="1.3"/>
+      <path d="M57 47 l1 5"/><path d="M63 47 l-1 5"/>
+      <path d="M49 58 q3.5 3 7 0"/><path d="M64 58 q3.5 3 7 0"/>
+      <path d="M58.5 63 l1.5 2 l1.5 -2"/><path d="M60 65 q-2 3 -5 2"/><path d="M60 65 q2 3 5 2"/>
+      <path d="M38 62 l-9 -2"/><path d="M38 66 l-9 1"/><path d="M82 62 l9 -2"/><path d="M82 66 l9 1"/>
+      <path d="M55 112 L55 99"/><path d="M65 112 L65 99"/>
+      <path d="M82 104 Q102 108 103 92 Q104 80 94 82"/>
+      <path d="M50 92 h4 M58 98 h4 M66 90 h4" stroke-width="1.3"/>
+      <rect x="92" y="96" width="30" height="16" rx="2" fill="var(--paper)"/><path d="M88 112 h38"/><circle cx="107" cy="104" r="1.6" fill="currentColor" stroke="none"/>
+    </g>
+  </symbol>
+  <symbol id="d-gondola" viewBox="0 0 140 110">
+    <g filter="url(#hand)" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="110" cy="24" r="10" fill="var(--mustard)" stroke="none" opacity=".9"/>
+      <path d="M4 104 L44 50 L58 66 L80 36 L136 104"/>
+      <path d="M36 61 L44 50 L52 59 L47 57 L42 62 Z" fill="var(--paper)"/>
+      <path d="M71 48 L80 36 L90 49 L84 46 L78 51 Z" fill="var(--paper)"/>
+      <path d="M64 88 l-7 12 h14 Z M64 100 v5 M100 92 l-5 9 h10 Z M100 101 v4" stroke-width="1.4" fill="var(--paper)"/>
+      <path d="M2 14 L138 30"/>
+      <path d="M27 17 L27 28"/>
+      <rect x="13" y="28" width="28" height="22" rx="5" fill="var(--paper)"/>
+      <rect x="18" y="33" width="18" height="8" rx="2" fill="url(#dots)"/>
+      <path d="M13 44 h28" stroke-width="1.3"/>
+    </g>
+  </symbol>
+  <symbol id="d-dog" viewBox="0 0 120 120">
+    <g filter="url(#hand)" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M36 106 Q29 92 40 80 Q37 69 50 65 Q60 61 70 65 Q83 69 80 80 Q91 92 84 106 Z" fill="var(--mustard)" fill-opacity=".9"/>
+      <path d="M45 84 l3 4 M50 82 l2 5 M70 84 l-3 4 M75 86 l-2 5" stroke-width="1.2"/>
+      <path d="M84 94 Q101 90 98 75 Q96 68 89 70" />
+      <path d="M41 51 Q35 41 44 34 Q47 24 58 26 Q68 21 75 30 Q85 35 80 46 Q85 56 76 61 Q69 68 59 65 Q48 69 42 61 Q34 57 41 51 Z" fill="var(--mustard)" fill-opacity=".55"/>
+      <path d="M45 34 L47 25 L54 30" fill="var(--mustard)"/><path d="M68 28 L74 21 L76 31" fill="var(--mustard)"/>
+      <circle cx="52" cy="45" r="1.9" fill="currentColor" stroke="none"/><circle cx="67" cy="45" r="1.9" fill="currentColor" stroke="none"/>
+      <ellipse cx="59.5" cy="52" rx="2.6" ry="1.9" fill="currentColor" stroke="none"/>
+      <path d="M59.5 54 q-3 4 -6.5 1.5 M59.5 54 q3 4 6.5 1.5"/>
+      <path d="M50 106 v-8 M70 106 v-8"/><path d="M26 107 h68"/>
+      <path d="M96 30 c-3 -5 -10 -2 -6 4 l6 5 l6 -5 c4 -6 -3 -9 -6 -4 Z" fill="var(--mustard)" stroke-width="1.4"/>
+    </g>
+  </symbol>
+  <symbol id="d-skyline" viewBox="0 0 240 96">
+    <g filter="url(#hand)" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="210" cy="20" r="8" fill="var(--mustard)" stroke="none"/>
+      <rect x="18" y="42" width="14" height="30" fill="var(--paper)"/>
+      <rect x="34" y="30" width="13" height="42" fill="url(#dots)"/>
+      <path d="M54 72 V24 H62 V13 H69 V24 H73 V32 H77 V72" fill="var(--paper)"/><path d="M62 13 V4 M69 13 V6"/>
+      <path d="M58 34 h4 M58 44 h4 M58 54 h4 M66 34 h4 M66 44 h4 M66 54 h4" stroke-width="1.2"/>
+      <rect x="82" y="38" width="16" height="34" fill="var(--paper)"/>
+      <path d="M104 72 L109 20 H121 L126 72 Z" fill="var(--paper)"/><path d="M110 32 L120 46 M120 32 L110 46 M109 50 L121 64 M121 50 L109 64" stroke-width="1.2"/><path d="M112 20 V9 M118 20 V7"/>
+      <rect x="131" y="46" width="12" height="26" fill="url(#dots)"/>
+      <path d="M147 72 V32 L154 24 L161 32 V72" fill="var(--paper)"/>
+      <rect x="165" y="50" width="18" height="22" fill="var(--paper)"/>
+      <rect x="186" y="40" width="10" height="32" fill="var(--paper)"/>
+      <rect x="199" y="54" width="22" height="18" fill="url(#dots)"/>
+      <path d="M8 72 H232"/>
+      <path d="M14 80 q8 -3 16 0 t16 0 t16 0 t16 0 t16 0 t16 0 t16 0 t16 0 t16 0 t16 0 t16 0 t16 0 t16 0" stroke-width="1.3"/>
+      <path d="M50 88 q8 -3 16 0 t16 0 t16 0 t16 0 t16 0 t16 0 t16 0 t16 0" stroke-width="1.3"/>
+    </g>
+  </symbol>
+  <symbol id="d-coffee" viewBox="0 0 100 100">
+    <g filter="url(#hand)" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M40 30 q-4 -6 0 -11 q4 -6 0 -12 M51 30 q-4 -6 0 -11 q4 -6 0 -12 M62 30 q-4 -6 0 -11 q4 -6 0 -12" stroke-width="1.4"/>
+      <path d="M68 46 q15 0 15 12 q0 12 -15 12"/>
+      <path d="M27 38 h42 v34 q0 13 -13 13 h-16 q-13 0 -13 -13 Z" fill="var(--paper)"/>
+      <path d="M27 52 h42 v9 h-42 Z" fill="var(--mustard)"/>
+      <path d="M14 90 q34 6 70 0"/>
+    </g>
+  </symbol>
+  <symbol id="d-notebook" viewBox="0 0 140 104">
+    <g filter="url(#hand)" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <g transform="rotate(-4 60 52)">
+        <rect x="18" y="16" width="82" height="76" rx="3" fill="var(--paper)"/>
+        <path d="M28 12 v8 M38 12 v8 M48 12 v8 M58 12 v8 M68 12 v8 M78 12 v8 M88 12 v8" stroke-width="1.6"/>
+        <path d="M30 80 V34 M30 80 H90" stroke-width="1.4"/>
+        <path d="M32 74 L46 64 L56 68 L70 50 L86 38" />
+        <path d="M32 74 L46 64 L56 68 L70 50 L86 38 V80 H32 Z" fill="url(#dots)" stroke="none"/>
+        <circle cx="86" cy="38" r="3" fill="var(--mustard)"/>
+      </g>
+      <path d="M108 92 L122 44 L129 46 L115 94 Z" fill="var(--mustard)"/><path d="M108 92 L110 99 L115 94"/><path d="M120 51 l7 2" stroke-width="1.3"/>
+    </g>
+  </symbol>
+  <symbol id="d-ticket" viewBox="0 0 150 90">
+    <g filter="url(#hand)" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <g transform="rotate(-8 75 45)">
+        <path d="M20 22 H118 a7 7 0 0 0 0 14 V58 a7 7 0 0 0 0 14 H20 a7 7 0 0 0 0 -14 V36 a7 7 0 0 0 0 -14 Z" fill="var(--paper)"/>
+        <path d="M96 24 V70" stroke-dasharray="2 4" stroke-width="1.4"/>
+        <path d="M32 36 h46 M32 46 h34 M32 56 h40" stroke-width="1.4"/>
+        <rect x="100" y="38" width="12" height="18" fill="url(#dots)" stroke="none"/>
+      </g>
+      <path d="M126 12 v18 a5 4 0 1 1 -3 -4" /><path d="M126 12 l8 3"/>
+      <path d="M12 74 l2.5 5 l5.5 .8 l-4 3.8 l1 5.4 l-5 -2.6 l-5 2.6 l1 -5.4 l-4 -3.8 l5.5 -.8 Z" fill="var(--mustard)"/>
+    </g>
+  </symbol>
+  <symbol id="d-board" viewBox="0 0 120 100"><g filter="url(#hand)" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="10" y="12" width="96" height="62" rx="4" fill="var(--paper)"/><path d="M22 34 q6 -8 12 0 t12 0" stroke-width="1.5"/><path d="M58 30 h16 M66 22 v16" stroke-width="1.5"/><path d="M22 54 h40" stroke-width="1.4"/><circle cx="84" cy="52" r="7" fill="var(--mustard)"/>
+      <path d="M30 74 l-8 18 M90 74 l8 18"/><path d="M80 80 h20" stroke-width="1.4"/></g></symbol>  <symbol id="d-bookmark" viewBox="0 0 120 100"><g filter="url(#hand)" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M22 14 h26 v62 l-13 -10 l-13 10 Z" fill="var(--mustard)"/><path d="M56 22 h26 v62 l-13 -10 l-13 10 Z" fill="var(--paper)"/>
+      <path d="M92 18 V88" stroke-width="1.4"/><circle cx="92" cy="26" r="5" fill="var(--paper)"/><circle cx="92" cy="52" r="5" fill="var(--mustard)"/><circle cx="92" cy="78" r="5" fill="var(--paper)"/></g></symbol>  <symbol id="d-chat" viewBox="0 0 120 100"><g filter="url(#hand)" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 14 h58 a8 8 0 0 1 8 8 v22 a8 8 0 0 1 -8 8 h-40 l-12 10 v-10 h-6 a8 8 0 0 1 -8 -8 v-22 a8 8 0 0 1 8 -8 Z" fill="var(--paper)"/><path d="M22 28 h44 M22 38 h30" stroke-width="1.4"/>
+      <path d="M50 52 h52 a8 8 0 0 1 8 8 v16 a8 8 0 0 1 -8 8 h-4 v10 l-12 -10 h-36 a8 8 0 0 1 -8 -8 v-16 a8 8 0 0 1 8 -8 Z" fill="var(--mustard)"/><path d="M60 64 l5 -9 l5 9 Z" stroke-width="1.4" fill="var(--paper)"/><path d="M76 66 h24" stroke-width="1.4"/></g></symbol>  <symbol id="d-funnel" viewBox="0 0 120 100"><g filter="url(#hand)" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14 16 h84 l-30 34 v26 l-22 10 v-36 Z" fill="var(--paper)"/>
+      <circle cx="30" cy="24" r="2.2" fill="currentColor" stroke="none"/><circle cx="46" cy="22" r="2.2" fill="currentColor" stroke="none"/><circle cx="62" cy="25" r="2.2" fill="currentColor" stroke="none"/><circle cx="78" cy="22" r="2.2" fill="currentColor" stroke="none"/><circle cx="54" cy="36" r="2.2" fill="currentColor" stroke="none"/>
+      <circle cx="57" cy="66" r="5" fill="var(--mustard)"/><path d="M84 70 l6 6 l14 -16" stroke-width="2"/></g></symbol>
+</svg>
+
+<nav class="bar" aria-label="信头">
+  <div class="l">芝加哥，2026 年 10 月</div>
+  <div class="r"><a href="#five">五个产品</a><a href="#about">关于我</a><a href="../assets/Jessie_Chen_Resume.pdf">简历</a><a href="mailto:jessiechenyiqi@outlook.com">邮箱</a><a href="https://github.com/jessieyiqichen">GitHub</a><a href="../" hreflang="en" lang="en">English</a></div>
+</nav>
+
+<header class="hero">
+  <div class="tx">
+    <p class="sal">亲爱的招聘经理：</p>
+    <h1 class="al-b">你在招<span class="nw"><button type="button" data-l="pm" style="--c:var(--pm)" aria-pressed="false">产品</button>、</span><span class="nw"><button type="button" data-l="eng" style="--c:var(--eng)" aria-pressed="false">工程</button>，</span><span class="nw">还是<button type="button" data-l="data" style="--c:var(--data)" aria-pressed="false">数据</button>方向？</span></h1>
+    <p class="sub">过去一年，我独立把五个 AI 产品从一张白纸做到上线，其中三个至今每天在生产环境运行。</p>
+    <p class="lensline" id="sub" aria-live="polite">在上面选一个，整页就按那个方向归档。</p>
+    <a class="al-skip" href="#five">或者直接看这五个 ↓</a>
+  </div>
+  <div class="lead-wrap">
+    <div class="ncard">
+      <img class="nc-ph" src="../assets/photos/ice-cave.jpg" alt="陈亦奇穿着冬装站在冰洞里，双手比耶">
+      <p class="nc-nm">陈亦奇 <span lang="en">Jessie Chen</span></p>
+      <p class="nc-l">AI 产品 · 芝加哥 / 上海 · 正在寻找机会</p>
+      <p class="nc-s">芝加哥大学计算社会科学硕士 · 2027 届</p>
+      <p class="nc-m"><a href="mailto:jessiechenyiqi@outlook.com">jessiechenyiqi@outlook.com</a></p>
+      <p class="nc-b"><a class="btn" href="../assets/Jessie_Chen_Resume.pdf">简历（PDF）</a><a class="btn" href="https://github.com/jessieyiqichen">GitHub</a></p>
+    </div>
+  </div>
+</header>
+
+
+<section class="five" id="five">
+  <div class="fh"><svg class="doodle d-note" aria-hidden="true"><use href="#d-notebook"/></svg><div><h2>五个产品，每个都由我独立上线</h2><p>第一张已经抽出来了，可以让我带你过一遍。按你想考察的方向重新归档，排在最前的那张就会换出来。</p></div></div>
+  <section class="drawer">
+    <div class="tabs" role="group" aria-label="五个产品的归档方式">
+      <button data-l="pm" style="--c:var(--pm)" aria-pressed="true">产品</button>
+      <button data-l="eng" style="--c:var(--eng)" aria-pressed="false">工程</button>
+      <button data-l="data" style="--c:var(--data)" aria-pressed="false">数据与成本</button>
+    </div>
+    <div class="divider"><span class="l-pm">按产品判断归档：每个产品选了什么问题，靠哪个数字说话。</span><span class="l-eng">按工程归档：每个产品怎么搭起来、怎么上线、怎么持续运行。</span><span class="l-data">按数据与成本归档：看数字，也看每次调用花多少钱。</span></div>
+    <ol class="stack" id="stack">
+    <li class="card" data-k="lc" style="--bg:#cfe0f7;--r:-0.7deg">
+      <button class="head" aria-expanded="false"><span class="nm">Lecture Companion</span><svg class="doodle cd" aria-hidden="true"><use href="#d-board"/></svg><span class="role">实时听课 AI 助手</span><span class="peek"><span class="pk l-pm"><em>瓶颈在输入摩擦，不在模型能力。</em><b>59 / 63</b> 次标记零输入完成</span><span class="pk l-eng"><em>多模态检索，一次只上线一层。</em><b>0</b> 次回滚，共 3 期上线</span><span class="pk l-data"><em>成本按用量账本逐项管理。</em><b>¼</b> 影子双跑后的 ASR 成本</span></span></button>
+      <div class="more"><div class="in">
+        <figure><div class="view"><img src="../assets/img/lecture-companion.png" alt="Lecture Companion 产品截图" loading="lazy"><svg class="marks" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><ellipse class="mk" data-j="0" cx="38.47" cy="47.77" rx="10.23" ry="14.04"/><ellipse class="mk" data-j="1" cx="86.25" cy="46.56" rx="13.70" ry="24.60"/><ellipse class="mk" data-j="2" cx="64.24" cy="10.22" rx="36.41" ry="5.82"/></svg><span class="bd" style="left:27.94%;top:32.33%">1</span><span class="bd" style="left:72.25%;top:20.56%">2</span><span class="bd" style="left:27.53%;top:3.00%">3</span></div><figcaption>指向下面任意一条注释，图上会圈出对应位置。</figcaption><ol class="calls"><li data-j="0"><span class="k">1</span>每个蓝点是一次标记：学生在没听懂的转写句上点一下，不用打字。</li><li data-j="1"><span class="k">2</span>AI 解释这句话，同时附上点击那一刻截下的板书。</li><li data-j="2"><span class="k">3</span>一节真实的公开课，录制后处理：MIT 14.12《博弈论》。</li></ol></figure>
+        <div class="tx"><div class="sw"><div class="l-pm"><h3>瓶颈在输入摩擦，不在模型能力。</h3><p>提问变成对转写句的一次点击。北极星定在课后复习，不定在课中标记。</p></div><div class="l-eng"><h3>多模态检索，一次只上线一层。</h3><p>检索补齐一句话背后的板书与公式。分三期上线，两天全部合并。</p></div><div class="l-data"><h3>成本按用量账本逐项管理。</h3><p>每次模型调用都记账。降本之前，先用影子双跑证明质量不掉。</p></div></div><div class="nums"><div><b>63</b><span>次标记，59 次零输入</span></div><div><b>3</b><span>期灰度上线，零回滚</span></div><div><b>¼</b><span>影子双跑后的 ASR 成本</span></div></div><p class="lk"><a href="../projects/lecture-companion.html">案例拆解 ↗</a><a href="https://jessieyiqichen.github.io/lc-demo/">在线演示 ↗</a><a href="https://jessieyiqichen.github.io/lecture-companion-walkthrough/">引导式走读 ↗</a></p><button class="close">放回去</button></div>
+      </div></div>
+    </li>
+    <li class="card" data-k="xhs" style="--bg:#f7e7a1;--r:0.6deg">
+      <button class="head" aria-expanded="false"><span class="nm">xhs-threads</span><svg class="doodle cd" aria-hidden="true"><use href="#d-bookmark"/></svg><span class="role">小红书收藏的思考轨迹</span><span class="peek"><span class="pk l-pm"><em>整理从来不会发生，所以不该让用户来发起。</em><b>4</b> 类竞品调研</span><span class="pk l-eng"><em>每条产出都由独立审核模型把关。</em><b>11 · 63</b> 条轨迹 · 个节点，2026-09</span><span class="pk l-data"><em>按任务分档路由：大部分调用不碰大模型。</em><b>90%</b> 的调用走轻量档</span></span></button>
+      <div class="more"><div class="in">
+        <figure><div class="view"><img src="../assets/img/xhs-threads.png" alt="xhs-threads 产品截图" loading="lazy"><svg class="marks" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><ellipse class="mk" data-j="0" cx="27.78" cy="39.45" rx="15.23" ry="11.26"/><ellipse class="mk" data-j="1" cx="72.85" cy="24.45" rx="13.49" ry="10.04"/><ellipse class="mk" data-j="2" cx="30.35" cy="67.33" rx="17.52" ry="5.82"/></svg><span class="bd" style="left:12.25%;top:26.78%">1</span><span class="bd" style="left:59.06%;top:13.00%">2</span><span class="bd" style="left:12.53%;top:60.11%">3</span></div><figcaption>指向下面任意一条注释，图上会圈出对应位置。</figcaption><ol class="calls"><li data-j="0"><span class="k">1</span>产品承诺：把收藏夹变回你的思考。</li><li data-j="1"><span class="k">2</span>一条轨迹：关于咖啡摊想法的几篇收藏，归成一条思路，3 个节点。</li><li data-j="2"><span class="k">3</span>你只管存。归线交给 AI，全天候无人值守。</li></ol></figure>
+        <div class="tx"><div class="sw"><div class="l-pm"><h3>整理从来不会发生，所以不该让用户来发起。</h3><p>零标注的主动归档：你只管存。定位来自对四类竞品的调研。</p></div><div class="l-eng"><h3>每条产出都由独立审核模型把关。</h3><p>AI 自动归线、写笔记并质检；产出质量由独立审核模型把关。</p></div><div class="l-data"><h3>按任务分档路由：大部分调用不碰大模型。</h3><p>每次调用按任务分到对应的模型档位，单位成本按条追踪：¥0.05–0.10。</p></div></div><div class="nums"><div><b>11 · 63</b><span>条轨迹 · 个节点，读数 2026-09</span></div><div><b>90%</b><span>的调用走轻量档</span></div><div><b>¥0.05–0.10</b><span>单条成本</span></div></div><p class="lk"><a href="../projects/xhs-threads.html">案例拆解 ↗</a><a href="https://47.94.34.146:8443/demo">引导式演示 ↗</a><a href="https://47.94.34.146:8443/try">试玩 ↗</a></p><button class="close">放回去</button></div>
+      </div></div>
+    </li>
+    <li class="card" data-k="nous" style="--bg:#d6cff5;--r:-0.4deg">
+      <button class="head" aria-expanded="false"><span class="nm">Nous</span><svg class="doodle cd" aria-hidden="true"><use href="#d-chat"/></svg><span class="role">认知分身消息代理</span><span class="peek"><span class="pk l-pm"><em>别人的 bot 学你怎么说话，它学你怎么做决定。</em><b>9</b> 维认知模型</span><span class="pk l-eng"><em>一个认知模型，三端日常在用。</em><b>3</b> 端真实在线</span><span class="pk l-data"><em>修正飞轮，可量化地缩小了差距。</em><b>49 → 71%</b> 行为预测</span></span></button>
+      <div class="more"><div class="in">
+        <figure><div class="view"><img src="../assets/img/nous.png" alt="Nous 产品截图" loading="lazy"><svg class="marks" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><ellipse class="mk" data-j="0" cx="22.98" cy="35.55" rx="21.54" ry="8.04"/><ellipse class="mk" data-j="1" cx="76.31" cy="40.44" rx="14.04" ry="7.82"/><ellipse class="mk" data-j="2" cx="76.25" cy="50.11" rx="13.98" ry="7.49"/></svg><span class="bd" style="left:1.14%;top:26.11%">1</span><span class="bd" style="left:61.97%;top:31.22%">2</span><span class="bd" style="left:61.97%;top:41.22%">3</span></div><figcaption>指向下面任意一条注释，图上会圈出对应位置。</figcaption><ol class="calls"><li data-j="0"><span class="k">1</span>同事问：这周末有空整理一下季度数据吗？周一要用。</li><li data-j="1"><span class="k">2</span>Nous 用我的口吻起草回复：最近有点忙，但这周末会弄，周一可以吗？</li><li data-j="2"><span class="k">3</span>质检警告：我多半会答应，但按习惯会拖到周日晚上才动手，所以草稿替我争取了一天。</li></ol></figure>
+        <div class="tx"><div class="sw"><div class="l-pm"><h3>别人的 bot 学你怎么说话，它学你怎么做决定。</h3><p>它替你判断回不回、按你的方式起草，并在你要答应一件做不到的事之前发出警告。</p></div><div class="l-eng"><h3>一个认知模型，三端日常在用。</h3><p>飞书 bot、Mac 悬浮助手和 Web，三端基于同一个认知模型在生产环境运行。</p></div><div class="l-data"><h3>修正飞轮，可量化地缩小了差距。</h3><p>用户的修正回流到模型，闭环已经跑通。</p></div></div><div class="nums"><div><b>49→71%</b><span>行为预测</span></div><div><b>3</b><span>端真实在线</span></div><div><b>已闭环</b><span>修正飞轮</span></div></div><p class="lk"><a href="../projects/nous.html">案例拆解 ↗</a><a href="https://jessieyiqichen.github.io/demos/nous.html">引导式演示 ↗</a><a href="https://web-ten-omega-72.vercel.app/agent">愿景沙盒 ↗</a></p><button class="close">放回去</button></div>
+      </div></div>
+    </li>
+    <li class="card" data-k="jp" style="--bg:#c6ecd2;--r:0.8deg">
+      <button class="head" aria-expanded="false"><span class="nm">JobPilot</span><svg class="doodle cd" aria-hidden="true"><use href="#d-funnel"/></svg><span class="role">AI 求职军师，开源</span><span class="peek"><span class="pk l-pm"><em>求职的卡点不在信息，在人。</em><b>6</b> 条取舍，每条都写明了为什么</span><span class="pk l-eng"><em>开源、有测试、有 CI，还有在线演示。</em><b>544</b> 个测试，覆盖 31 个命令</span><span class="pk l-data"><em>一个用户真正看得懂的漏斗。</em><b>349 · 37</b> 岗采集 · 高分岗</span></span></button>
+      <div class="more"><div class="in">
+        <figure><div class="view"><img src="../assets/img/job-pilot.png" alt="JobPilot 产品截图" loading="lazy"><svg class="marks" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><ellipse class="mk" data-j="0" cx="49.99" cy="24.78" rx="40.51" ry="8.82"/><ellipse class="mk" data-j="1" cx="20.97" cy="41.77" rx="11.48" ry="8.04"/><ellipse class="mk" data-j="2" cx="49.86" cy="70.55" rx="38.98" ry="14.82"/></svg><span class="bd" style="left:9.19%;top:14.56%">1</span><span class="bd" style="left:9.19%;top:32.33%">2</span><span class="bd" style="left:10.58%;top:54.33%">3</span></div><figcaption>指向下面任意一条注释，图上会圈出对应位置。</figcaption><ol class="calls"><li data-j="0"><span class="k">1</span>一句话诊断：一个都还没投，但有 37 个高分岗在等。先投，策略以后再说。</li><li data-j="1"><span class="k">2</span>采集的 349 个岗位里，有 37 个高分岗。</li><li data-j="2"><span class="k">3</span>本周计划：每个岗位都打了分，都附上了下一步。</li></ol></figure>
+        <div class="tx"><div class="sw"><div class="l-pm"><h3>求职的卡点不在信息，在人。</h3><p>市面工具停在行为层。JobPilot 诊断的是人，每个取舍都写了下来。</p></div><div class="l-eng"><h3>开源、有测试、有 CI，还有在线演示。</h3><p>命令行内核有 31 个命令，配持续集成，外加一个线上只读演示。</p></div><div class="l-data"><h3>一个用户真正看得懂的漏斗。</h3><p>岗位先采集、再打分，本周计划由分数推出来。</p></div></div><div class="nums"><div><b>349 · 37</b><span>岗采集 · 高分岗</span></div><div><b>31 · 544</b><span>个 CLI 命令 · 个测试，2026-09</span></div><div><b>CI</b><span>加线上只读演示</span></div></div><p class="lk"><a href="../projects/job-pilot.html">案例拆解 ↗</a><a href="https://jobpilot-demo-delta.vercel.app">在线演示 ↗</a><a href="https://github.com/jessieyiqichen/job-pilot">GitHub ↗</a></p><button class="close">放回去</button></div>
+      </div></div>
+    </li>
+    <li class="card" data-k="mc" style="--bg:#f4efe6;--r:-0.5deg">
+      <button class="head" aria-expanded="false"><span class="nm">MusiClaw</span><svg class="doodle cd" aria-hidden="true"><use href="#d-ticket"/></svg><span class="role">上海音乐剧市场数据</span><span class="peek"><span class="pk l-pm"><em>一个带真实内容运营闭环的数据产品。</em><b>4</b> 条内容产线</span><span class="pk l-eng"><em>每天自己更新，AI 的职责写成了文档。</em><b>每日</b> 不用人按按钮</span><span class="pk l-data"><em>把座位图和卡司当作市场数据来读。</em><b>86</b> 部剧每日快照</span></span></button>
+      <div class="more"><div class="in">
+        <figure><div class="view"><img src="../assets/img/musiclaw.png" alt="MusiClaw 产品截图" loading="lazy"><svg class="marks" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><ellipse class="mk" data-j="0" cx="76.04" cy="43.44" rx="17.66" ry="35.71"/><ellipse class="mk" data-j="1" cx="24.03" cy="68.78" rx="22.59" ry="6.82"/><ellipse class="mk" data-j="2" cx="70.14" cy="86.66" rx="21.48" ry="6.94"/></svg><span class="bd" style="left:58.08%;top:6.33%">1</span><span class="bd" style="left:1.14%;top:60.56%">2</span><span class="bd" style="left:48.36%;top:78.33%">3</span></div><figcaption>指向下面任意一条注释，图上会圈出对应位置。</figcaption><ol class="calls"><li data-j="0"><span class="k">1</span>今日精选：一轮售罄的演出，海报上已标出。</li><li data-j="1"><span class="k">2</span>售出 100%，1,928 / 1,928 座，45.1K 人想看。</li><li data-j="2"><span class="k">3</span>每天自己更新，下一次运行在 06:00。</li></ol></figure>
+        <div class="tx"><div class="sw"><div class="l-pm"><h3>一个带真实内容运营闭环的数据产品。</h3><p>四条产线支撑一个真实运营的数据账号，每篇帖子发布 24 小时后固定复盘。</p></div><div class="l-eng"><h3>每天自己更新，AI 的职责写成了文档。</h3><p>每日座位图快照无人值守运行；AI 能决定什么、不能决定什么，都写成了文档。</p></div><div class="l-data"><h3>把座位图和卡司当作市场数据来读。</h3><p>座位图快照加上卡司归因分析，把公开售票数据变成数据集。</p></div></div><div class="nums"><div><b>86</b><span>部剧每日快照</span></div><div><b>4</b><span>条内容产线</span></div><div><b>24 h</b><span>发布后固定复盘</span></div></div><p class="lk"><a href="../projects/musiclaw.html">案例拆解 ↗</a><a href="https://jessieyiqichen.github.io/musiclaw-demo/">数据仪表盘 ↗</a></p><button class="close">放回去</button></div>
+      </div></div>
+    </li>
+    </ol>
+  </section>
+</section>
+
+<section class="rest" id="about">
+  <div>
+    <h2>我的工作方式</h2>
+    <p class="hiw">证据优先：这里的每个数字，都能说出哪个后台、哪个指标、哪天的读数。</p>
+    <ul class="rules">
+      <li class="r-pm"><b>痛点先于方案。</b>课堂提问的瓶颈在输入摩擦，不在模型。</li>
+      <li class="r-eng"><b>灰度上线。</b>每期只改一层。检索：三期上线，零回滚。</li>
+      <li class="r-pm r-data"><b>指标先定口径。</b>看课后被复习的标记，不看课中做的标记。</li>
+      <li class="r-eng r-data"><b>成本是产品参数。</b>每次调用都记账、分档路由；降本之前先影子双跑。</li>
+    </ul>
+  </div>
+  <div>
+    <div class="pets"><svg class="doodle d-cat" aria-hidden="true"><use href="#d-cat"/></svg><svg class="doodle d-dog" aria-hidden="true"><use href="#d-dog"/></svg></div>
+    <h2>下班以后</h2>
+    <p>生在武汉，在香港待了四年，现在在芝加哥。两只猫、两只狗，还有一个看音乐剧的爱好，后来变成了 MusiClaw。</p>
+  </div>
+</section>
+<section class="strip" aria-label="照片">
+  <figure><img src="../assets/photos/wuhan-night.jpg" alt="隔着长江看武汉夜景" loading="lazy"><figcaption>武汉，我出生的地方</figcaption></figure>
+  <figure><img src="../assets/photos/hong-kong.jpg" alt="维多利亚港夜景" loading="lazy"><figcaption>香港，四年</figcaption></figure>
+  <figure><img src="../assets/photos/chicago-river.jpg" alt="黄昏时的芝加哥河与高楼" loading="lazy"><figcaption>芝加哥，现在</figcaption></figure>
+  <figure><img src="../assets/photos/cat-laptop.jpg" alt="一只猫待在打开的笔记本电脑旁" loading="lazy"><figcaption>Titi，正在审我的活</figcaption></figure>
+  <figure><img src="../assets/photos/dog-flowers.jpg" alt="花坛前一只毛茸茸的小狗" loading="lazy"><figcaption>Damai，正在摆拍</figcaption></figure>
+  <figure><img src="../assets/photos/playbills.jpg" alt="软木板上钉着三张节目单" loading="lazy"><figcaption>MusiClaw 背后的爱好</figcaption></figure>
+</section>
+
+<section class="ask signoff" id="contact">
+  <img src="../assets/img/jessie-wave.png" alt="陈亦奇的拟我表情，正在挥手">
+  <div>
+    <p class="yours">祝好，</p>
+    <p class="sig">陈亦奇 <span lang="en">Jessie Chen</span></p>
+    <p class="sig-l">正在寻找 AI 产品经理的机会。想深入了解任何一个项目，或者需要完整简历，欢迎发邮件给我。</p>
+    <p class="sig-m"><a href="mailto:jessiechenyiqi@outlook.com">jessiechenyiqi@outlook.com</a></p>
+    <div class="row"><a class="btn" href="../assets/Jessie_Chen_Resume.pdf">简历（PDF）</a><a class="btn" href="https://github.com/jessieyiqichen">GitHub</a></div>
+    <p class="ps"><b>P.S.</b> 上面每个产品都附有链接，通往今天就能打开的演示。</p>
+  </div>
+  <svg class="doodle d-coffee" aria-hidden="true"><use href="#d-coffee"/></svg>
+</section>
+<div class="tshade" id="tshade" hidden></div>
+<dialog class="hello" id="hello" aria-labelledby="hello-h">
+  <img src="../assets/img/jessie-wave.png" alt="">
+  <button type="button" class="hello-x" id="hello-x" aria-label="以后再说">×</button>
+  <h2 id="hello-h">嗨，我是陈亦奇。</h2>
+  <p>要我带你逛逛这一页吗？一共六站，大约 30 秒。</p>
+  <div class="hello-row"><button type="button" class="pri" id="hello-go">带我看看</button><button type="button" id="hello-no">我自己看看</button></div>
+</dialog>
+<div class="gm rest" id="gm" aria-live="polite">
+  <div class="gm-b" id="gm-b">
+    <div class="gm-hi" id="gm-hi"><p>要不要来个 30 秒导览？</p><button type="button" class="gm-start" id="gm-start">带我看看</button><button type="button" class="gm-x" id="gm-x" aria-label="以后再说">×</button></div>
+    <div id="gm-step" hidden><p class="gm-t" id="gm-t"></p><div class="gm-n"><span class="gm-c" id="gm-c"></span><button type="button" id="gm-back">上一步</button><button type="button" class="pri" id="gm-next">下一步</button><button type="button" id="gm-skip">跳过</button></div></div>
+  </div>
+  <button type="button" class="gm-img" id="gm-img" aria-label="开始导览"><img src="../assets/img/jessie-wave.png" alt="陈亦奇的拟我表情"></button>
+</div>
+<footer>© 2026 陈亦奇 Jessie Chen · 手写 HTML/CSS，无框架，无跟踪</footer>
+
+<script>
+(function(){
+  const ORDER={"pm": ["nous", "lc", "xhs", "jp", "mc"], "eng": ["jp", "nous", "lc", "mc", "xhs"], "data": ["xhs", "nous", "lc", "mc", "jp"]},body=document.body,stack=document.getElementById('stack'),tabs=[...document.querySelectorAll('.tabs button')];
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function closeAll(except){stack.querySelectorAll('.card.open').forEach(c=>{if(c!==except){c.classList.remove('open');c.querySelector('.head').setAttribute('aria-expanded','false')}})}
+  stack.addEventListener('click',e=>{
+    const card=e.target.closest('.card');if(!card)return;
+    if(e.target.closest('.close')){card.classList.remove('open');card.querySelector('.head').setAttribute('aria-expanded','false');return}
+    if(!e.target.closest('.head'))return;
+    const on=!card.classList.contains('open');closeAll(card);card.classList.toggle('open',on);card.querySelector('.head').setAttribute('aria-expanded',on);
+    if(on&&!reduce)setTimeout(()=>card.scrollIntoView({behavior:'smooth',block:'start'}),120);
+    if(on&&tour&&tour.i===PICK){tour.picked=card;setTimeout(()=>show(PICK),reduce?0:450)}
+  });
+  stack.addEventListener('mouseover',e=>{const li=e.target.closest('.calls li');if(!li)return;const c=li.closest('.card'),j=li.dataset.j;c.querySelectorAll('.calls li').forEach(x=>x.classList.toggle('on',x===li));c.querySelectorAll('.mk').forEach(m=>m.classList.toggle('on',m.dataset.j===j))});
+  stack.addEventListener('mouseout',e=>{const li=e.target.closest('.calls li');if(!li||li.contains(e.relatedTarget))return;li.closest('.card').querySelectorAll('.calls .on,.mk.on').forEach(x=>x.classList.remove('on'))});
+  // the page-wide tour: my memoji walks to each thing, the rest of the page goes dark
+  stack.querySelectorAll('.card').forEach(c=>{c.querySelector('.view').insertAdjacentHTML('afterend','<button class="walk" type="button"><img src="../assets/img/jessie-face.png" alt="">带我看一遍</button>')});
+  const $=id=>document.getElementById(id),gm=$('gm'),shade=$('tshade'),gmImg=gm.querySelector('.gm-img img'),POSE={wave:'jessie-wave',idea:'memoji-idea',heart:'memoji-heart',party:'memoji-party'};
+  const openCard=()=>{let c=stack.querySelector('.card.open');if(!c){c=stack.firstElementChild;closeAll(c);c.classList.add('open');c.querySelector('.head').setAttribute('aria-expanded','true')}return c};
+  // Six stops: the question, me, the card already out, then the visitor pulls one out themselves, the tabs, the sign-off.
+  const closed=()=>[...stack.querySelectorAll('.card:not(.open)')];
+  const nameOf=c=>c.querySelector('.nm').textContent;
+  const unionOf=els=>{const rs=els.map(e=>e.getBoundingClientRect());const l=Math.min(...rs.map(r=>r.left)),t=Math.min(...rs.map(r=>r.top));return{left:l,top:t,width:Math.max(...rs.map(r=>r.right))-l,height:Math.max(...rs.map(r=>r.bottom))-t}};
+  const STOPS=[
+    {el:()=>document.querySelector('h1.al-b'),pose:'idea',say:()=>'先说说，你在招什么方向？点「产品」「工程」或「数据」，整页就按那个方向归档。'},
+    {el:()=>document.querySelector('.ncard'),pose:'heart',say:()=>'这就是我：做 AI 产品，往返芝加哥和上海，在芝加哥大学读硕士，2027 届。邮箱就在卡片上。'},
+    {el:()=>openCard(),pose:'idea',say:()=>['这张已经抽出来了：'+nameOf(openCard())+'。','每张卡片打开都一样：一张界面截图，圈出三处值得看的地方；一句话说它做什么；它靠哪几个数字说话；还有能直接试用的链接。']},
+    {el:()=>tour.picked||closed()[0],box:()=>tour.picked?null:unionOf(closed()),pose:'idea',say:()=>tour.picked?'抽出来了：'+nameOf(tour.picked)+'。慢慢看，看好了就点「下一步」。':'轮到你了：再抽一张出来。点任意一张卡片，我等你。或者点「下一步」，我替你抽一张。'},
+    {el:()=>document.querySelector('.divider'),pad:[64,14,14,14],pose:'idea',say:()=>'这些标签按你想考察的方向给五个产品归档：产品、工程，或数据与成本。排在最前的那张会先抽出来。'},
+    {el:()=>document.querySelector('.signoff'),pose:'heart',say:()=>'导览就到这里。想深入了解这五个中的任何一个，给我写信吧，邮箱就在这儿。'}
+  ];
+  const PICK=3;
+  // pull a card out on the visitor's behalf, as a click on its head would
+  function pick(card){closeAll(card);card.classList.add('open');card.querySelector('.head').setAttribute('aria-expanded','true');tour.picked=card}
+  let tour=null,moveT=0;
+  function pose(k){gmImg.src='../assets/img/'+POSE[k]+'.png'}
+  function rectOf(st){const e=st.el();if(!e)return null;const r=(st.box&&st.box())||e.getBoundingClientRect(),p=st.pad||[12,12,12,12];return{left:r.left-p[3],top:r.top-p[0],width:r.width+p[1]+p[3],height:r.height+p[0]+p[2]}}
+  function place(snap){
+    if(!tour)return;const st=STOPS[tour.i],r=rectOf(st);if(!r)return;
+    shade.classList.toggle('snap',!!snap);gm.classList.toggle('snap',!!snap);
+    Object.assign(shade.style,{left:r.left+'px',top:r.top+'px',width:r.width+'px',height:r.height+'px'});
+    const W=innerWidth,H=innerHeight,w=gm.offsetWidth,h=gm.offsetHeight;let x,y,flip=false;
+    if(r.left+r.width+w+16<W){x=r.left+r.width+12;flip=true}else if(r.left-w-12>0){x=r.left-w-12}else{x=Math.max(12,Math.min(W-w-12,r.left))}
+    y=Math.max(12,Math.min(H-h-12,r.top+r.height/2-h/2));
+    if(x===Math.max(12,Math.min(W-w-12,r.left))&&!(r.left-w-12>0)&&!(r.left+r.width+w+16<W)){y=r.top+r.height+12+h<H?r.top+r.height+12:Math.max(12,r.top-h-12)}
+    gm.classList.toggle('flip',flip);gm.style.left=x+'px';gm.style.top=y+'px';
+  }
+  function show(i){
+    if(!tour)return;tour.i=i;const st=STOPS[i],e=st.el();if(!e){if(i<STOPS.length-1)show(i+1);return}
+    e.scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'});
+    gm.classList.add('walking');pose(st.pose);clearTimeout(moveT);
+    const said=st.say(),t=$('gm-t');t.textContent='';if(Array.isArray(said)){const b=document.createElement('b');b.textContent=said[0];t.append(b,' '+said[1])}else t.textContent=said;
+    $('gm-c').textContent=(i+1)+' / '+STOPS.length;$('gm-back').disabled=i===0;$('gm-next').textContent=i===STOPS.length-1?'完成':'下一步';
+    setTimeout(()=>place(false),reduce?0:420);
+    moveT=setTimeout(()=>{gm.classList.remove('walking');gm.classList.add('talk');setTimeout(()=>gm.classList.remove('talk'),520)},reduce?0:1300);
+  }
+  function startTour(i){
+    tour={i:0,picked:null};gm.classList.remove('rest');gm.classList.add('touring');shade.hidden=false;
+    $('gm-b').hidden=false;$('gm-hi').hidden=true;$('gm-step').hidden=false;
+    const r=gm.getBoundingClientRect();gm.classList.add('snap');gm.style.left=r.left+'px';gm.style.top=r.top+'px';gm.offsetWidth;gm.classList.remove('snap');
+    show(i||0);$('gm-next').focus({preventScroll:true});
+  }
+  function endTour(){
+    if(!tour)return;tour=null;shade.hidden=true;gm.classList.remove('touring','walking','flip');gm.classList.add('rest','snap');gm.style.left='';gm.style.top='';
+    $('gm-step').hidden=true;$('gm-b').hidden=true;pose('wave');requestAnimationFrame(()=>gm.classList.remove('snap'));
+  }
+  $('gm-start').addEventListener('click',()=>startTour(0));
+  $('gm-img').addEventListener('click',()=>{if(!tour)startTour(0)});
+  $('gm-x').addEventListener('click',()=>{$('gm-b').hidden=true});
+  // The greeting opens on arrival. "Show me" starts the tour; anything else closes it and leaves the memoji in its corner.
+  const hello=$('hello');
+  $('hello-go').addEventListener('click',()=>{hello.close();startTour(0)});
+  $('hello-no').addEventListener('click',()=>hello.close());
+  $('hello-x').addEventListener('click',()=>hello.close());
+  // a click on the dimmed page around the card (the dialog's own box, outside its edges) closes it too
+  hello.addEventListener('click',e=>{if(e.target!==hello)return;const r=hello.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)hello.close()});
+  // In the gallery's thumbnail (a page inside a frame) the greeting is only drawn, so it never takes the gallery's focus.
+  if(window.self!==window.top){hello.setAttribute('open','');document.body.classList.add('hello-thumb')}
+  else if(hello.showModal){hello.showModal();$('hello-go').focus()}
+  $('gm-next').addEventListener('click',()=>{if(!tour)return;if(tour.i===PICK&&!tour.picked&&closed().length){pick(closed()[0]);show(PICK);return}if(tour.i<STOPS.length-1)show(tour.i+1);else endTour()});
+  $('gm-back').addEventListener('click',()=>{if(tour&&tour.i>0)show(tour.i-1)});
+  $('gm-skip').addEventListener('click',endTour);
+  stack.addEventListener('click',e=>{const w=e.target.closest('.walk');if(w){const c=w.closest('.card');closeAll(c);c.classList.add('open');startTour(2)}});
+  let raf=0;addEventListener('scroll',()=>{if(!tour||raf)return;raf=requestAnimationFrame(()=>{raf=0;place(true)})},{passive:true});
+  addEventListener('resize',()=>place(true));
+  document.addEventListener('keydown',e=>{if(!tour)return;if(e.key==='Escape')endTour();else if(e.key==='ArrowRight')$('gm-next').click();else if(e.key==='ArrowLeft')$('gm-back').click()});
+  // the corner question waits until the greeting is closed, so the same question is never asked twice at once
+  $('gm-b').hidden=true;
+  if(hello.open)hello.addEventListener('close',()=>setTimeout(()=>{if(!tour)$('gm-b').hidden=false},350),{once:true});
+  else setTimeout(()=>{if(!tour)$('gm-b').hidden=false},1400);
+  function setLens(l,push){
+    if(!ORDER[l])l='pm';
+    const cards=[...stack.children],first=new Map(cards.map(c=>[c,c.getBoundingClientRect().top]));
+    body.dataset.lens=l;tabs.forEach(b=>b.setAttribute('aria-pressed',b.dataset.l===l));
+    closeAll(null);
+    ORDER[l].forEach(k=>{const c=stack.querySelector('[data-k="'+k+'"]');if(c)stack.appendChild(c)});
+    if(!reduce)cards.forEach(c=>{const dy=first.get(c)-c.getBoundingClientRect().top;if(dy)c.animate([{translate:'0 '+dy+'px'},{translate:'0 0'}],{duration:600,easing:'cubic-bezier(.3,.7,.2,1)'})});
+    if(push)history.replaceState(null,'','#'+l);
+    const lead=stack.querySelector('[data-k="'+ORDER[l][0]+'"]');
+    const pullLead=()=>{if(body.dataset.lens!==l)return;closeAll(lead);lead.classList.add('open');lead.querySelector('.head').setAttribute('aria-expanded','true')};
+    if(push&&!reduce)setTimeout(pullLead,420);else pullLead();
+  }
+  tabs.forEach(b=>b.addEventListener('click',()=>setLens(b.dataset.l,true)));
+  // the first screen asks which lens; the answer files the drawer and rewrites the line under the headline
+  const SUB={pm:'已按产品归档：每个产品选了什么问题，靠哪个数字说话。',eng:'已按工程归档：每个产品怎么搭起来、怎么上线、怎么持续运行。',data:'已按数据与成本归档：看数字，也看每次调用花多少钱。'};
+  const asks=[...document.querySelectorAll('.al-b button')],sub=document.getElementById('sub');
+  asks.forEach(b=>b.addEventListener('click',()=>{
+    const l=b.dataset.l;asks.forEach(x=>x.setAttribute('aria-pressed',x===b));b.closest('h1').classList.add('chosen');sub.textContent=SUB[l];
+    setLens(l,true);if(tour){setTimeout(()=>show(2),500);return}document.getElementById('five').scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
+  }));
+  tabs.forEach(b=>b.addEventListener('click',()=>{asks.forEach(x=>x.setAttribute('aria-pressed',x.dataset.l===b.dataset.l));asks[0].closest('h1').classList.add('chosen');sub.textContent=SUB[b.dataset.l]}));
+  const h=location.hash.slice(1);setLens(ORDER[h]?h:'pm',false);
+  requestAnimationFrame(()=>requestAnimationFrame(()=>body.classList.remove('preload')));
+})();
+</script>
+</body>
+</html>

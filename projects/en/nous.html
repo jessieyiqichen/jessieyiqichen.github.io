@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nous — Jessie Chen 陈亦奇</title>
+<meta name="description" content="Nous: a cognitive-twin message agent. Other bots learn how you talk; this one learns how you decide. Message triage, reply drafting and execution quality checks driven by a nine-dimension cognitive model, live on three clients.">
+<link rel="alternate" hreflang="zh-CN" href="https://jessieyiqichen.github.io/projects/nous.html">
+<link rel="alternate" hreflang="en" href="https://jessieyiqichen.github.io/projects/en/nous.html">
+<link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../../index.html">Jessie Chen <span style="color:var(--primary)" lang="zh-CN">陈亦奇</span></a>
+    <a class="nav-link" href="../../index.html#five">Projects</a>
+    <a class="nav-link" href="../../index.html#contact">Contact</a>
+    <a class="nav-link lang-link" href="../nous.html" hreflang="zh-CN" lang="zh-CN">中文</a>
+    <span class="nav-tag">CASE 03 · SOLO BUILD</span>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="measure">
+    <span class="kicker">AI Product · Solo build · 2026.3 —</span>
+    <h1>Nous</h1>
+    <p class="lede">Other bots learn how you talk; this one learns how you decide.</p>
+    <p style="margin-top:18px">From cognitive-modeling research to a real product: Nous first builds a nine-dimension cognitive model through conversational interviews, then turns that model into a message agent. When a message comes in, it judges whether to reply the way you would, drafts the reply for you, and raises a quality warning when you are about to say yes to something you cannot actually do. Feishu bot, Mac floating assistant and Web: three clients, one brain, in production for my own daily use.</p>
+    <div class="facts">
+      <span><b>Role</b> — Solo build (research + product + full stack)</span>
+      <span><b>Status</b> — Three clients in production for my own daily use · <a href="../../demos/nous.html">Guided demo (replay of real interactions)</a> · <a href="https://web-ten-omega-72.vercel.app/agent" target="_blank" rel="noopener">Vision sandbox</a></span>
+      <span><b>Stack</b> — Python · DeepSeek · Next.js · Swift (macOS) · Feishu Open Platform · Supabase</span>
+    </div>
+    <div class="metrics">
+      <div class="metric"><b>71%</b><span>behavior prediction accuracy (random baseline 25%)</span></div>
+      <div class="metric"><b>99%</b><span>model understanding accuracy (direct judgment)</span></div>
+      <div class="metric"><b>3</b><span>clients live: Feishu / macOS / Web<small> (as of 2026-09)</small></span></div>
+      <div class="metric"><b>9</b><span>dimensions in the cognitive model, driving every judgment</span></div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section class="section">
+  <div class="measure">
+    <div class="sec-label" data-n="01"><span>Start Here</span></div>
+    <h2>Three ways into this project, depending on how much time you have.</h2>
+    <div class="status-grid">
+      <article class="status-card">
+        <span class="tag shipped">Two minutes · Try it yourself</span>
+        <h3><a href="../../demos/nous.html">Guided demo →</a></h3>
+        <p>A true-to-scale recreation of the interaction at two real entry points: a message arrives in WeChat for desktop, the Nous floating card catches it, and you click “Fill into input box” yourself to watch the draft land in the chat box. The Feishu bot conversation is a replay of the original production logs. The judgments, drafts and quality checks are all real model output.</p>
+      </article>
+      <article class="status-card">
+        <span class="tag">Five minutes · The product judgment</span>
+        <h3><a href="#insight">Read on ↓</a></h3>
+        <p>One judgment (replying to a message is a decision, not text generation), one feature platforms cannot build (the execution quality check), and one learning loop (correct a draft once, and the next one sounds more like you).</p>
+      </article>
+      <article class="status-card">
+        <span class="tag">Dig deeper · The research foundation</span>
+        <h3><a href="#research">Cognitive-layer modeling ↓</a></h3>
+        <p>Under the product is research: how the nine-dimension cognitive model is built, how behavior prediction is validated (49→71%), and how contradictions between “what you say” and “what you do” become objective evidence of blind spots.</p>
+      </article>
+    </div>
+    <a class="pi-media" href="../../demos/nous.html" style="margin-top:26px;display:block"><img src="../../assets/img/nous.png" alt="Nous twin notification center interface" loading="lazy"></a>
+  </div>
+</section>
+
+<section class="section" id="insight">
+  <div class="measure">
+    <div class="sec-label" data-n="02"><span>Problem</span></div>
+    <h2>Replying to a message is a decision, not text generation.</h2>
+    <p>Behind every message is a string of micro-decisions: reply or not, reply now or let it wait, say yes or not, and how firmly to say no. Writing a polite reply is already standard on every platform: Feishu has a built-in AI assistant, and even input methods can polish your text. But “polite” is the same for everyone; “deciding the way you would” belongs only to you:</p>
+    <ul class="evidence">
+      <li>A platform assistant does not know whether this message is worth replying to in your world. It has no model of your attention.</li>
+      <li>Even less does it know whether you will actually do what you agree to. It has no record of how you follow through.</li>
+      <li>It is locked into a single platform, while your social decisions span WeChat, DingTalk and Feishu. “Who gets my energy tonight” needs to see all of them.</li>
+    </ul>
+    <div class="quote">
+      <p>“Tone can be imitated; cognitive structure cannot.”</p>
+      <cite>— Platform assistants answer “how to reply politely”; Nous answers “how you would reply”</cite>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="measure">
+    <div class="sec-label" data-n="03"><span>Product</span></div>
+    <h2>One brain, three entry points, living inside the chat apps you already use.</h2>
+    <p>The twin is not a new app. It catches messages on your phone through a Feishu bot, floats above WeChat and DingTalk for desktop through a Mac menu-bar assistant, and the Web client hosts the demo and the sandbox. All three clients call the same cognitive-model service.</p>
+    <div class="flow">
+      <div class="flow-step"><span class="n">01</span><strong>A message comes in</strong><span>Banner auto-detection / double ⌘C / forward to the bot</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><span class="n">02</span><strong>Triage</strong><span>Reply for you / reply later / don’t reply / reply yourself</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><span class="n">03</span><strong>Draft + check</strong><span>Drafted your way; empty promises called out</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><span class="n">04</span><strong>One-click fill</strong><span>The draft goes straight into the chat input box; you press send</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><span class="n">05</span><strong>Corrections saved</strong><span>Every rewrite you make brings it closer to you</span></div>
+    </div>
+    <div class="proof-grid">
+      <article class="proof-card highlight">
+        <span class="kicker">macOS floating assistant · native Swift</span>
+        <h3>Suggestions float above WeChat; your focus never leaves the conversation.</h3>
+        <p>Notification banners detect new messages automatically (screen reading through Accessibility), or you press ⌘C twice on a message to summon it manually. A non-activating panel pops up the draft, and clicking “Fill into input box” simulates a paste straight into the chat box. A single copy causes zero interruption: when a tool stays out of the way matters as much as when it shows up.</p>
+      </article>
+      <article class="proof-card">
+        <span class="kicker">Feishu bot · official API</span>
+        <h3>The mobile entry point, routed around a 3-second timeout.</h3>
+        <p>Webhook verification hit a 3-second timeout wall on the cross-border link, so I switched to long-connection mode: the client connects to Feishu itself, and no public URL is needed. Forward a message to the bot, and a few seconds later you get the judgment, the draft and the quality check. Official APIs throughout, zero risk of account bans.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="measure">
+    <div class="sec-label" data-n="04"><span>Signature Feature</span></div>
+    <h2>“You’ll say yes, but you can’t follow through.”</h2>
+    <p>This product feature grew out of the research foundation: the cognitive model records 20 contradictions between “who you say you are” and “what you actually do.” When the twin predicts that your verbal commitment will come apart from what you actually do, it does not cover for you. It says so plainly, then scales the commitment in the draft down to what you will really do.</p>
+    <div class="quote">
+      <p>“You’ll most likely say yes, but by your habits you won’t take this to heart, and odds are you’ll put it off until Sunday night. The draft relaxes the deadline to Monday, leaving yourself a buffer.”</p>
+      <cite>— Real output: the execution quality check for a manager assigning work over the weekend</cite>
+    </div>
+    <p>Platform assistants structurally cannot do this: it needs long-term modeling of one person’s behavior, and “calling the user out” runs against the product logic of pleasing the user. This is a moat unique to cognitive-layer modeling.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="measure">
+    <div class="sec-label" data-n="05"><span>Learning Loop</span></div>
+    <h2>Teach it one rule, and it knows that rule.</h2>
+    <p>“Like you” is not built in one go; two layers of data keep feeding it. The style card distills how you type (sentence patterns, punctuation, verbal tics) from real writing samples, as a one-time cold start. The correction flywheel records every rewrite you make to a draft: “what the twin wrote vs. what you actually sent” goes straight into the next generation as an example. Tested: teach it one rule, “a refusal should be direct and offer an alternative,” ask again in the same scenario, and the draft immediately uses the corrected phrasing.</p>
+    <div class="compare">
+      <div class="compare-head"><span>Dimension</span><span>Platform AI assistant</span><span>Nous twin</span></div>
+      <div class="compare-row">
+        <div class="compare-label">Optimization goal</div>
+        <div class="compare-cell" data-col="Platform AI assistant">Polite replies, generic courtesy</div>
+        <div class="compare-cell" data-col="Nous twin">Consistent with the decisions you would actually make</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-label">Learning data</div>
+        <div class="compare-cell" data-col="Platform AI assistant">Average feedback from all users</div>
+        <div class="compare-cell" data-col="Nous twin">Your cognitive model + your rewrite history</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-label">Coverage</div>
+        <div class="compare-cell" data-col="Platform AI assistant">Locked into a single platform</div>
+        <div class="compare-cell" data-col="Nous twin">Across WeChat / DingTalk / Feishu</div>
+      </div>
+    </div>
+    <p class="tech-line"><span class="kicker">Cost</span>The full stack moved from Claude to DeepSeek: 11 API routes switched over through one shared wrapper, unit call cost fell by more than an order of magnitude, and calls now connect directly within China instead of depending on a cross-border link.</p>
+  </div>
+</section>
+
+<section class="section" id="research">
+  <div class="measure">
+    <div class="sec-label" data-n="06"><span>Research Foundation</span></div>
+    <h2>Under the product: model first, then validate, and fix what is wrong.</h2>
+    <p>The twin’s judgment comes from cognitive-layer modeling. An AI interviewer uses 15–25 rounds of natural conversation to map nine dimensions (decision architecture, attention allocation, reasoning style, emotional processing, social cognition, blind spots, value hierarchy, response to uncertainty, execution-layer flexibility), then tests the model by predicting behavior in new scenarios. The prediction hit rate is an external standard, not a matter of how it feels.</p>
+    <ul class="evidence">
+      <li><strong>A validation loop.</strong> Predict, answer, score, correct: behavior prediction accuracy went from 49% on the first test to 71% through iteration (deterministic scoring, random baseline 25%), and model understanding accuracy reached 99% by direct judgment.</li>
+      <li><strong>Contradictions are the most honest data.</strong> “What you say” and “what you do” are recorded on separate tracks, and where they conflict is objective evidence of a blind spot. 20 found so far: the ammunition for quality warnings.</li>
+      <li><strong>Passive collection.</strong> In the background it extracts cognitive signals from everyday AI sessions, with local pre-filtering to save API calls: 101 signals so far. You work as usual, and the model gets more accurate on its own.</li>
+    </ul>
+    <p class="tech-line"><span class="kicker">The method works on strangers</span>The first stranger participant’s single 23-round interview produced a nine-dimension profile, 8 contradictions and 52 signals. The modeling process does not depend on prior knowledge of the participant.</p>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="foot-nav measure">
+    <a href="xhs-threads.html">← Previous — xhs-threads</a>
+    <a href="job-pilot.html">Next — JobPilot →</a>
+  </div>
+  <div class="foot-meta"><div class="measure"><span>© 2026 Jessie Chen 陈亦奇</span><span>Accuracy figures and quality-check copy are from real project records</span></div></div>
+</footer>
+
+</body>
+</html>
