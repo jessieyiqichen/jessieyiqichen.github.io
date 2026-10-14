@@ -26,19 +26,17 @@
     <span class="kicker">AI Product · 独立开发 · 2026.7 —</span>
     <h1>xhs-threads</h1>
     <p class="lede">你只管存，整理交给 AI。</p>
-    <p style="margin-top:18px">收藏是高频动作，整理几乎不发生，收藏那一刻的想法也没有载体。我把整理做成零标注的主动归档：系统定时自动运行，AI 判断每条新收藏的归属主线、生成笔记并自动质检，主线随收藏持续分叉生长。产品沉淀的不是内容摘要，是用户自己的想法轨迹。</p>
-    <div class="facts">
-      <span><b>角色</b> — 独立开发（产品 + 全栈）</span>
-      <span><b>状态</b> — 服务器 7×24 自动归线 · 邀请码注册内测中</span>
-      <span><b>演示</b> — <a href="https://47.94.34.146:8443/demo" target="_blank" rel="noopener">引导式演示（内嵌可点的真产品）</a> · <a href="https://47.94.34.146:8443/try" target="_blank" rel="noopener">试玩实例</a></span>
-      <span><b>技术</b> — Python · Node · 多租户 · 模型分档路由 · Rubric 评测 · 服务器定时归线</span>
-    </div>
+    <p class="sum">系统定时运行，AI 判断每条新收藏归哪条主线、写笔记并质检，攒下的是你自己的想法轨迹。</p>
     <div class="metrics">
       <div class="metric"><b>11</b><span>思考轨迹主线（截至 2026-09）</span></div>
-      <div class="metric"><b>63</b><span>主线上的节点</span></div>
       <div class="metric"><b>90%</b><span>调用落在轻量档</span></div>
       <div class="metric"><b>¥0.05–0.10</b><span>单条模型成本（精确值计量中）</span></div>
     </div>
+  </div>
+  <div class="measure facts">
+    <span><b>角色</b> 独立开发（产品 + 全栈）</span>
+    <span><b>试用</b> <a href="https://47.94.34.146:8443/demo" target="_blank" rel="noopener">引导式演示</a> · <a href="https://47.94.34.146:8443/try" target="_blank" rel="noopener">试玩实例</a></span>
+    <span><b>技术</b> Python · Node · 多租户 · 模型分档路由 · Rubric 评测</span>
   </div>
 </header>
 
@@ -48,11 +46,11 @@
   <div class="measure">
     <div class="sec-label" data-n="01"><span>Problem</span></div>
     <h2>收藏在发生，想法在丢。</h2>
-    <p>每次点收藏，其实都有一个当下的念头：这个方法我的项目能用；这篇和上周看的那篇矛盾。但这个念头没地方存。收藏夹只存了内容，几个月后回头看，就是一堆想不起来为什么存的链接。</p>
+    <p>每次点收藏都有个念头：这方法我的项目能用；这篇和上周那篇矛盾。可收藏夹只存内容，几个月后只剩一堆想不起为什么存的链接。</p>
     <ul class="evidence">
-      <li>收藏是几秒钟的事，天天做；整理要专门坐下来，所以基本不做。</li>
-      <li>指望用户养成整理习惯，等于把产品该解决的问题推回给用户。正确的问题是：整理能否完全不需要用户参与？</li>
-      <li>值钱的是「你当时为什么存它」，不是内容分类。这个东西丢了就找不回来。</li>
+      <li>收藏几秒钟、天天做；整理要专门坐下来，所以基本不做。</li>
+      <li>指望用户养成整理习惯，是把问题推回给用户；该问的是：整理能否完全不要用户参与？</li>
+      <li>值钱的是「你当时为什么存它」，不是内容分类，丢了就找不回来。</li>
     </ul>
   </div>
 </section>
@@ -61,7 +59,7 @@
   <div class="measure">
     <div class="sec-label" data-n="02"><span>Differentiation</span></div>
     <h2>竞品都在等用户发起，我让系统自己动。</h2>
-    <p>调研四类竞品后确认：现有工具都把收藏整理做成内容归类，且多数需要用户主动发起。社区工具导出后自行整理，AI 工具也要用户发起请求才归类一次，没有见到零标注、随收藏自动生长的做法。差异化据此确立，并写成 8 条产品判断，约束后续所有功能取舍。</p>
+    <p>调研四类竞品：现有工具都把整理做成内容归类，多数还要用户发起，没有零标注、随收藏自动生长的。差异化据此写成 8 条产品判断。</p>
     <div class="compare">
       <div class="compare-head"><span>维度</span><span>现有工具</span><span>xhs-threads</span></div>
       <div class="compare-row">
@@ -87,22 +85,22 @@
   <div class="measure">
     <div class="sec-label" data-n="03"><span>Evaluation</span></div>
     <h2>AI 写给用户看的东西，得先过质检。</h2>
-    <p>AI 产出的文字直接进入用户界面，量大且无法逐条人工把关。为此搭建了自动评审：由独立于生成模型的审核模型按判据打分，同一条内容审三次取多数，不及格打回重写；重写仍不合格转人工，不静默放行。</p>
+    <p>AI 写的文字直接给用户看，量大，没法逐条人工把关；不及格就打回重写，重写仍不合格转人工，不静默放行。</p>
     <div class="proof-grid">
       <article class="proof-card highlight">
         <span class="kicker">上线前验收</span>
         <h3>7 个坏样本，全拦住了。</h3>
-        <p>上线前专门造了 7 个典型坏样本（编造、空话、归错线）当验收集，评审全部拦截之后才放行。</p>
+        <p>上线前造了 7 个典型坏样本（编造、空话、归错线），评审全部拦住才放行。</p>
       </article>
       <article class="proof-card">
         <span class="kicker">机制要点</span>
         <h3>审核模型必须独立。</h3>
-        <p>让模型给自己打分等于没打。审核走另一个模型，三审取多数，判据写成文档，不靠临场发挥。</p>
+        <p>模型给自己打分等于没打，所以审核走另一个模型，三审取多数，判据写成文档。</p>
       </article>
       <article class="proof-card">
         <span class="kicker">评测素养</span>
         <h3>连尺子本身的误差也量了。</h3>
-        <p>归线准确率单次测量 30/36（83%），对照最强平凡基线只有 31%。同一份判据重跑四次为 30/28/28/31——噪声地板 ±3，凡小于噪声的“提升”一律不认，不对着噪声讲故事。</p>
+        <p>归线准确率单次测得 30/36（83%），最强平凡基线仅 31%；同一判据重跑四次为 30/28/28/31，小于 ±3 噪声的“提升”一律不认。</p>
       </article>
     </div>
   </div>
@@ -112,13 +110,13 @@
   <div class="measure">
     <div class="sec-label" data-n="04"><span>Unit Economics</span></div>
     <h2>一条笔记 15 次调用，90% 走轻量档。</h2>
-    <p>一条笔记从判断归属到生成完毕，平均经过 15 次模型调用（账本实测：622 次调用、41 条笔记）。全用旗舰档成本过高，全用轻量档质量不稳，所以按任务分档路由：分类判断走轻量档，写作走旗舰档。</p>
+    <p>一条笔记平均 15 次模型调用（账本实测：622 次、41 条）。全用旗舰档太贵，全用轻量档不稳，于是分类走轻量档、写作走旗舰档。</p>
     <ul class="evidence">
-      <li><strong>每次调用都记账。</strong>用途、档位、token 用量全记，成本报表一条命令能复现。</li>
-      <li><strong>实测结构。</strong>约 90% 的调用落在轻量档。单条模型成本目前约 0.05–0.10 元——账本早期混入了评测调用，我修复了记账（每步调用带笔记标签）后正在重新计量精确值，不先给一个我知道不准的数。</li>
-      <li><strong>质量兜底。</strong>评审不合格自动重写，还不行转人工。省钱不能靠悄悄降质。</li>
+      <li><strong>每次调用都记账。</strong>用途、档位、token 全记，成本报表一条命令复现。</li>
+      <li><strong>单条成本。</strong>约 0.05–0.10 元；早期账本混入评测调用，修好记账后正在重测。</li>
+      <li><strong>质量兜底。</strong>省钱不能靠悄悄降质，不合格照样打回重写。</li>
     </ul>
-    <p class="tech-line"><span class="kicker">进展</span>截至 2026-09-14：11 条思考轨迹、63 个节点（数据来自我本人的真实日常使用）。系统已迁移至服务器 7×24 无人值守运行，邀请码自助注册已上线，正在邀请首批外部试用者。</p>
+    <p class="tech-line"><span class="kicker">进展</span>截至 2026-09-14：11 条思考轨迹、63 个节点，都来自我本人的使用；服务器 7×24 无人值守运行，邀请码注册已上线，正邀请首批外部试用者。</p>
   </div>
 </section>
 

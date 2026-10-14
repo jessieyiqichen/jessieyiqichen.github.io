@@ -26,18 +26,17 @@
     <span class="kicker">AI Product · Solo build · Open source</span>
     <h1>JobPilot</h1>
     <p class="lede">Tools on the market help you apply more and faster; this one wants to understand you as a person first.</p>
-    <p style="margin-top:18px">A job-search strategist that stays with you from finding roles to getting an offer: it knows how you think, how you talk, and where you get stuck. The differentiation is not the number of features but the layer of modeling. Others stop at the behavior layer; it plugs in a cognitive model and language samples. Open source, with CI, and a read-only live demo.</p>
-    <div class="facts">
-      <span><b>Role</b> — Solo build (product + full stack)</span>
-      <span><b>Status</b> — Open source · CI · read-only live demo</span>
-      <span><b>Stack</b> — Python · Claude API · Next.js · GitHub Actions</span>
-    </div>
+    <p class="sum">A job-search strategist from first search to offer, using a cognitive model and language samples to know how you think, talk, and get stuck.</p>
     <div class="metrics">
       <div class="metric"><b>349</b><span>jobs collected across multiple channels</span></div>
-      <div class="metric"><b>37</b><span>high-score jobs picked out by AI scoring</span></div>
       <div class="metric"><b>6</b><span>product trade-offs, each with the why thought through</span></div>
       <div class="metric"><b>544</b><span>tests passing, CI all green<small> (as of 2026-09)</small></span></div>
     </div>
+  </div>
+  <div class="measure facts">
+    <span><b>Role</b> Solo build (product + full stack)</span>
+    <span><b>Try it</b> <a href="https://jobpilot-demo-delta.vercel.app" target="_blank" rel="noopener">Read-only live demo</a> · <a href="https://github.com/jessieyiqichen/job-pilot" target="_blank" rel="noopener">Open source on GitHub</a></span>
+    <span><b>Stack</b> Python · Claude API · Next.js · GitHub Actions</span>
   </div>
 </header>
 
@@ -51,17 +50,17 @@
       <article class="status-card">
         <span class="tag shipped">Two minutes · Try it yourself</span>
         <h3><a href="https://jobpilot-demo-delta.vercel.app" target="_blank" rel="noopener">Live demo →</a></h3>
-        <p>It opens on a board of 349 real collected jobs. Click any high-score job to see the actual output of the AI-tailored résumé and interview prep. The “Job-search strategist” item in the navigation is the most distinctive part of this product.</p>
+        <p>A board of 349 real collected jobs; the “Job-search strategist” is the part to see.</p>
       </article>
       <article class="status-card">
         <span class="tag">Five minutes · The product judgment</span>
         <h3><a href="#insight">Read on ↓</a></h3>
-        <p>One judgment (the job search is blocked by people, not information), one comparison table (behavior layer vs. cognitive layer), and six trade-offs, each with the why thought through. This is where the weight of this page lies.</p>
+        <p>Why the job search is blocked by people, and six trade-offs.</p>
       </article>
       <article class="status-card">
         <span class="tag">Dig deeper · The code</span>
         <h3><a href="https://github.com/jessieyiqichen/job-pilot" target="_blank" rel="noopener">GitHub →</a></h3>
-        <p>31 CLI commands, 544 tests, CI and coverage reporting. The README has the full architecture notes and product documentation.</p>
+        <p>31 CLI commands, 544 tests, CI and coverage reporting.</p>
       </article>
     </div>
     <a class="pi-media" href="https://jobpilot-demo-delta.vercel.app" target="_blank" rel="noopener" style="margin-top:26px;display:block"><img src="../../assets/img/job-pilot.png" alt="JobPilot job-search strategist page interface" loading="lazy"></a>
@@ -72,13 +71,12 @@
   <div class="measure">
     <div class="sec-label" data-n="02"><span>Problem</span></div>
     <h2>The job search is blocked by people, not information.</h2>
-    <p>When I was job hunting myself, I found that what really held me back was not a lack of job information:</p>
+    <p>What held me back was not a lack of job information; mass-application and template tools only look at what you did, not why:</p>
     <ul class="evidence">
-      <li>I picked out 37 high-score jobs and tailored 19 résumés, and did not send out a single application.</li>
-      <li>I had to edit the AI-generated opening messages every time, because they did not sound like me.</li>
+      <li>I picked out 37 high-score jobs, tailored 19 résumés, and sent out not a single application.</li>
+      <li>I had to edit the AI’s opening messages every time, because they did not sound like me.</li>
       <li>With two offers in front of me, I did not know what criteria to choose by.</li>
     </ul>
-    <p>Mass-application tools and template tools cannot solve these. They stop at the behavior layer: they only look at what you did, not at why you did it.</p>
     <div class="quote">
       <p>“Its diagnosis of my 0 applications was not ‘keep going, apply faster’ but ‘you are holding the things you care about to too high a standard; let yourself send an imperfect version first.’ Keyword matching cannot say something like that.”</p>
       <cite>— The first genuinely useful diagnosis the strategist gave me</cite>
@@ -90,13 +88,13 @@
   <div class="measure">
     <div class="sec-label" data-n="03"><span>Insight</span></div>
     <h2>Moving from the behavior layer to the cognitive layer.</h2>
-    <p>This is the fundamental difference between it and the tools on the market, and the one thing the whole project sets out to prove:</p>
+    <p>Your declared preferences are hard rules; inferred cognition only adjusts how it talks, and where the two clash is often the most valuable.</p>
     <div class="compare">
       <div class="compare-head"><span>Dimension</span><span>Behavior-layer tools (market mainstream)</span><span>JobPilot</span></div>
       <div class="compare-row">
         <div class="compare-label">What it models</div>
         <div class="compare-cell" data-col="Behavior-layer tools">What you do: applications, clicks, preferences</div>
-        <div class="compare-cell" data-col="JobPilot">How you think (how you decide, blind spots, value ranking) plus how you talk (language style)</div>
+        <div class="compare-cell" data-col="JobPilot">How you think (decisions, blind spots, value ranking) and how you talk</div>
       </div>
       <div class="compare-row">
         <div class="compare-label">What it gives you</div>
@@ -109,7 +107,6 @@
         <div class="compare-cell" data-col="JobPilot">Catching the contradictions between “what you say” and “what you do”</div>
       </div>
     </div>
-    <p style="margin-top:22px">Declared and inferred are kept clearly apart. Your declared preferences (city, deal-breakers) are hard rules the strategist must respect; inferred cognition is the understanding layer, which helps it adjust how it talks and see where you are stuck. Where the two clash is often where the most valuable insight lies.</p>
   </div>
 </section>
 
@@ -118,14 +115,14 @@
     <div class="sec-label" data-n="04"><span>Decisions</span></div>
     <h2>Six trade-offs, each with the why thought through.</h2>
     <ul class="role-list">
-      <li><strong>No auto-apply, no scrapers.</strong> Applying is irreversible, and platforms have anti-scraping boundaries. The positioning is “we generate, you send”: restraint in exchange for trust.</li>
-      <li><strong>From the behavior layer to the cognitive layer.</strong> It plugs in a cognitive model (how you think) and language samples (how you talk); that is the moat. The cost is being bound deeply to one user.</li>
-      <li><strong>Plans and follow-ups are computed by rules, without burning LLM calls.</strong> If “which ones to apply to this week” can be computed, it does not call the API. That saves money, and every suggestion points back to data, so it holds up to “based on what?”</li>
-      <li><strong>Two-stage scoring.</strong> A free heuristic first does a rough pass over all jobs, and only the top N get a precise evaluation through the API, so the cost of a full run stays under control.</li>
-      <li><strong>Résumé tailoring patches the original docx instead of regenerating it.</strong> difflib patches the changes back into the original file, keeping fonts and layout; a skills whitelist stops the AI from writing in abilities I do not have.</li>
-      <li><strong>No rush to go multi-user.</strong> The strongest personalization comes precisely from being bound deeply to one person; generalizing too early would dilute it into one more ordinary tool. First prove it is useful to one person.</li>
+      <li><strong>No auto-apply, no scrapers.</strong> Applying is irreversible, so it is “we generate, you send”: restraint in exchange for trust.</li>
+      <li><strong>From the behavior layer to the cognitive layer.</strong> That is the moat, and the cost is being bound deeply to one user.</li>
+      <li><strong>Plans and follow-ups are computed by rules, without burning LLM calls.</strong> If it can be computed, it does not call the API, and every suggestion points back to data.</li>
+      <li><strong>Two-stage scoring.</strong> A free heuristic does a rough pass over all jobs, and only the top N get a precise API evaluation.</li>
+      <li><strong>Résumé tailoring patches the original docx instead of regenerating it.</strong> The layout is kept, and a skills whitelist stops the AI from inventing abilities.</li>
+      <li><strong>No rush to go multi-user.</strong> Generalizing too early would dilute it into an ordinary tool, so first prove it is useful to one person.</li>
     </ul>
-    <p class="tech-line"><span class="kicker">Engineering baseline</span>Pipeline stages are isolated from one another, so one failing channel does not affect the others; without an API key it falls back to heuristics, and the basic functions keep working. <code style="font-family:var(--mono);font-size:14px">pipeline-all</code> runs the whole flow in one command.</p>
+    <p class="tech-line"><span class="kicker">Engineering baseline</span>Pipeline stages are isolated from one another, and without an API key it falls back to heuristics; <code style="font-family:var(--mono);font-size:14px">pipeline-all</code> runs the whole flow in one command.</p>
     <div class="flow">
       <div class="flow-step"><span class="n">01</span><strong>Search</strong><span>Four channels collected in parallel</span></div>
       <div class="flow-arrow">→</div>
@@ -148,12 +145,12 @@
       <article class="proof-card">
         <span class="kicker">The real problem</span>
         <h3>Not multi-user, but cold start.</h3>
-        <p>The data layer has long been isolated per user, so multi-user is not hard to engineer. The hard part is how a user it has never met can quickly get this depth of understanding. Right now the strongest personalization comes precisely from being deeply bound to me alone; generalizing too early would dilute it into an ordinary tool.</p>
+        <p>The data layer is already isolated per user; the hard part is how a user it has never met can quickly get this depth of understanding.</p>
       </article>
       <article class="proof-card highlight">
         <span class="kicker">My plan</span>
         <h3>Progressive depth.</h3>
-        <p>A new user fills in only a 5-minute questionnaire and gives a few messages they wrote themselves, and then it understands them better the more they use it: every conversation collects cognitive signals, and every edit to a message makes the system more like them. The aim is not to be accurate from the start, but to be like someone who has been with you for three months.</p>
+        <p>A new user fills in a 5-minute questionnaire and a few messages, then it learns with use, like someone who has been with you for three months.</p>
       </article>
     </div>
     <div class="quote">

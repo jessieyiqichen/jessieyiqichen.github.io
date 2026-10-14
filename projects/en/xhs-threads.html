@@ -26,19 +26,17 @@
     <span class="kicker">AI Product · Solo build · 2026.7 —</span>
     <h1>xhs-threads</h1>
     <p class="lede">You only save; the AI does the organizing.</p>
-    <p style="margin-top:18px">Bookmarking is frequent; organizing almost never happens, and the thought you had at the moment of saving has nowhere to live. I turned organizing into zero-label, proactive archiving: the system runs automatically on a schedule, and the AI decides which thread each new bookmark belongs to, writes a note and checks it automatically, while the threads keep branching and growing as bookmarks come in. What the product builds up is not content summaries but the user’s own trail of thought.</p>
-    <div class="facts">
-      <span><b>Role</b> — Solo build (product + full stack)</span>
-      <span><b>Status</b> — Auto-threading 7×24 on a server · invite-code sign-up, in beta</span>
-      <span><b>Demo</b> — <a href="https://47.94.34.146:8443/demo" target="_blank" rel="noopener">Guided demo (with the real product embedded and clickable)</a> · <a href="https://47.94.34.146:8443/try" target="_blank" rel="noopener">Try-it instance</a></span>
-      <span><b>Stack</b> — Python · Node · Multi-tenant · Model-tier routing · Rubric evaluation · Scheduled threading on the server</span>
-    </div>
+    <p class="sum">The system runs on a schedule: the AI picks a thread for each new bookmark, writes a note and checks it; what builds up is your own trail of thought.</p>
     <div class="metrics">
       <div class="metric"><b>11</b><span>thought-trail threads (as of 2026-09)</span></div>
-      <div class="metric"><b>63</b><span>nodes on the threads</span></div>
       <div class="metric"><b>90%</b><span>of calls on the light tier</span></div>
       <div class="metric"><b>¥0.05–0.10</b><span>model cost per item (exact figure being measured)</span></div>
     </div>
+  </div>
+  <div class="measure facts">
+    <span><b>Role</b> Solo build (product + full stack)</span>
+    <span><b>Try it</b> <a href="https://47.94.34.146:8443/demo" target="_blank" rel="noopener">Guided demo</a> · <a href="https://47.94.34.146:8443/try" target="_blank" rel="noopener">Try-it instance</a></span>
+    <span><b>Stack</b> Python · Node · Multi-tenant · Model-tier routing · Rubric evaluation</span>
   </div>
 </header>
 
@@ -48,11 +46,11 @@
   <div class="measure">
     <div class="sec-label" data-n="01"><span>Problem</span></div>
     <h2>The bookmarks keep coming; the thoughts get lost.</h2>
-    <p>Every time you tap save, there is a thought in that moment: my project could use this method; this post contradicts the one I read last week. But that thought has nowhere to go. The bookmark folder stores only the content, and when you look back a few months later, it is a pile of links you cannot remember why you saved.</p>
+    <p>Every time you tap save, there is a thought: my project could use this; this post contradicts last week’s. But the folder stores only the content, and months later it is a pile of links you cannot remember why you saved.</p>
     <ul class="evidence">
-      <li>Saving takes a few seconds and happens every day; organizing means sitting down specifically to do it, so it basically never happens.</li>
-      <li>Expecting users to build an organizing habit pushes the problem the product should solve back onto the user. The right question is: can organizing need no user involvement at all?</li>
-      <li>What is valuable is “why you saved it at the time,” not content categories. Once that is lost, you cannot get it back.</li>
+      <li>Saving takes seconds and happens daily; organizing means sitting down to do it, so it basically never happens.</li>
+      <li>Expecting users to build an organizing habit pushes the problem back onto them; the right question is: can organizing need no user involvement?</li>
+      <li>What is valuable is “why you saved it at the time,” not content categories, and once lost it cannot be recovered.</li>
     </ul>
   </div>
 </section>
@@ -61,7 +59,7 @@
   <div class="measure">
     <div class="sec-label" data-n="02"><span>Differentiation</span></div>
     <h2>Competitors wait for the user to start; I let the system act on its own.</h2>
-    <p>A survey of four competitor types confirmed that existing tools all treat bookmark organizing as content categorization, and most need the user to start it. With community tools you export and then organize yourself; AI tools also categorize only once each time the user makes a request. I found no approach that was zero-label and grew automatically with the bookmarks. The differentiation was set on this basis and written up as 8 product judgments that constrain every later feature trade-off.</p>
+    <p>A survey of four competitor types found that existing tools treat organizing as content categorization, and most need the user to start it; none was zero-label and grew with the bookmarks. I wrote the differentiation up as 8 product judgments.</p>
     <div class="compare">
       <div class="compare-head"><span>Dimension</span><span>Existing tools</span><span>xhs-threads</span></div>
       <div class="compare-row">
@@ -87,22 +85,22 @@
   <div class="measure">
     <div class="sec-label" data-n="03"><span>Evaluation</span></div>
     <h2>What the AI writes for users has to pass a quality check first.</h2>
-    <p>Text the AI produces goes straight into the user interface, in volume, and cannot be checked by hand item by item. So I built automated review: a reviewer model independent of the generation model scores against written criteria, the same item is reviewed three times and the majority decides, and a failing item is sent back for a rewrite. If the rewrite still fails, it goes to a human; nothing is silently let through.</p>
+    <p>Text the AI writes goes straight to users, in volume, and cannot be checked by hand item by item; a failing item is rewritten, a failed rewrite goes to a human, and nothing is silently let through.</p>
     <div class="proof-grid">
       <article class="proof-card highlight">
         <span class="kicker">Pre-launch acceptance</span>
         <h3>7 bad samples, all caught.</h3>
-        <p>Before launch I deliberately built 7 typical bad samples (fabrication, empty talk, wrong thread) as the acceptance set, and only let it go live after the review caught every one of them.</p>
+        <p>Before launch I built 7 typical bad samples (fabrication, empty talk, wrong thread) and launched only after review caught every one.</p>
       </article>
       <article class="proof-card">
         <span class="kicker">Key mechanism</span>
         <h3>The reviewer model must be independent.</h3>
-        <p>Letting a model grade itself is the same as not grading. Review runs on a different model, three reviews take the majority, and the criteria are written into a document rather than improvised.</p>
+        <p>A model grading itself is the same as no grading, so review runs on a different model, three reviews take the majority, and the criteria are written down.</p>
       </article>
       <article class="proof-card">
         <span class="kicker">Evaluation literacy</span>
         <h3>I even measured the error of the ruler itself.</h3>
-        <p>Threading accuracy in a single measurement was 30/36 (83%), against only 31% for the strongest trivial baseline. Rerunning the same criteria four times gave 30/28/28/31: a noise floor of ±3. Any “improvement” smaller than the noise does not count. No telling stories about noise.</p>
+        <p>Threading accuracy measured once was 30/36 (83%), against 31% for the strongest trivial baseline; rerunning the same criteria four times gave 30/28/28/31, so any “improvement” below the ±3 noise does not count.</p>
       </article>
     </div>
   </div>
@@ -112,13 +110,13 @@
   <div class="measure">
     <div class="sec-label" data-n="04"><span>Unit Economics</span></div>
     <h2>15 calls per note, 90% on the light tier.</h2>
-    <p>From deciding where it belongs to being fully written, one note goes through 15 model calls on average (measured from the ledger: 622 calls, 41 notes). All-flagship costs too much and all-light gives unstable quality, so calls are routed to a tier by task: classification judgments go to the light tier, writing goes to the flagship tier.</p>
+    <p>One note takes 15 model calls on average (from the ledger: 622 calls, 41 notes). All-flagship costs too much and all-light is unstable, so classification goes to the light tier and writing to the flagship tier.</p>
     <ul class="evidence">
-      <li><strong>Every call is logged.</strong> Purpose, tier and token usage are all recorded, and the cost report can be reproduced with one command.</li>
-      <li><strong>Measured structure.</strong> About 90% of calls land on the light tier. The model cost per item is currently about 0.05–0.10 yuan. Early ledger entries had evaluation calls mixed in; after I fixed the bookkeeping (each step’s call now carries a note tag), I am re-measuring the exact figure, rather than giving a number first that I know is inaccurate.</li>
-      <li><strong>A quality backstop.</strong> Output that fails review is rewritten automatically, and if that still fails, it goes to a human. Saving money cannot come from quietly lowering quality.</li>
+      <li><strong>Every call is logged.</strong> Purpose, tier and tokens are all recorded, and the cost report reproduces with one command.</li>
+      <li><strong>Cost per item.</strong> About 0.05–0.10 yuan; early ledger entries mixed in evaluation calls, and after fixing the bookkeeping I am re-measuring.</li>
+      <li><strong>A quality backstop.</strong> Saving money cannot come from quietly lowering quality, so failing output is still sent back for a rewrite.</li>
     </ul>
-    <p class="tech-line"><span class="kicker">Progress</span>As of 2026-09-14: 11 thought trails, 63 nodes (data from my own real daily use). The system has moved to a server and runs unattended 7×24, invite-code self-service sign-up is live, and I am inviting the first external testers.</p>
+    <p class="tech-line"><span class="kicker">Progress</span>As of 2026-09-14: 11 thought trails and 63 nodes, all from my own use; it runs unattended 7×24 on a server, invite-code sign-up is live, and I am inviting the first external testers.</p>
   </div>
 </section>
 

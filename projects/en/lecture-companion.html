@@ -26,19 +26,17 @@
     <span class="kicker">AI Product · Solo build · 2026.7 —</span>
     <h1>Lecture Companion</h1>
     <p class="lede">A classroom question, compressed into one click.</p>
-    <p style="margin-top:18px">I designed this product and built the full stack on my own. During class, click any transcript sentence to get an AI explanation; at the same moment the system captures the screen and hands it to a multimodal model, which reads the whiteboard and formulas directly. After class, review traces each answer back to its page number in the lecture slides. The product runs in production in real classes, and features ship in staged rollouts.</p>
-    <div class="facts">
-      <span><b>Role</b> — Solo build (product + full stack)</span>
-      <span><b>Status</b> — In production for my own use, iterating continuously</span>
-      <span><b>Demo</b> — <a href="https://jessieyiqichen.github.io/lc-demo/" target="_blank" rel="noopener">Live demo (read-only version of the real product, MIT public lecture data)</a> · <a href="https://jessieyiqichen.github.io/lecture-companion-walkthrough/" target="_blank" rel="noopener">Guided walkthrough</a></span>
-      <span><b>Tech</b> — Python · Volcano Engine Ark Doubao · multimodal RAG · streaming ASR · Next.js · SQLite</span>
-    </div>
+    <p class="sum">Click any transcript sentence for an AI explanation while a screenshot lets the model read the board; review later by slide page. In production in real classes.</p>
     <div class="metrics">
-      <div class="metric"><b>63</b><span>marks in total (production database reading)</span></div>
-      <div class="metric"><b>59</b><span>of them made with zero typing</span></div>
+      <div class="metric"><b>59</b><span>of 63 marks made with zero typing</span></div>
       <div class="metric"><b>108</b><span>entries into the review flow in total</span></div>
       <div class="metric"><b>¼</b><span>ASR-side cost after moving down a tier</span></div>
     </div>
+  </div>
+  <div class="measure facts">
+    <span><b>Role</b> Solo build (product + full stack)</span>
+    <span><b>Try it</b> <a href="https://jessieyiqichen.github.io/lc-demo/" target="_blank" rel="noopener">Live demo</a> · <a href="https://jessieyiqichen.github.io/lecture-companion-walkthrough/" target="_blank" rel="noopener">Guided walkthrough</a></span>
+    <span><b>Stack</b> Python · Volcano Engine Ark Doubao · multimodal RAG · streaming ASR · Next.js · SQLite</span>
   </div>
 </header>
 
@@ -48,11 +46,11 @@
   <div class="measure">
     <div class="sec-label" data-n="01"><span>Problem</span></div>
     <h2>Plenty of questions, zero asked.</h2>
-    <p>In an online class, questions come up all the time: a word you didn't catch, a step skipped in a derivation, a page of board writing that flashes past. But the act of asking almost never happens. You have to pause, put the question into words, switch windows, and by the time you finish typing, the lecture has moved on to the next page.</p>
+    <p>In an online class, questions come up all the time, but asking means pausing, putting the question into words and switching windows, and by the time you finish typing, the lecture has moved on to the next page.</p>
     <ul class="evidence">
-      <li>Questions come up often, yet the questions actually asked are close to zero. The gap is not whether you want to ask; it is how much effort one question costs.</li>
-      <li>A general-purpose chatbot doesn't help: it needs you to describe the problem clearly first, and "describing it clearly" is exactly the most expensive action in class.</li>
-      <li>A text transcript alone isn't enough either. The board writing, the formulas and the diagrams are all in the picture.</li>
+      <li>Questions come up often, yet almost none get asked: the gap is the effort one question costs.</li>
+      <li>A general-purpose chatbot needs you to describe the problem clearly first, the most expensive action in class.</li>
+      <li>A text transcript alone isn't enough: the board writing, formulas and diagrams are all in the picture.</li>
     </ul>
     <div class="quote">
       <p>"The bottleneck is input friction, not model capability."</p>
@@ -65,7 +63,7 @@
   <div class="measure">
     <div class="sec-label" data-n="02"><span>Iteration 1 · Zero-typing marks</span></div>
     <h2>Make asking a single click.</h2>
-    <p>If input is the bottleneck, remove the input. The in-class screen scrolls a live speech transcript; click whichever sentence confuses you, and the explanation comes straight back. The same click captures the current screen and hands it to a multimodal model, restoring the board writing and formulas that plain text loses.</p>
+    <p>If input is the bottleneck, remove the input: click whichever sentence confuses you, and the same click hands a screenshot to a multimodal model to restore the board writing and formulas.</p>
     <div class="flow">
       <div class="flow-step"><span class="n">01</span><strong>Live transcript</strong><span>Streaming ASR, sentence by sentence on screen</span></div>
       <div class="flow-arrow">→</div>
@@ -73,11 +71,11 @@
       <div class="flow-arrow">→</div>
       <div class="flow-step"><span class="n">03</span><strong>Auto screenshot</strong><span>The screen goes to a multimodal model</span></div>
       <div class="flow-arrow">→</div>
-      <div class="flow-step"><span class="n">04</span><strong>Instant explanation</strong><span>An explanation that draws on the context</span></div>
+      <div class="flow-step"><span class="n">04</span><strong>Instant explanation</strong><span>Explained in context</span></div>
       <div class="flow-arrow">→</div>
       <div class="flow-step"><span class="n">05</span><strong>After-class review</strong><span>Marks build up into review material</span></div>
     </div>
-    <p class="tech-line"><span class="kicker">Validation</span>In my own use across 9 class sessions: 63 marks in total, 59 of them with zero typing. The interaction hypothesis held: bring the cost of asking down to one click, and asking actually happens.</p>
+    <p class="tech-line"><span class="kicker">Validation</span>Across 9 class sessions: 63 marks, 59 with zero typing. Bring the cost of asking down to one click, and asking happens.</p>
   </div>
 </section>
 
@@ -85,17 +83,17 @@
   <div class="measure">
     <div class="sec-label" data-n="03"><span>Iteration 2 · Multimodal retrieval</span></div>
     <h2>Answers cite a slide page number, and the page number cannot be made up.</h2>
-    <p>The formulas, diagrams and annotations in the lecture slides existed only in the page images, and the AI's explanations could not point back to the original slide page. The second iteration fuses each page image and its page text into a single vector in the index, so answers can now cite the page they came from. Page numbers are returned as structured data by the retrieval layer and never generated by the model, which rules out fabrication by design.</p>
+    <p>Slide formulas and diagrams existed only in the page images. The second iteration fuses each page image and its text into a single vector; page numbers come from the retrieval layer, never the model, so they cannot be made up.</p>
     <div class="proof-grid">
       <article class="proof-card highlight">
         <span class="kicker">How it shipped</span>
         <h3>Three rollout stages, one layer changed per stage.</h3>
-        <p>Indexing, retrieval and citation display shipped in three stages, so a problem pointed at its layer immediately. Fully merged in two days, zero rollbacks.</p>
+        <p>Indexing, retrieval and citation display shipped in three stages, fully merged in two days, zero rollbacks.</p>
       </article>
       <article class="proof-card">
         <span class="kicker">Why I'm strict about this</span>
         <h3>Being traceable matters more than looking smart.</h3>
-        <p>When I review, I can trust an answer that carries a page number, and I can click back to check it. If the page numbers were made up, the product would be unusable.</p>
+        <p>I can trust an answer that carries a page number, and click back to check it.</p>
       </article>
     </div>
   </div>
@@ -105,7 +103,7 @@
   <div class="measure">
     <div class="sec-label" data-n="04"><span>North Star</span></div>
     <h2>The North Star sits after class, not in class.</h2>
-    <p>Marks per hour only show how much was clicked in class, but this product delivers its value after class, so the North Star is "marks reviewed", with events written directly by the server. The review flow has been entered 108 times in total, and in the early readings more than 60% of those entries fell in exam weeks and assignment weeks. After-class review is driven by exams; it is a completely different scenario from in-class use.</p>
+    <p>The product delivers its value after class, so the North Star is "marks reviewed". The review flow has been entered 108 times; early on, more than 60% of entries fell in exam and assignment weeks.</p>
     <div class="compare">
       <div class="compare-head"><span>Scenario</span><span>In class</span><span>After class</span></div>
       <div class="compare-row">
@@ -131,11 +129,11 @@
   <div class="measure">
     <div class="sec-label" data-n="05"><span>Unit Economics</span></div>
     <h2>Keep the books first, then cut cost. To cut cost, first prove quality holds.</h2>
-    <p>Breaking down the usage ledger: one two-hour class costs about ¥5.5, and ASR accounts for more than 80% of that, so cost cutting focuses only on the ASR side. On the LLM side, models are assigned to tiers by task, measured at about ¥1 per class.</p>
+    <p>One two-hour class costs about ¥5.5, and ASR accounts for more than 80% of that, so cost cutting focuses only on ASR; the LLM side is about ¥1 per class.</p>
     <ul class="evidence">
-      <li><strong>Shadow run.</strong> The old and new ASR tiers ran side by side in real classes: the timestamp residual was zero and sentence-level similarity was 0.98 or higher. I switched only after confirming there was no problem.</li>
+      <li><strong>Shadow run.</strong> The old and new ASR tiers ran side by side in real classes: zero timestamp residual, sentence-level similarity of 0.98 or higher.</li>
       <li><strong>Result.</strong> Switching to the same vendor's tier at one quarter of the unit price cut the monthly cost from ¥90 to ¥25 (measured over 8 classes, 11.25 hours).</li>
-      <li><strong>The order cannot be reversed.</strong> First the ledger shows where the money goes, then verify that the lower tier doesn't hurt quality, and only then make the switch.</li>
+      <li><strong>The order cannot be reversed.</strong> Ledger first, then the quality check, and only then the switch.</li>
     </ul>
   </div>
 </section>
